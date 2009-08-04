@@ -1,10 +1,14 @@
 # -------------------------------------------------
 # Project created by QtCreator 2009-07-16T17:34:15
 # -------------------------------------------------
-GSTPATH = /usr/include/gstreamer-0.10/
-GLIBPATH = /usr/include/glib-2.0/ /usr/lib/glib-2.0/include/
-LIBXMLPATH = /usr/include/libxml2/
-INCLUDEPATH += $$GSTPATH $$GLIBPATH $$LIBXMLPATH
+
+unix {
+    GSTCONFIG += $$system( pkg-config --cflags --libs gstreamer-0.10 )
+    GSTINC = $$find( GSTCONFIG, -I* )
+    for(a, GSTINC) : : {INCLUDEPATH += $$system( echo $$a | cut -b3- )}
+    LIBS += $$find( GSTCONFIG, -l* )
+}
+
 QT += xml
 TARGET = QtCast
 TEMPLATE = app
