@@ -34,7 +34,7 @@
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString" >Debug</value>
    <value key="QtVersionId" type="int" >0</value>
    <value key="addQDumper" type="" ></value>
-   <value key="buildDirectory" type="QString" >/home/max/src/QtCast</value>
+   <value key="buildDirectory" type="QString" >/home/max/src/QtCast/svn/trunk</value>
   </valuemap>
  </data>
  <data>
@@ -58,7 +58,7 @@
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
     <value type="QString" >ALSA_PLUGINS_DIR=/usr/lib/alsa-lib</value>
     <value type="QString" >CHROMIUM_DATA=/usr/share/chromium/data</value>
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-HLY9lgjp2h,guid=df1916a781175137e54ba4ed4a6012b7</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-yUTjgG7OsR,guid=ab532e2bc86dbcb169724fa04a772a86</value>
     <value type="QString" >DESKTOP_SESSION=kde</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -81,21 +81,21 @@
     <value type="QString" >KDE_SESSION_UID=1000</value>
     <value type="QString" >KDE_SESSION_VERSION=4</value>
     <value type="QString" >LANG=en_US.utf8</value>
-    <value type="QString" >LANGUAGE=</value>
     <value type="QString" >LC_COLLATE=C</value>
     <value type="QString" >LESS=-R</value>
     <value type="QString" >LOGNAME=max</value>
-    <value type="QString" >MOZ_PLUGIN_PATH=/usr/lib/mozilla/plugins:/opt/mozilla/lib/plugins</value>
+    <value type="QString" >MOZ_PLUGIN_PATH=/usr/lib/mozilla/plugins</value>
     <value type="QString" >OOO_FORCE_DESKTOP=gnome</value>
-    <value type="QString" >PATH=/opt/qtsdk-2009.01/qt/bin:/bin:/usr/bin:/sbin:/usr/sbin:/opt/kde/bin:/usr/bin/perlbin/site:/usr/bin/perlbin/vendor:/usr/bin/perlbin/core:/opt/kde/bin</value>
-    <value type="QString" >PKG_CONFIG_PATH=:/opt/kde/lib/pkgconfig</value>
+    <value type="QString" >PATH=/opt/qtsdk-2009.01/qt/bin:/bin:/usr/bin:/sbin:/usr/sbin:/opt/kde/bin:/usr/bin/perlbin/site:/usr/bin/perlbin/vendor:/usr/bin/perlbin/core:/opt/qt/bin:/opt/kde/bin</value>
+    <value type="QString" >PKG_CONFIG_PATH=:/opt/kde/lib/pkgconfig:/opt/qt/lib/pkgconfig</value>
     <value type="QString" >PS3=> </value>
     <value type="QString" >PS4=+ </value>
     <value type="QString" >PWD=/home/max</value>
     <value type="QString" >QTDIR=/opt/qtsdk-2009.01/qt</value>
     <value type="QString" >QT_IM_MODULE=scim</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/max/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/bilbo:@/tmp/.ICE-unix/3753,unix/bilbo:/tmp/.ICE-unix/3753</value>
+    <value type="QString" >QT_XFT=true</value>
+    <value type="QString" >SESSION_MANAGER=local/bilbo:@/tmp/.ICE-unix/3546,unix/bilbo:/tmp/.ICE-unix/3546</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=1</value>
     <value type="QString" >USER=max</value>
@@ -106,13 +106,13 @@
     <value type="QString" >XDG_CONFIG_HOME=/home/max/.config</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/local/share:/opt/kde/share</value>
     <value type="QString" >XDG_DATA_HOME=/home/max/.local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=13434271df01f3188177800748e6c3e5-1247810224.707194-796014436</value>
+    <value type="QString" >XDG_SESSION_COOKIE=13434271df01f3188177800748e6c3e5-1249323648.250242-1428659690</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
     <value type="QString" >XMODIFIERS=@im=SCIM</value>
     <value type="QString" >_=/usr/bin/kdeinit4</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList" >
-    <value type="QString" >/home/max/src/QtCast/QtCast.pro</value>
+    <value type="QString" >/home/max/src/QtCast/svn/trunk/QtCast.pro</value>
     <value type="QString" >-spec</value>
     <value type="QString" >linux-g++</value>
     <value type="QString" >-r</value>
@@ -120,8 +120,8 @@
     <value type="QString" >CONFIG+=debug</value>
    </valuelist>
    <value key="abstractProcess.command" type="QString" >/opt/qtsdk-2009.01/qt/bin/qmake</value>
-   <value key="abstractProcess.enabled" type="bool" >false</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >/home/max/src/QtCast</value>
+   <value key="abstractProcess.enabled" type="bool" >true</value>
+   <value key="abstractProcess.workingDirectory" type="QString" >/home/max/src/QtCast/svn/trunk</value>
    <value key="buildConfiguration" type="int" >10</value>
   </valuemap>
  </data>
@@ -132,7 +132,7 @@
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
     <value type="QString" >ALSA_PLUGINS_DIR=/usr/lib/alsa-lib</value>
     <value type="QString" >CHROMIUM_DATA=/usr/share/chromium/data</value>
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-HLY9lgjp2h,guid=df1916a781175137e54ba4ed4a6012b7</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-yUTjgG7OsR,guid=ab532e2bc86dbcb169724fa04a772a86</value>
     <value type="QString" >DESKTOP_SESSION=kde</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -155,21 +155,21 @@
     <value type="QString" >KDE_SESSION_UID=1000</value>
     <value type="QString" >KDE_SESSION_VERSION=4</value>
     <value type="QString" >LANG=en_US.utf8</value>
-    <value type="QString" >LANGUAGE=</value>
     <value type="QString" >LC_COLLATE=C</value>
     <value type="QString" >LESS=-R</value>
     <value type="QString" >LOGNAME=max</value>
-    <value type="QString" >MOZ_PLUGIN_PATH=/usr/lib/mozilla/plugins:/opt/mozilla/lib/plugins</value>
+    <value type="QString" >MOZ_PLUGIN_PATH=/usr/lib/mozilla/plugins</value>
     <value type="QString" >OOO_FORCE_DESKTOP=gnome</value>
-    <value type="QString" >PATH=/opt/qtsdk-2009.01/qt/bin:/bin:/usr/bin:/sbin:/usr/sbin:/opt/kde/bin:/usr/bin/perlbin/site:/usr/bin/perlbin/vendor:/usr/bin/perlbin/core:/opt/kde/bin</value>
-    <value type="QString" >PKG_CONFIG_PATH=:/opt/kde/lib/pkgconfig</value>
+    <value type="QString" >PATH=/opt/qtsdk-2009.01/qt/bin:/bin:/usr/bin:/sbin:/usr/sbin:/opt/kde/bin:/usr/bin/perlbin/site:/usr/bin/perlbin/vendor:/usr/bin/perlbin/core:/opt/qt/bin:/opt/kde/bin</value>
+    <value type="QString" >PKG_CONFIG_PATH=:/opt/kde/lib/pkgconfig:/opt/qt/lib/pkgconfig</value>
     <value type="QString" >PS3=> </value>
     <value type="QString" >PS4=+ </value>
     <value type="QString" >PWD=/home/max</value>
     <value type="QString" >QTDIR=/opt/qtsdk-2009.01/qt</value>
     <value type="QString" >QT_IM_MODULE=scim</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/max/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/bilbo:@/tmp/.ICE-unix/3753,unix/bilbo:/tmp/.ICE-unix/3753</value>
+    <value type="QString" >QT_XFT=true</value>
+    <value type="QString" >SESSION_MANAGER=local/bilbo:@/tmp/.ICE-unix/3546,unix/bilbo:/tmp/.ICE-unix/3546</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=1</value>
     <value type="QString" >USER=max</value>
@@ -180,7 +180,7 @@
     <value type="QString" >XDG_CONFIG_HOME=/home/max/.config</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/local/share:/opt/kde/share</value>
     <value type="QString" >XDG_DATA_HOME=/home/max/.local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=13434271df01f3188177800748e6c3e5-1247810224.707194-796014436</value>
+    <value type="QString" >XDG_SESSION_COOKIE=13434271df01f3188177800748e6c3e5-1249323648.250242-1428659690</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
     <value type="QString" >XMODIFIERS=@im=SCIM</value>
     <value type="QString" >_=/usr/bin/kdeinit4</value>
@@ -191,7 +191,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString" >/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool" >true</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >/home/max/src/QtCast</value>
+   <value key="abstractProcess.workingDirectory" type="QString" >/home/max/src/QtCast/svn/trunk</value>
    <valuelist key="makeargs" type="QVariantList" >
     <value type="QString" >debug</value>
    </valuelist>
@@ -210,7 +210,7 @@
    <valuelist key="abstractProcess.Environment" type="QVariantList" >
     <value type="QString" >ALSA_PLUGINS_DIR=/usr/lib/alsa-lib</value>
     <value type="QString" >CHROMIUM_DATA=/usr/share/chromium/data</value>
-    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-iO6vOb8WxD,guid=d1cc795295c89a1ce864877e4a5e50bd</value>
+    <value type="QString" >DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-yUTjgG7OsR,guid=ab532e2bc86dbcb169724fa04a772a86</value>
     <value type="QString" >DESKTOP_SESSION=kde</value>
     <value type="QString" >DESKTOP_STARTUP_ID=</value>
     <value type="QString" >DISPLAY=:0.0</value>
@@ -233,21 +233,21 @@
     <value type="QString" >KDE_SESSION_UID=1000</value>
     <value type="QString" >KDE_SESSION_VERSION=4</value>
     <value type="QString" >LANG=en_US.utf8</value>
-    <value type="QString" >LANGUAGE=</value>
     <value type="QString" >LC_COLLATE=C</value>
     <value type="QString" >LESS=-R</value>
     <value type="QString" >LOGNAME=max</value>
-    <value type="QString" >MOZ_PLUGIN_PATH=/usr/lib/mozilla/plugins:/opt/mozilla/lib/plugins</value>
+    <value type="QString" >MOZ_PLUGIN_PATH=/usr/lib/mozilla/plugins</value>
     <value type="QString" >OOO_FORCE_DESKTOP=gnome</value>
-    <value type="QString" >PATH=/opt/qtsdk-2009.01/qt/bin:/bin:/usr/bin:/sbin:/usr/sbin:/opt/kde/bin:/usr/bin/perlbin/site:/usr/bin/perlbin/vendor:/usr/bin/perlbin/core:/opt/kde/bin</value>
-    <value type="QString" >PKG_CONFIG_PATH=:/opt/kde/lib/pkgconfig</value>
+    <value type="QString" >PATH=/opt/qtsdk-2009.01/qt/bin:/bin:/usr/bin:/sbin:/usr/sbin:/opt/kde/bin:/usr/bin/perlbin/site:/usr/bin/perlbin/vendor:/usr/bin/perlbin/core:/opt/qt/bin:/opt/kde/bin</value>
+    <value type="QString" >PKG_CONFIG_PATH=:/opt/kde/lib/pkgconfig:/opt/qt/lib/pkgconfig</value>
     <value type="QString" >PS3=> </value>
     <value type="QString" >PS4=+ </value>
     <value type="QString" >PWD=/home/max</value>
     <value type="QString" >QTDIR=/opt/qtsdk-2009.01/qt</value>
     <value type="QString" >QT_IM_MODULE=scim</value>
     <value type="QString" >QT_PLUGIN_PATH=/home/max/.kde4/lib/kde4/plugins/:/usr/lib/kde4/plugins/</value>
-    <value type="QString" >SESSION_MANAGER=local/bilbo:@/tmp/.ICE-unix/3622,unix/bilbo:/tmp/.ICE-unix/3622</value>
+    <value type="QString" >QT_XFT=true</value>
+    <value type="QString" >SESSION_MANAGER=local/bilbo:@/tmp/.ICE-unix/3546,unix/bilbo:/tmp/.ICE-unix/3546</value>
     <value type="QString" >SHELL=/bin/bash</value>
     <value type="QString" >SHLVL=1</value>
     <value type="QString" >USER=max</value>
@@ -258,7 +258,7 @@
     <value type="QString" >XDG_CONFIG_HOME=/home/max/.config</value>
     <value type="QString" >XDG_DATA_DIRS=/usr/share:/usr/local/share:/opt/kde/share</value>
     <value type="QString" >XDG_DATA_HOME=/home/max/.local/share</value>
-    <value type="QString" >XDG_SESSION_COOKIE=13434271df01f3188177800748e6c3e5-1247695031.714696-2053214099</value>
+    <value type="QString" >XDG_SESSION_COOKIE=13434271df01f3188177800748e6c3e5-1249323648.250242-1428659690</value>
     <value type="QString" >XDM_MANAGED=method=classic</value>
     <value type="QString" >XMODIFIERS=@im=SCIM</value>
     <value type="QString" >_=/usr/bin/kdeinit4</value>
@@ -269,7 +269,7 @@
    </valuelist>
    <value key="abstractProcess.command" type="QString" >/usr/bin/make</value>
    <value key="abstractProcess.enabled" type="bool" >true</value>
-   <value key="abstractProcess.workingDirectory" type="QString" >/home/max/src/QtCast</value>
+   <value key="abstractProcess.workingDirectory" type="QString" >/home/max/src/QtCast/svn/trunk</value>
   </valuemap>
  </data>
  <data>

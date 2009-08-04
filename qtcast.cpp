@@ -2,6 +2,8 @@
 #include "ui_qtcast.h"
 
 #include <gst/gst.h>
+#include <glib.h>
+
 
 #include <QFile>
 #include <QFileDialog>
@@ -12,6 +14,27 @@ QtCast::QtCast(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::QtCastClass)
 {
     ui->setupUi(this);
+
+    const gchar *nano_str;
+    guint major, minor, micro, nano;
+
+    gst_init(0, 0);
+
+    gst_version (&major, &minor, &micro, &nano);
+
+    if (nano == 1)
+    nano_str = "(CVS)";
+    else if (nano == 2)
+    nano_str = "(Prerelease)";
+    else
+    nano_str = "";
+
+    printf ("This program is linked against GStreamer %d.%d.%d %s\n",
+          major, minor, micro, nano_str);
+
+    GstElement *pipeline, *source, *demuxer, *decoder, *conv, *sink;
+    GstBus *bus;
+
 }
 
 QtCast::~QtCast()
