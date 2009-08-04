@@ -1,0 +1,4 @@
+LIBRARY libgthread
+EXPORTS
+g_thread_init
+g_thread_init_with_errorcheck_mutexes

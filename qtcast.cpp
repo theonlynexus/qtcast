@@ -113,3 +113,13 @@ void QtCast::on_btnAddTrack_clicked()
          return;
 
 }
+
+void QtCast::on_actionAbout_triggered()
+{
+     QMessageBox msgBox;
+     msgBox.setText("QTcast, a podcast utility written in QT and gstreamer.");
+     msgBox.setInformativeText("About");
+     msgBox.setStandardButtons(QMessageBox::Ok);
+     msgBox.setDefaultButton(QMessageBox::Ok);
+     msgBox.exec();
+}

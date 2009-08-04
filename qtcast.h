@@ -24,6 +24,7 @@ private:
     Podcast podcast;
 
 private slots:
+    void on_actionAbout_triggered();
     void on_btnAddTrack_clicked();
     void on_actionExit_triggered();
     void on_editEdpisodeTitle_editingFinished();
