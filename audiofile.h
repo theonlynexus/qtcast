@@ -15,6 +15,8 @@ private:
     QString title;
     QString artist;
     QString duration;
+
+    void MakeDecodingPipeline();
 };
 
 #endif // AUDIOFILE_H
