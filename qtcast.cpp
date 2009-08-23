@@ -1,14 +1,15 @@
 #include "qtcast.h"
 #include "ui_qtcast.h"
+#include "AudioFile.h"
 
 #include <gst/gst.h>
 #include <glib.h>
-
 
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QGraphicsView>
+#include <QToolBar>
 
 QtCast::QtCast(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::QtCastClass)
@@ -35,6 +36,11 @@ QtCast::QtCast(QWidget *parent)
     GstElement *pipeline, *source, *demuxer, *decoder, *conv, *sink;
     GstBus *bus;
 
+    QToolBar* mainToolbar = (QToolBar*) this->findChild<QToolBar*>( "mainToolBar" );
+    QAction* action = (QAction*)this->findChild<QAction*>( "actionLoad_Episode" );
+    mainToolbar->addAction(action);
+    action = (QAction*)this->findChild<QAction*>( "actionSave_Episode" );
+    mainToolbar->addAction(action);
 }
 
 QtCast::~QtCast()
@@ -112,6 +118,7 @@ void QtCast::on_btnAddTrack_clicked()
      if( 0 == fileName )
          return;
 
+     AudioFile file( fileName );
 }
 
 void QtCast::on_actionAbout_triggered()

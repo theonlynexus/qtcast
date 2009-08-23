@@ -10,9 +10,12 @@ win32 {
     INCLUDEPATH += ./windeps/libiconv-1.9.2/include
     LIBS += -L./windeps/gstreamer/lib \
         -L./windeps/libiconv-1.9.2/lib
-    LIBS += -lglib-2.0 \
-        -lgstreamer-0.10 \
-        -lgthread-2.0
+    LIBS += -lgstreamer-0.10 \
+            -lgstbase-0.10 \
+            -lgstaudio-0.10 \
+            -lglib-2.0 \
+            -lgthread-2.0 \
+            -lgobject-2.0
 }
 
 # Linux/*ix specific settings
@@ -25,15 +28,15 @@ unix {
         LIBS += $$find( GSTCONFIG, -l* )
 }
 
-    QT += xml
-    TARGET = QtCast
-    TEMPLATE = app
-    SOURCES += main.cpp \
-        qtcast.cpp \
-        podcast.cpp
-    HEADERS += qtcast.h \
-        podcast.h
-    FORMS += qtcast.ui
-    HEADERS += audiofile.h
-    SOURCES += audiofile.cpp
-
+QT += xml
+TARGET = QtCast
+TEMPLATE = app
+SOURCES += main.cpp \
+           qtcast.cpp \
+           podcast.cpp
+HEADERS += qtcast.h \
+           podcast.h
+FORMS += qtcast.ui
+RESOURCES += icons.qrc
+HEADERS += audiofile.h
+SOURCES += audiofile.cpp
