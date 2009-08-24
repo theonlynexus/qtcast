@@ -32,6 +32,7 @@ void AudioFile::Open( QString filename )
 
     g_object_set( source, "location", filename.toLocal8Bit().constData(), NULL );
     g_print( "Starting reading for %s", filename.toLocal8Bit().constData() );
+    fflush(stdout);
 
     /* Decodebin will only commit to PAUSED if it actually finds a type;
      * otherwise the state change fails */
@@ -43,19 +44,22 @@ void AudioFile::Open( QString filename )
           gst_element_get_state( GST_ELEMENT( pipeline ), &state, NULL,
               5 * GST_SECOND ) )
       {
-        g_print( "State change failed for %s. Aborting\n", filename.toLocal8Bit().constData() );
+        printf( "State change failed for %s. Aborting\n", filename.toLocal8Bit().constData() );
+        fflush(stdout);
         return;
       }
     }
     else if ( sret != GST_STATE_CHANGE_SUCCESS )
     {
-      g_print ("%s - Could not read file\n", filename.toLocal8Bit().constData() );
+      printf("%s - Could not read file\n", filename.toLocal8Bit().constData() );
+      fflush(stdout);
       return;
     }
 
     if ( !MessageLoop( GST_ELEMENT( pipeline ), &tags ) )
     {
-      g_print( "Failed in message reading for %s\n", filename.toLocal8Bit().constData() );
+      printf( "Failed in message reading for %s\n", filename.toLocal8Bit().constData() );
+      fflush(stdout);
     }
 
     if ( tags )
@@ -77,7 +81,10 @@ void AudioFile::Open( QString filename )
       tags = NULL;
     }
     else
-        g_print( "No metadata found for %s\n", filename.toLocal8Bit().constData() );
+    {
+        printf( "No metadata found for %s\n", filename.toLocal8Bit().constData() );
+        fflush(stdout);
+    }
 
     /* Finished reading tags, so set state to NULL */
     sret = gst_element_set_state( GST_ELEMENT (pipeline), GST_STATE_NULL );

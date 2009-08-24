@@ -1,6 +1,6 @@
 #include "qtcast.h"
 #include "ui_qtcast.h"
-#include "AudioFile.h"
+#include "audiofile.h"
 
 #include <gst/gst.h>
 #include <glib.h>
@@ -32,9 +32,7 @@ QtCast::QtCast(QWidget *parent)
 
     printf ("This program is linked against GStreamer %d.%d.%d %s\n",
           major, minor, micro, nano_str);
-
-    GstElement *pipeline, *source, *demuxer, *decoder, *conv, *sink;
-    GstBus *bus;
+    fflush(stdout);
 
     QToolBar* mainToolbar = (QToolBar*) this->findChild<QToolBar*>( "mainToolBar" );
     QAction* action = (QAction*)this->findChild<QAction*>( "actionLoad_Episode" );
