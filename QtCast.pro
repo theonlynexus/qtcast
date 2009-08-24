@@ -5,18 +5,18 @@
 # Windows specific settings
 # All the necessary include and libraries are in the subdir "windeps"
 win32{
-    INCLUDEPATH += ./windeps/gstreamer/include/gstreamer-0.10
-    INCLUDEPATH += ./windeps/gstreamer/include/glib-2.0
-    INCLUDEPATH += ./windeps/gstreamer/include/
-    INCLUDEPATH += ./windeps/libiconv-1.9.2/include
-    LIBS += -L./windeps/gstreamer/lib \
-        -L./windeps/libiconv-1.9.2/lib
-    LIBS += -lgstreamer-0.10 \
-            -lgstbase-0.10 \
-            -lgstaudio-0.10 \
-            -lglib-2.0 \
-            -lgthread-2.0 \
-            -lgobject-2.0
+    INCLUDEPATH += "./windeps/gstreamer/include/gstreamer-0.10"
+    INCLUDEPATH += "./windeps/gstreamer/include/glib-2.0"
+    INCLUDEPATH += "./windeps/gstreamer/include/"
+    INCLUDEPATH += "./windeps/libiconv-1.9.2/include"
+    LIBS += -L"./windeps/gstreamer/lib" \
+            -L"./windeps/libiconv-1.9.2/lib"
+    LIBS += -llibgstreamer-0.10 \
+            -llibgstbase-0.10 \
+            -llibgstaudio-0.10 \
+            -llibglib-2.0 \
+            -llibgthread-2.0 \
+            -llibgobject-2.0
 }
 
 # Linux/*ix specific settings
@@ -30,22 +30,21 @@ unix{
 }
 
 # Includes for Pantheios logging API
-INCLUDEPATH += ./deps/stlsoft/include
-INCLUDEPATH += ./deps/pantheios/include
+INCLUDEPATH += "./deps/stlsoft/include"
+INCLUDEPATH += "./deps/pantheios/include"
 
 # Remember to compile pantheios lib files!
-LIBS += -L./deps/pantheios/lib
+LIBS += -L"./deps/pantheios/lib"
 
 win32{
     # Supposing MinGW 3.4
     # TODO: Add compiler version detection
     LIBS += -lpantheios.1.core.gcc34.debug \
-        -lpantheios.1.fe.simple.gcc34.debug \
-        -lpantheios.1.fe.N.gcc34.debug \
-        -lpantheios.1.be.file.gcc34.debug \
-        -lpantheios.1.be.N.gcc34.debug \
-        -lpantheios.1.core.gcc34.debug \
-        -lpantheios.1.util.gcc34.debug
+            -lpantheios.1.fe.simple.gcc34.debug \
+            -lpantheios.1.be.file.gcc34.debug \
+            -lpantheios.1.bec.file.gcc34.debug \
+            -lpantheios.1.core.gcc34.debug \
+            -lpantheios.1.util.gcc34.debug
 }
 
 unix{

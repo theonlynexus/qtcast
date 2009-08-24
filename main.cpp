@@ -3,17 +3,35 @@
 
 /* C++ program, so Pantheios init is automatic! */
 #include <pantheios/pantheios.hpp>
+#include <pantheios/frontends/fe.simple.h>
+#include <pantheios/backends/bec.file.h>
 
-/* Using Pantheios implicit linking features */
-/* WTF? Does not work on GCC 4.4 + Linux
-#include <pantheios/implicit_link/core.h>
-#include <pantheios/implicit_link/fe.simple.h>
-#include <pantheios/implicit_link/be.file.h>
-*/
+PANTHEIOS_EXTERN_C const char PANTHEIOS_FE_PROCESS_IDENTITY[] = "QtCast";
 
 
 int main(int argc, char *argv[])
-{    
+{
+    try
+    {
+        // Set the file name for the local back-end, truncating the
+        // file's existing contents, if any.
+        pantheios_be_file_setFilePath( "log.all" );
+
+        pantheios::log_NOTICE( "Initializing Qt application." );
+    }
+    catch(std::bad_alloc&)
+    {
+        pantheios::logputs( pantheios::alert, "out of memory" );
+    }
+    catch(std::exception& x)
+    {
+        pantheios::log_CRITICAL( "Exception: ", x );
+    }
+    catch(...)
+    {
+        pantheios::logputs( pantheios::emergency, "Unexpected unknown error" );
+    }
+
     QApplication a(argc, argv);
     QtCast w;
     w.show();
