@@ -15,9 +15,13 @@ public:
     void Close( );
 
 private:
+    QString filename;
     QString title;
     QString artist;
-    QString duration;
+    QString album;
+    /* QString duration; */
+
+    unsigned int  mins, secs;
 
     /* Objects for Metadata reading */
     GstElement *pipeline, *source, *decodebin;

@@ -3,6 +3,11 @@
 #include <glib-object.h>
 #include <QMessageBox>
 
+/* C++ program, so Pantheios init is automatic! */
+#include <pantheios/pantheios.hpp>
+#include <pantheios/frontends/fe.simple.h>
+#include <pantheios/inserters/integer.hpp>
+
 AudioFile::AudioFile()
 {
     InitVars();
@@ -30,12 +35,15 @@ void AudioFile::Open( QString filename )
     GstState state;
     GstTagList *tags = NULL;
 
+    this->filename = filename;
+
+    pantheios::log_DEBUG( "AudioFile::Open( ", filename.toLocal8Bit().constData(), " )"  );
+
     g_object_set( source, "location", filename.toLocal8Bit().constData(), NULL );
-    g_print( "Starting reading for %s", filename.toLocal8Bit().constData() );
-    fflush(stdout);
 
     /* Decodebin will only commit to PAUSED if it actually finds a type;
      * otherwise the state change fails */
+    pantheios::log_DEBUG( "AudioFile::Open - Setting pipeline to GST_STATE_PAUSED"  );
     sret = gst_element_set_state (GST_ELEMENT (pipeline), GST_STATE_PAUSED);
 
     if ( GST_STATE_CHANGE_ASYNC == sret )
@@ -44,38 +52,74 @@ void AudioFile::Open( QString filename )
           gst_element_get_state( GST_ELEMENT( pipeline ), &state, NULL,
               5 * GST_SECOND ) )
       {
-        printf( "State change failed for %s. Aborting\n", filename.toLocal8Bit().constData() );
-        fflush(stdout);
+        pantheios::log_DEBUG( "AudioFile::Open - State change failed. Aborting."  );
         return;
       }
     }
     else if ( sret != GST_STATE_CHANGE_SUCCESS )
     {
-      printf("%s - Could not read file\n", filename.toLocal8Bit().constData() );
-      fflush(stdout);
+      pantheios::log_DEBUG( "AudioFile::Open - Could not read file. Aborting."  );
+      QMessageBox::critical( 0, "File read error.", "Could not read selected audio file" );
       return;
     }
 
     if ( !MessageLoop( GST_ELEMENT( pipeline ), &tags ) )
     {
-      printf( "Failed in message reading for %s\n", filename.toLocal8Bit().constData() );
-      fflush(stdout);
+      pantheios::log_DEBUG( "AudioFile::Open - Impossible error!"  );
     }
 
     if ( tags )
     {
       const GValue *tagVal = NULL;
-      tagVal = gst_tag_list_get_value_index( tags, "title", 1 );
+      tagVal = gst_tag_list_get_value_index( tags, GST_TAG_TITLE, 0 );
       if( tagVal )
       {
-          QString title = "Title tag value:";
           title += g_value_get_string( tagVal );
-          QMessageBox::information( 0, "Info", title  );
+          pantheios::log_DEBUG( "AudioFile::Open - Title tag: ", title.toLocal8Bit().constData()  );
       }
       else
       {
-          QMessageBox::information( 0, "Error!", "No value for title tag"  );
+          pantheios::log_DEBUG( "AudioFile::Open - No Title tag");
       }
+
+      tagVal = gst_tag_list_get_value_index( tags, GST_TAG_ALBUM, 0 );
+      if( tagVal )
+      {
+          album += g_value_get_string( tagVal );
+          pantheios::log_DEBUG( "AudioFile::Open - Album tag: ", album.toLocal8Bit().constData()  );
+      }
+      else
+      {
+          pantheios::log_DEBUG( "AudioFile::Open - No Album tag");
+      }
+
+      tagVal = gst_tag_list_get_value_index( tags, GST_TAG_ARTIST, 0 );
+      if( tagVal )
+      {
+          artist += g_value_get_string( tagVal );
+          pantheios::log_DEBUG( "AudioFile::Open - Artist tag: ", artist.toLocal8Bit().constData()  );
+      }
+      else
+      {
+          pantheios::log_DEBUG( "AudioFile::Open - No Artist tag");
+      }
+
+      tagVal = gst_tag_list_get_value_index( tags, GST_TAG_DURATION, 0 );
+      if( tagVal )
+      {
+          gint64 nanosecs = g_value_get_int64( tagVal );
+          secs = nanosecs / 1000000;
+          mins = secs / 60;
+          secs = secs % 60;
+          pantheios::log_DEBUG( "AudioFile::Open - Duration tag: ",
+                                pantheios::integer(mins),":",
+                                pantheios::integer(secs)  );
+      }
+      else
+      {
+          pantheios::log_DEBUG( "AudioFile::Open - No Duration tag");
+      }
+
       /* gst_tag_list_foreach( tags, &AudioFile::PrintTag, NULL );*/
       gst_tag_list_free( tags );
       tags = NULL;

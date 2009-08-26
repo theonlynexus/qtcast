@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     {
         // Set the file name for the local back-end, truncating the
         // file's existing contents, if any.
-        pantheios_be_file_setFilePath( "log.all" );
+        pantheios_be_file_setFilePath( "QtCast.log" );
 
         pantheios::log_NOTICE( "Initializing Qt application." );
     }
