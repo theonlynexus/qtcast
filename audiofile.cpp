@@ -130,6 +130,31 @@ void AudioFile::Open( QString filename )
         fflush(stdout);
     }
 
+    /* gboolean gst_element_query_duration (GstElement *element, GstFormat *format, gint64 *duration); */
+    gint64 nanosecs;
+    GstFormat format = GST_FORMAT_TIME;
+
+    if( TRUE == gst_element_query_duration( (GstElement*)pipeline, &format, &nanosecs ) )
+    {
+      if( format != GST_FORMAT_TIME )
+      {
+          pantheios::log_DEBUG( "AudioFile::Open - Could not get time in format GST_FORMAT_TIME.");
+      }
+      else
+      {
+          secs = nanosecs / 1000000;
+          mins = secs / 60;
+          secs = secs % 60;
+          pantheios::log_DEBUG( "AudioFile::Open - gst_element_query_duration: ",
+                                pantheios::integer(mins),":",
+                                pantheios::integer(secs)  );
+      }
+    }
+    else
+    {
+      pantheios::log_DEBUG( "AudioFile::Open - Could not get time al all.");
+    }
+
     /* Finished reading tags, so set state to NULL */
     sret = gst_element_set_state( GST_ELEMENT (pipeline), GST_STATE_NULL );
 }
