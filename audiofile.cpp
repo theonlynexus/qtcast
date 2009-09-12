@@ -46,21 +46,37 @@ void AudioFile::Open( QString filename )
     pantheios::log_DEBUG( "AudioFile::Open - Setting pipeline to GST_STATE_PAUSED"  );
     sret = gst_element_set_state (GST_ELEMENT (pipeline), GST_STATE_PAUSED);
 
-    if ( GST_STATE_CHANGE_ASYNC == sret )
+    unsigned short int nTries = 0;
+    switch( sret )
     {
-      if( GST_STATE_CHANGE_SUCCESS !=
-          gst_element_get_state( GST_ELEMENT( pipeline ), &state, NULL,
-              5 * GST_SECOND ) )
-      {
-        pantheios::log_DEBUG( "AudioFile::Open - State change failed. Aborting."  );
-        return;
-      }
-    }
-    else if ( sret != GST_STATE_CHANGE_SUCCESS )
-    {
-      pantheios::log_DEBUG( "AudioFile::Open - Could not read file. Aborting."  );
-      QMessageBox::critical( 0, "File read error.", "Could not read selected audio file" );
-      return;
+        case GST_STATE_CHANGE_ASYNC:
+            pantheios::log_DEBUG( "AudioFile::Open - GST_STATE_CHANGE_ASYNC"  );
+            while( ( GST_STATE_CHANGE_ASYNC == ( sret = gst_element_get_state(
+                                                 GST_ELEMENT( pipeline ), &state, NULL,
+                                                 5 * GST_SECOND ) ) )
+                   && ( nTries < 4 ) )
+            {
+                pantheios::log_DEBUG( "AudioFile::Open - GST_STATE_CHANGE_ASYNC"  );
+                nTries++;
+            }
+            switch( sret )
+            {
+                case GST_STATE_CHANGE_SUCCESS:
+                    pantheios::log_DEBUG( "AudioFile::Open - GST_STATE_CHANGE_SUCCESS"  );
+                    break;
+                default:
+                    pantheios::log_DEBUG( "AudioFile::Open - Could not read file. Aborting."  );
+                    QMessageBox::critical( 0, "File read error.", "Could not read selected audio file" );
+                    return;
+            }
+            break;
+        case GST_STATE_CHANGE_SUCCESS:
+            pantheios::log_DEBUG( "AudioFile::Open - GST_STATE_CHANGE_SUCCESS"  );
+            break;
+        default:
+            pantheios::log_DEBUG( "AudioFile::Open - Could not read file. Aborting."  );
+            QMessageBox::critical( 0, "File read error.", "Could not read selected audio file" );
+            return;
     }
 
     if ( !MessageLoop( GST_ELEMENT( pipeline ), &tags ) )
@@ -102,6 +118,19 @@ void AudioFile::Open( QString filename )
       else
       {
           pantheios::log_DEBUG( "AudioFile::Open - No Artist tag");
+      }
+
+      pantheios::log_DEBUG( "AudioFile::Open - Changing pipeline state to GST_STATE_PLAYING");
+      sret = gst_element_set_state (GST_ELEMENT (pipeline), GST_STATE_PLAYING);
+      if ( GST_STATE_CHANGE_ASYNC == sret )
+      {
+        if( GST_STATE_CHANGE_SUCCESS !=
+          gst_element_get_state( GST_ELEMENT( pipeline ), &state, NULL,
+              5 * GST_SECOND ) )
+        {
+          pantheios::log_DEBUG( "AudioFile::Open - State change failed. Aborting."  );
+          return;
+        }
       }
 
       tagVal = gst_tag_list_get_value_index( tags, GST_TAG_DURATION, 0 );

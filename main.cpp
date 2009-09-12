@@ -8,7 +8,6 @@
 
 PANTHEIOS_EXTERN_C const char PANTHEIOS_FE_PROCESS_IDENTITY[] = "QtCast";
 
-
 int main(int argc, char *argv[])
 {
     try
