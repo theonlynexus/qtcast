@@ -24,7 +24,7 @@ private:
     unsigned int  mins, secs;
 
     /* Objects for Metadata reading */
-    GstElement *pipeline, *source, *decodebin;
+    GstElement *pipeline, *source, *decodebin, *fakesink;
     GstBus *bus;
 
     void MakeDecodingPipeline();

@@ -81,7 +81,7 @@ void AudioFile::Open( QString filename )
 
     if ( !MessageLoop( GST_ELEMENT( pipeline ), &tags ) )
     {
-      pantheios::log_DEBUG( "AudioFile::Open - Impossible error!"  );
+      pantheios::log_ERROR( "AudioFile::Open - Impossible error!"  );
     }
 
     if ( tags )
@@ -159,30 +159,53 @@ void AudioFile::Open( QString filename )
         fflush(stdout);
     }
 
-    /* gboolean gst_element_query_duration (GstElement *element, GstFormat *format, gint64 *duration); */
-    gint64 nanosecs;
-    GstFormat format = GST_FORMAT_TIME;
-
-    if( TRUE == gst_element_query_duration( (GstElement*)pipeline, &format, &nanosecs ) )
+    GstQuery *query;
+    gboolean res;
+    query = gst_query_new_duration (GST_FORMAT_TIME);
+    res = gst_element_query( (GstElement*)pipeline, query);
+    if( res )
     {
-      if( format != GST_FORMAT_TIME )
-      {
-          pantheios::log_DEBUG( "AudioFile::Open - Could not get time in format GST_FORMAT_TIME.");
-      }
-      else
-      {
-          secs = nanosecs / 1000000;
-          mins = secs / 60;
-          secs = secs % 60;
-          pantheios::log_DEBUG( "AudioFile::Open - gst_element_query_duration: ",
-                                pantheios::integer(mins),":",
-                                pantheios::integer(secs)  );
-      }
+        gint64 duration;
+        secs = duration / 1000000;
+        mins = secs / 60;
+        secs = secs % 60;
+
+        gst_query_parse_duration (query, NULL, &duration);
+        pantheios::log_DEBUG( "AudioFile::Open - gst_element_query_duration: ",
+                             pantheios::integer(mins), ":",
+                             pantheios::integer(secs) );
     }
     else
     {
-      pantheios::log_DEBUG( "AudioFile::Open - Could not get time al all.");
+        pantheios::log_DEBUG( "AudioFile::Open - Duration query failed...");
     }
+    gst_query_unref (query);
+
+
+//    /* gboolean gst_element_query_duration (GstElement *element, GstFormat *format, gint64 *duration); */
+//    gint64 nanosecs;
+//    GstFormat format = GST_FORMAT_TIME;
+//
+//    if( TRUE == gst_element_query_duration( (GstElement*)pipeline, &format, &nanosecs ) )
+//    {
+//      if( format != GST_FORMAT_TIME )
+//      {
+//          pantheios::log_DEBUG( "AudioFile::Open - Could not get time in format GST_FORMAT_TIME.");
+//      }
+//      else
+//      {
+//          secs = nanosecs / 1000000;
+//          mins = secs / 60;
+//          secs = secs % 60;
+//          pantheios::log_DEBUG( "AudioFile::Open - gst_element_query_duration: ",
+//                                pantheios::integer(mins),":",
+//                                pantheios::integer(secs)  );
+//      }
+//    }
+//    else
+//    {
+//      pantheios::log_DEBUG( "AudioFile::Open - Could not get time al all.");
+//    }
 
     /* Finished reading tags, so set state to NULL */
     sret = gst_element_set_state( GST_ELEMENT (pipeline), GST_STATE_NULL );
@@ -205,7 +228,10 @@ void AudioFile::MakeDecodingPipeline()
   g_assert( GST_IS_ELEMENT( source) );
   decodebin = gst_element_factory_make ("decodebin", "decodebin");
   g_assert( GST_IS_ELEMENT( decodebin ) );
+//  fakesink = gst_element_factory_make ("fakesink", "fakesink");
+//  g_assert( GST_IS_ELEMENT( fakesink ) );
 
+//  gst_bin_add_many( GST_BIN( pipeline ), source, decodebin, fakesink, NULL );
   gst_bin_add_many( GST_BIN( pipeline ), source, decodebin, NULL );
   gst_element_link( source, decodebin );
 }
