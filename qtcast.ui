@@ -48,6 +48,9 @@
          <property name="text">
           <string>Podcast name:</string>
          </property>
+         <property name="buddy">
+          <cstring>editPodcastName</cstring>
+         </property>
         </widget>
        </item>
        <item row="0" column="1">
@@ -58,6 +61,9 @@
          <property name="text">
           <string>Author:</string>
          </property>
+         <property name="buddy">
+          <cstring>editPodcastAuthor</cstring>
+         </property>
         </widget>
        </item>
        <item row="1" column="1">
@@ -67,6 +73,9 @@
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Episode number:</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinBox</cstring>
          </property>
         </widget>
        </item>
@@ -84,6 +93,9 @@
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Episode title:</string>
+         </property>
+         <property name="buddy">
+          <cstring>editEdpisodeTitle</cstring>
          </property>
         </widget>
        </item>
@@ -161,9 +173,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
-        <width>261</width>
-        <height>321</height>
+        <y>30</y>
+        <width>221</width>
+        <height>301</height>
        </rect>
       </property>
      </widget>
@@ -183,7 +195,7 @@
      <widget class="QPushButton" name="btnDelTrack">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>130</x>
         <y>350</y>
         <width>101</width>
         <height>28</height>
@@ -196,10 +208,10 @@
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
        <rect>
-        <x>290</x>
-        <y>10</y>
-        <width>231</width>
-        <height>321</height>
+        <x>280</x>
+        <y>240</y>
+        <width>241</width>
+        <height>141</height>
        </rect>
       </property>
       <property name="title">
@@ -218,6 +230,151 @@
         <string>Normalize output levels</string>
        </property>
       </widget>
+     </widget>
+     <widget class="QGroupBox" name="GboxTrackInfo">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>30</y>
+        <width>241</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Track info</string>
+      </property>
+      <widget class="QWidget" name="formLayoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>19</y>
+         <width>221</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="layoutTrackInfo">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineArtist">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_14">
+          <property name="text">
+           <string>Song:</string>
+          </property>
+          <property name="buddy">
+           <cstring>lineSong</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineSong">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_16">
+          <property name="text">
+           <string>Album:</string>
+          </property>
+          <property name="buddy">
+           <cstring>lineAlbum</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineAlbum">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_17">
+          <property name="text">
+           <string>Duration:</string>
+          </property>
+          <property name="buddy">
+           <cstring>lineDuration</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="lineDuration">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_12">
+          <property name="text">
+           <string>Artist:</string>
+          </property>
+          <property name="buddy">
+           <cstring>lineArtist</cstring>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>221</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Tracks list</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnTrackUp">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>30</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnTrackDown">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>300</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tabBases">
@@ -296,7 +453,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>241</width>
+        <width>331</width>
         <height>271</height>
        </rect>
       </property>
@@ -409,17 +566,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>269</x>
-        <y>9</y>
-        <width>251</width>
-        <height>381</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2"/>
-     </widget>
     </widget>
    </widget>
   </widget>
@@ -429,7 +575,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

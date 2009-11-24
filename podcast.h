@@ -22,6 +22,7 @@ private:
 
     QStringList tracksFilenames;
     QStringList basesFilenames;
+    
     /*
     numbers << "One" << "Two" << "Three" << "Four" << "Five";
     QAbstractItemModel *model = new StringListModel(numbers);

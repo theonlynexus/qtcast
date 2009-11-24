@@ -91,3 +91,6 @@ FORMS += qtcast.ui
 RESOURCES += icons.qrc
 HEADERS += audiofile.h
 SOURCES += audiofile.cpp
+HEADERS += audiofilelistmodel.h
+SOURCES += audiofilelistmodel.cpp
+

@@ -29,6 +29,22 @@ void AudioFile::InitVars()
     bus = NULL;
 }
 
+QString AudioFile::Filename()
+{ return filename; }
+
+QString AudioFile::Title()
+
+{ return title; }
+
+QString AudioFile::Artist()
+{ return artist; }
+
+QString AudioFile::Album()
+{ return album; }
+
+QString AudioFile::Duration()
+{ return "Cippa"; }
+
 void AudioFile::Open( QString filename )
 {
     GstStateChangeReturn sret;

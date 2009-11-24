@@ -2,8 +2,11 @@
 #define QTCAST_H
 
 #include "podcast.h"
+#include "audiofile.h"
 
 #include <QtGui/QMainWindow>
+#include <QList>
+#include <QAbstractItemModel>
 
 namespace Ui
 {
@@ -22,6 +25,10 @@ private:
     Ui::QtCastClass *ui;
 
     Podcast podcast;
+    QAbstractItemModel *trackListModel;
+    QList<AudioFile> tracksList;
+    QList<AudioFile> basesList;
+
 
 private slots:
     void on_actionAbout_triggered();

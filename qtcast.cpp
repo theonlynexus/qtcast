@@ -1,6 +1,7 @@
 #include "qtcast.h"
 #include "ui_qtcast.h"
 #include "audiofile.h"
+#include "audiofilelistmodel.h"
 
 #include <gst/gst.h>
 #include <glib.h>
@@ -39,6 +40,9 @@ QtCast::QtCast(QWidget *parent)
     mainToolbar->addAction(action);
     action = (QAction*)this->findChild<QAction*>( "actionSave_Episode" );
     mainToolbar->addAction(action);
+
+    trackListModel = new AudioFileListModel(tracksList);
+    ui->listTracks->setModel( trackListModel );
 }
 
 QtCast::~QtCast()
@@ -67,15 +71,15 @@ void QtCast::on_btnSelectLogo_clicked()
      podcast.logo = podcast.logo.scaled( 100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
      // Find the graphicsView and check
-     QLabel* lblLogo = (QLabel*) this->findChild<QLabel*>( "lblLogo" );
-     if( !lblLogo )
-     {
-        QMessageBox::critical( this, "Error!", "Could not find \"lblLogo\" component."  );
-        return;
-     }
+//     QLabel* lblLogo = (QLabel*) this->findChild<QLabel*>( "lblLogo" );
+//     if( !lblLogo )
+//     {
+//        QMessageBox::critical( this, "Error!", "Could not find \"lblLogo\" component."  );
+//        return;
+//     }
 
-     lblLogo->setPixmap( QPixmap::fromImage( podcast.logo ) );
-     lblLogo->update();
+     ui->lblLogo->setPixmap( QPixmap::fromImage( podcast.logo ) );
+     ui->lblLogo->update();
 }
 
 void QtCast::on_editPodcastName_editingFinished()
@@ -117,11 +121,17 @@ void QtCast::on_btnAddTrack_clicked()
          return;
 
      AudioFile file( fileName );
+
+     tracksList.append( file );
+//     ui->listTracks-
+     delete( trackListModel );
+     trackListModel = new AudioFileListModel( tracksList );
+     ui->listTracks->setModel(trackListModel);
 }
 
 void QtCast::on_actionAbout_triggered()
 {
-     QMessageBox msgBox;
+     QMessageBox msgBox(this);
      msgBox.setText("QTcast, a podcast utility written in QT and gstreamer.");
      msgBox.setInformativeText("About");
      msgBox.setStandardButtons(QMessageBox::Ok);
