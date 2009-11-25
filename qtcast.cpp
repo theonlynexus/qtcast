@@ -93,26 +93,22 @@ void QtCast::on_btnSelectLogo_clicked()
 
 void QtCast::on_editPodcastName_editingFinished()
 {
-    QLineEdit* editPodcastTitle = (QLineEdit*) this->findChild<QLineEdit*>( "editPodcastTitle" );
-    podcast.podcastTitle = editPodcastTitle->text();
+    podcast.podcastTitle = ui->editPodcastName->text();
 }
 
 void QtCast::on_editPodcastAuthor_editingFinished()
 {
-    QLineEdit* editAuthor = (QLineEdit*) this->findChild<QLineEdit*>( "editAuthor" );
-    podcast.author = editAuthor->text();
+    podcast.author = ui->editPodcastAuthor->text();
 }
 
 void QtCast::on_spinBox_editingFinished()
 {
-    QSpinBox* spinEpisodeNumber = (QSpinBox*) this->findChild<QSpinBox*>( "spinBox" );
-    podcast.episodeNumber = spinEpisodeNumber->value();
+    podcast.episodeNumber = ui->spinBox->value();
 }
 
 void QtCast::on_editEdpisodeTitle_editingFinished()
 {
-    QLineEdit* editEpisodeTitle = (QLineEdit*) this->findChild<QLineEdit*>( "editEdpisodeTitle" );
-    podcast.episodeTitle = editEpisodeTitle->text();
+    podcast.episodeTitle = ui->editEdpisodeTitle->text();
 }
 
 void QtCast::on_actionExit_triggered()
@@ -150,7 +146,6 @@ void QtCast::on_btnAddTrack_clicked()
      {
          pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row data set " );
          variant = trackListModel->data( index, Qt::EditRole );
-         trackListModel->itemData(index);
          meta = variant.value<AudioFileMeta>();
          pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row title: ",
                                meta.title.toLocal8Bit().constData() );
@@ -175,3 +170,37 @@ void QtCast::on_actionAbout_triggered()
      msgBox.exec();
 }
 
+
+void QtCast::on_btnDelTrack_clicked()
+{
+    QModelIndex idx = ui->listTracks->currentIndex();
+
+    if( idx.isValid() )
+    {
+        pantheios::log_DEBUG( "QtCast::on_btnDelTrack_clicked - Removing idx ",
+                               QString::number(idx.row()).toLocal8Bit().constData() );
+        trackListModel->removeRow( idx.row() );        
+    }
+
+    return;
+}
+
+void QtCast::on_listTracks_clicked(QModelIndex index)
+{
+    QModelIndex idx = ui->listTracks->currentIndex();
+
+    if( idx.isValid() )
+    {
+         QVariant variant = trackListModel->data( index, Qt::EditRole );
+         AudioFileMeta meta = variant.value<AudioFileMeta>();
+
+         ui->lineTrackArtist->setText( meta.artist );
+         ui->lineTrackArtist->setCursorPosition(0);
+         ui->lineTrackAlbum->setText( meta.album );
+         ui->lineTrackAlbum->setCursorPosition(0);
+         ui->lineTrackDuration->setText( "Cippa" );
+         ui->lineTrackDuration->setCursorPosition(0);
+         ui->lineTrackTitle->setText( meta.title );
+         ui->lineTrackTitle->setCursorPosition(0);
+    }
+}
