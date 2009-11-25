@@ -93,4 +93,6 @@ HEADERS += audiofile.h
 SOURCES += audiofile.cpp
 HEADERS += audiofilelistmodel.h
 SOURCES += audiofilelistmodel.cpp
+HEADERS += audiofilemeta.h
+SOURCES += audiofilemeta.cpp
 

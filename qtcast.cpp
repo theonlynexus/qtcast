@@ -41,8 +41,8 @@ QtCast::QtCast(QWidget *parent)
     action = (QAction*)this->findChild<QAction*>( "actionSave_Episode" );
     mainToolbar->addAction(action);
 
-    qRegisterMetaType<AudioFile>("AudioFile");
-    audioFileMetaId = QMetaType::type("AudioFile");
+    qRegisterMetaType<AudioFileMeta>("AudioFileMeta");
+    audioFileMetaId = QMetaType::type("AudioFileMeta");
 
     trackListModel = new AudioFileListModel(tracksList);
     ui->listTracks->setModel( trackListModel );
@@ -124,7 +124,7 @@ void QtCast::on_btnAddTrack_clicked()
          return;
 
      AudioFile file( fileName );
-     QVariant variant( audioFileMetaId, &file);
+     QVariant variant( audioFileMetaId, &(file.Meta()) );
 
      trackListModel->insertRow(trackListModel->rowCount(), QModelIndex());
      QModelIndex index = trackListModel->index(trackListModel->rowCount(), 0, QModelIndex());

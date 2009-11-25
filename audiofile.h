@@ -1,6 +1,8 @@
 #ifndef AUDIOFILE_H
 #define AUDIOFILE_H
 
+#include "audiofilemeta.h"
+
 #include <QString>
 
 #include <gst/gst.h>
@@ -19,15 +21,10 @@ public:
     QString Artist();
     QString Album();
     QString Duration();
+    AudioFileMeta Meta(){return meta;}
 
 private:
-    QString filename;
-    QString title;
-    QString artist;
-    QString album;
-    /* QString duration; */
-
-    unsigned int  mins, secs;
+    AudioFileMeta meta;
 
     /* Objects for Metadata reading */
     GstElement *pipeline, *source, *decodebin, *fakesink;

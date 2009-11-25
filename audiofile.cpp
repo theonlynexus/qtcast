@@ -30,17 +30,17 @@ void AudioFile::InitVars()
 }
 
 QString AudioFile::Filename()
-{ return filename; }
+{ return meta.filename; }
 
 QString AudioFile::Title()
 
-{ return title; }
+{ return meta.title; }
 
 QString AudioFile::Artist()
-{ return artist; }
+{ return meta.artist; }
 
 QString AudioFile::Album()
-{ return album; }
+{ return meta.album; }
 
 QString AudioFile::Duration()
 { return "Cippa"; }
@@ -51,9 +51,9 @@ void AudioFile::Open( QString filename )
     GstState state;
     GstTagList *tags = NULL;
 
-    this->filename = filename;
+    meta.filename = filename;
 
-    pantheios::log_DEBUG( "AudioFile::Open( ", filename.toLocal8Bit().constData(), " )"  );
+    pantheios::log_DEBUG( "AudioFile::Open( ", meta.filename.toLocal8Bit().constData(), " )"  );
 
     g_object_set( source, "location", filename.toLocal8Bit().constData(), NULL );
 
@@ -106,8 +106,8 @@ void AudioFile::Open( QString filename )
       tagVal = gst_tag_list_get_value_index( tags, GST_TAG_TITLE, 0 );
       if( tagVal )
       {
-          title += g_value_get_string( tagVal );
-          pantheios::log_DEBUG( "AudioFile::Open - Title tag: ", title.toLocal8Bit().constData()  );
+          meta.title += g_value_get_string( tagVal );
+          pantheios::log_DEBUG( "AudioFile::Open - Title tag: ", meta.title.toLocal8Bit().constData()  );
       }
       else
       {
@@ -117,8 +117,8 @@ void AudioFile::Open( QString filename )
       tagVal = gst_tag_list_get_value_index( tags, GST_TAG_ALBUM, 0 );
       if( tagVal )
       {
-          album += g_value_get_string( tagVal );
-          pantheios::log_DEBUG( "AudioFile::Open - Album tag: ", album.toLocal8Bit().constData()  );
+          meta.album += g_value_get_string( tagVal );
+          pantheios::log_DEBUG( "AudioFile::Open - Album tag: ", meta.album.toLocal8Bit().constData()  );
       }
       else
       {
@@ -128,8 +128,8 @@ void AudioFile::Open( QString filename )
       tagVal = gst_tag_list_get_value_index( tags, GST_TAG_ARTIST, 0 );
       if( tagVal )
       {
-          artist += g_value_get_string( tagVal );
-          pantheios::log_DEBUG( "AudioFile::Open - Artist tag: ", artist.toLocal8Bit().constData()  );
+          meta.artist += g_value_get_string( tagVal );
+          pantheios::log_DEBUG( "AudioFile::Open - Artist tag: ", meta.artist.toLocal8Bit().constData()  );
       }
       else
       {
@@ -153,12 +153,12 @@ void AudioFile::Open( QString filename )
       if( tagVal )
       {
           gint64 nanosecs = g_value_get_int64( tagVal );
-          secs = nanosecs / 1000000;
-          mins = secs / 60;
-          secs = secs % 60;
+          meta.secs = nanosecs / 1000000;
+          meta.mins = meta.secs / 60;
+          meta.secs = meta.secs % 60;
           pantheios::log_DEBUG( "AudioFile::Open - Duration tag: ",
-                                pantheios::integer(mins),":",
-                                pantheios::integer(secs)  );
+                                pantheios::integer(meta.mins),":",
+                                pantheios::integer(meta.secs)  );
       }
       else
       {
@@ -182,14 +182,14 @@ void AudioFile::Open( QString filename )
     if( res )
     {
         gint64 duration;
-        secs = duration / 1000000;
-        mins = secs / 60;
-        secs = secs % 60;
+        meta.secs = duration / 1000000;
+        meta.mins = meta.secs / 60;
+        meta.secs = meta.secs % 60;
 
         gst_query_parse_duration (query, NULL, &duration);
         pantheios::log_DEBUG( "AudioFile::Open - gst_element_query_duration: ",
-                             pantheios::integer(mins), ":",
-                             pantheios::integer(secs) );
+                             pantheios::integer(meta.mins), ":",
+                             pantheios::integer(meta.secs) );
     }
     else
     {

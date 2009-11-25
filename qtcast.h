@@ -26,8 +26,8 @@ private:
 
     Podcast podcast;
     QAbstractItemModel *trackListModel;
-    QList<AudioFile> tracksList;
-    QList<AudioFile> basesList;
+    QList<AudioFileMeta> tracksList;
+    QList<AudioFileMeta> basesList;
 
     int audioFileMetaId;
 

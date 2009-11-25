@@ -5,10 +5,10 @@ AudioFileListModel::AudioFileListModel(QObject *parent)
 {
 }
 
-AudioFileListModel::AudioFileListModel(const QList<AudioFile> &files, QObject *parent )
+AudioFileListModel::AudioFileListModel(const QList<AudioFileMeta> &data, QObject *parent )
          : QAbstractListModel(parent)
 {
-    list = files;
+    list = data;
 }
 
 QVariant AudioFileListModel::data ( const QModelIndex & index, int role ) const
@@ -20,7 +20,7 @@ QVariant AudioFileListModel::data ( const QModelIndex & index, int role ) const
         return QVariant();
 
     if (role == Qt::DisplayRole)
-        return ((AudioFile)list.at(index.row())).Title();
+        return ((AudioFileMeta)list.at(index.row())).title;
     else
         return QVariant();
 }
@@ -53,7 +53,7 @@ bool AudioFileListModel::setData(const QModelIndex &index, const QVariant &varia
 {
     if (index.isValid() && role == Qt::EditRole)
     {
-        list.replace(index.row(), variant.value<AudioFile>());
+        list.replace(index.row(), variant.value<AudioFileMeta>());
         emit dataChanged(index, index);
         return true;
     }
@@ -66,7 +66,7 @@ bool AudioFileListModel::insertRows(int position, int rows, const QModelIndex &p
 
     for (int row = 0; row < rows; ++row)
     {
-        list.insert(position, AudioFile());
+        list.insert(position, AudioFileMeta());
     }
 
     endInsertRows();
@@ -86,5 +86,3 @@ bool AudioFileListModel::removeRows(int position, int rows, const QModelIndex &p
     return true;
 }
 
-
-Q_DECLARE_METATYPE(AudioFile)
