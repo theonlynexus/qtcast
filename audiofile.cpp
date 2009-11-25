@@ -45,6 +45,9 @@ QString AudioFile::Album()
 QString AudioFile::Duration()
 { return "Cippa"; }
 
+AudioFileMeta AudioFile::Meta() const
+{ return meta; }
+
 void AudioFile::Open( QString filename )
 {
     GstStateChangeReturn sret;

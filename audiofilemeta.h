@@ -3,13 +3,13 @@
 
 #include <QVariant>
 #include <QString>
+#include <QObject>
 
 class AudioFileMeta
 {
-    Q_OBJECT
-
 public:
     AudioFileMeta();
+    AudioFileMeta( const AudioFileMeta &src );
 
     QString filename;
     QString title;
@@ -18,7 +18,10 @@ public:
     /* QString duration; */
 
     unsigned int  mins, secs;
+
 private:
 };
+
+Q_DECLARE_METATYPE(AudioFileMeta)
 
 #endif // AUDIOFILEMETA_H

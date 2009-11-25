@@ -1,6 +1,7 @@
 #include "qtcast.h"
 #include "ui_qtcast.h"
 #include "audiofile.h"
+#include "audiofilemeta.h"
 #include "audiofilelistmodel.h"
 
 #include <gst/gst.h>
@@ -11,6 +12,11 @@
 #include <QMessageBox>
 #include <QGraphicsView>
 #include <QToolBar>
+
+/* C++ program, so Pantheios init is automatic! */
+#include <pantheios/pantheios.hpp>
+#include <pantheios/frontends/fe.simple.h>
+#include <pantheios/inserters/integer.hpp>
 
 QtCast::QtCast(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::QtCastClass)
@@ -116,6 +122,7 @@ void QtCast::on_actionExit_triggered()
 
 void QtCast::on_btnAddTrack_clicked()
 {
+    pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked()"  );
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Select Logo"), "", tr("Audio Files (*.ogg *.mp3 *.wav);;All files (*.*)"));
 
@@ -123,12 +130,39 @@ void QtCast::on_btnAddTrack_clicked()
      if( 0 == fileName )
          return;
 
+     pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - User has selected file ",
+                           fileName.toLocal8Bit().constData()  );
      AudioFile file( fileName );
-     QVariant variant( audioFileMetaId, &(file.Meta()) );
+     AudioFileMeta meta( file.Meta() );
+     QVariant variant( audioFileMetaId, &meta );
 
-     trackListModel->insertRow(trackListModel->rowCount(), QModelIndex());
-     QModelIndex index = trackListModel->index(trackListModel->rowCount(), 0, QModelIndex());
-     trackListModel->setData( index, variant, Qt::EditRole );
+     pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Inserting row, current count: ",
+                            QString::number(trackListModel->rowCount()).toLocal8Bit().constData() );
+
+     trackListModel->insertRow( trackListModel->rowCount(), QModelIndex() );
+
+     pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row inserted, current count: ",
+                            QString::number(trackListModel->rowCount()).toLocal8Bit().constData() );
+
+     QModelIndex index = trackListModel->index( trackListModel->rowCount()-1, 0,
+                                                QModelIndex() );
+     if( ((AudioFileListModel*)trackListModel)->setData( index, variant, Qt::EditRole ) )
+     {
+         pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row data set " );
+         variant = trackListModel->data( index, Qt::EditRole );
+         trackListModel->itemData(index);
+         meta = variant.value<AudioFileMeta>();
+         pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row title: ",
+                               meta.title.toLocal8Bit().constData() );
+         pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row artist: ",
+                               meta.artist.toLocal8Bit().constData() );
+         pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row album: ",
+                               meta.album.toLocal8Bit().constData() );
+     }
+     else
+        pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Could not set data! " );
+
+
 }
 
 void QtCast::on_actionAbout_triggered()
@@ -140,3 +174,4 @@ void QtCast::on_actionAbout_triggered()
      msgBox.setDefaultButton(QMessageBox::Ok);
      msgBox.exec();
 }
+

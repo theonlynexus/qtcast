@@ -21,7 +21,7 @@ public:
     QString Artist();
     QString Album();
     QString Duration();
-    AudioFileMeta Meta(){return meta;}
+    AudioFileMeta Meta() const;
 
 private:
     AudioFileMeta meta;

@@ -5,8 +5,9 @@
 #include "audiofile.h"
 
 #include <QtGui/QMainWindow>
-#include <QList>
 #include <QAbstractItemModel>
+#include <QList>
+
 
 namespace Ui
 {

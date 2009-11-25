@@ -1,14 +1,20 @@
 #include "audiofilelistmodel.h"
 
+/* C++ program, so Pantheios init is automatic! */
+#include <pantheios/pantheios.hpp>
+#include <pantheios/frontends/fe.simple.h>
+#include <pantheios/inserters/integer.hpp>
+
 AudioFileListModel::AudioFileListModel(QObject *parent)
      : QAbstractListModel(parent)
 {
 }
 
-AudioFileListModel::AudioFileListModel(const QList<AudioFileMeta> &data, QObject *parent )
+AudioFileListModel::AudioFileListModel(const QList<AudioFileMeta> &metas
+                                       , QObject *parent )
          : QAbstractListModel(parent)
 {
-    list = data;
+    list = metas;
 }
 
 QVariant AudioFileListModel::data ( const QModelIndex & index, int role ) const
@@ -20,7 +26,10 @@ QVariant AudioFileListModel::data ( const QModelIndex & index, int role ) const
         return QVariant();
 
     if (role == Qt::DisplayRole)
-        return ((AudioFileMeta)list.at(index.row())).title;
+        return ((AudioFileMeta)(list.at(index.row()))).title;
+    else if (role == Qt::EditRole)
+        return QVariant( QMetaType::type("AudioFileMeta"),
+                         &list.at(index.row()) ) ;
     else
         return QVariant();
 }
@@ -49,13 +58,25 @@ int AudioFileListModel::rowCount(const QModelIndex &parent) const
      return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
  }
 
-bool AudioFileListModel::setData(const QModelIndex &index, const QVariant &variant, Qt::ItemDataRole role)
+bool AudioFileListModel::setData( const QModelIndex &index,
+                                  const QVariant &variant,
+                                  Qt::ItemDataRole role )
 {
+    pantheios::log_DEBUG( "AudioFileListModel::setData - Row title: ",
+                       variant.value<AudioFileMeta>().title.toLocal8Bit().constData() );
+    pantheios::log_DEBUG( "AudioFileListModel::setData - Row artist: ",
+                       variant.value<AudioFileMeta>().artist.toLocal8Bit().constData() );
+    pantheios::log_DEBUG( "AudioFileListModel::setData - Row album: ",
+                       variant.value<AudioFileMeta>().album.toLocal8Bit().constData() );
+
     if (index.isValid() && role == Qt::EditRole)
     {
-        list.replace(index.row(), variant.value<AudioFileMeta>());
-        emit dataChanged(index, index);
-        return true;
+        if( variant.canConvert<AudioFileMeta>() )
+        {
+            list.replace(index.row(), variant.value<AudioFileMeta>());
+            emit dataChanged(index, index);
+            return true;
+        }
     }
     return false;
 }
