@@ -1,24 +1,15 @@
 #include "audiofilelistmodel.h"
 
+AudioFileListModel::AudioFileListModel(QObject *parent)
+     : QAbstractListModel(parent)
+{
+}
 
-// Qt::ItemFlags AudioFileListModel::flags(const QModelIndex &index) const
-// {
-//     if (!index.isValid())
-//         return Qt::ItemIsEnabled;
-//
-//     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
-// }
-
-//bool AudioFileListModel::setData(const QModelIndex &index, const QVariant &value, int role)
-//{
-//    if (index.isValid() && role == Qt::EditRole)
-//    {
-//        list.replace(index.row(), value);
-//        emit dataChanged(index, index);
-//        return true;
-//    }
-//    return false;
-//}
+AudioFileListModel::AudioFileListModel(const QList<AudioFile> &files, QObject *parent )
+         : QAbstractListModel(parent)
+{
+    list = files;
+}
 
 QVariant AudioFileListModel::data ( const QModelIndex & index, int role ) const
 {
@@ -50,6 +41,25 @@ int AudioFileListModel::rowCount(const QModelIndex &parent) const
     return list.count();
 }
 
+ Qt::ItemFlags AudioFileListModel::flags(const QModelIndex &index) const
+ {
+     if (!index.isValid())
+         return Qt::ItemIsEnabled;
+
+     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+ }
+
+bool AudioFileListModel::setData(const QModelIndex &index, const QVariant &variant, Qt::ItemDataRole role)
+{
+    if (index.isValid() && role == Qt::EditRole)
+    {
+        list.replace(index.row(), variant.value<AudioFile>());
+        emit dataChanged(index, index);
+        return true;
+    }
+    return false;
+}
+
 bool AudioFileListModel::insertRows(int position, int rows, const QModelIndex &parent)
 {
     beginInsertRows(QModelIndex(), position, position+rows-1);
@@ -75,3 +85,6 @@ bool AudioFileListModel::removeRows(int position, int rows, const QModelIndex &p
     endRemoveRows();
     return true;
 }
+
+
+Q_DECLARE_METATYPE(AudioFile)

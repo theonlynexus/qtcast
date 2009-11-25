@@ -29,6 +29,8 @@ private:
     QList<AudioFile> tracksList;
     QList<AudioFile> basesList;
 
+    int audioFileMetaId;
+
 
 private slots:
     void on_actionAbout_triggered();
