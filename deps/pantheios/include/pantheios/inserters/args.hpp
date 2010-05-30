@@ -4,11 +4,11 @@
  * Purpose:     String inserter for argc+argv pairs.
  *
  * Created:     19th October 2006
- * Updated:     8th July 2009
+ * Updated:     22nd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,8 +55,8 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_ARGS_MAJOR       1
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_ARGS_MINOR       6
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_ARGS_REVISION    2
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_ARGS_EDIT        23
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_ARGS_REVISION    4
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_ARGS_EDIT        27
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,6 @@
 #if !defined(PANTHEIOS_NO_NAMESPACE)
 namespace pantheios
 {
-
 #endif /* !PANTHEIOS_NO_NAMESPACE */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -253,7 +252,11 @@ inline pan_char_t const* c_str_data(args const& a)
 }
 
 /** \overload c_str_len_a(args const&) */
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline size_t c_str_len_w(args const& a)
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline size_t c_str_len_a(args const& a)
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return a.size();
 }
@@ -344,12 +347,12 @@ namespace stlsoft
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_INSERTERS_HPP_ARGS */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

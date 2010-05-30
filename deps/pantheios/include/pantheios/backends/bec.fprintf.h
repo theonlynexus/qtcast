@@ -4,7 +4,7 @@
  * Purpose:     Declaration of the Pantheios fprintf Stock Back-end API.
  *
  * Created:     21st June 2005
- * Updated:     17th April 2009
+ * Updated:     11th September 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FPRINTF_MAJOR       2
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FPRINTF_MINOR       0
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FPRINTF_MINOR       1
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FPRINTF_REVISION    1
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FPRINTF_EDIT        19
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FPRINTF_EDIT        20
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -181,7 +181,7 @@ PANTHEIOS_CALL(void) pantheios_be_fprintf_getDefaultAppInit(pan_be_fprintf_init_
  * \ingroup group__backend__stock_backends__fprintf
  */
 PANTHEIOS_CALL(int) pantheios_be_fprintf_init(
-    char const*                     processIdentity
+    PAN_CHAR_T const*               processIdentity
 ,   int                             id
 ,   pan_be_fprintf_init_t const*    unused
 ,   void*                           reserved
@@ -197,11 +197,11 @@ PANTHEIOS_CALL(void) pantheios_be_fprintf_uninit(void* token);
  * \ingroup group__backend__stock_backends__fprintf
  */
 PANTHEIOS_CALL(int) pantheios_be_fprintf_logEntry(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
 /** \def pantheios_be_fprintf_parseArgs
@@ -250,4 +250,4 @@ inline pan_be_fprintf_init_t::pan_be_fprintf_init_t()
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_BACKENDS_H_FPRINTF */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

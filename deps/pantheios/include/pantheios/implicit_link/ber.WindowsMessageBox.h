@@ -4,11 +4,11 @@
  * Purpose: Implicitly links in the Pantheios Windows Event Log Remote Back-End Library
  *
  * Created: 15th March 2008
- * Updated: 11th September 2008
+ * Updated: 10th August 2009
  *
  * Home:    http://pantheios.org/
  *
- * Copyright (c) 2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2008-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BER_WINDOWSMESSAGEBOX_MAJOR    1
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BER_WINDOWSMESSAGEBOX_MINOR    0
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BER_WINDOWSMESSAGEBOX_REVISION 1
-# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BER_WINDOWSMESSAGEBOX_EDIT     2
+# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BER_WINDOWSMESSAGEBOX_EDIT     3
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -106,4 +106,4 @@
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_IMPLICIT_LINK_H_BER_WINDOWSMESSAGEBOX */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

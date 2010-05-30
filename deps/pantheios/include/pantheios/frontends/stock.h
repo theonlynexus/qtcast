@@ -5,7 +5,7 @@
  *              Elements.
  *
  * Created:     23rd November 2007
- * Updated:     8th July 2009
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -55,9 +55,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_STOCK_MAJOR    1
-# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_STOCK_MINOR    0
-# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_STOCK_REVISION 3
-# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_STOCK_EDIT     8
+# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_STOCK_MINOR    1
+# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_STOCK_REVISION 1
+# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_STOCK_EDIT     10
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -101,10 +101,10 @@
  *
  * \ingroup group__frontend__stock_frontends
  */
-PANTHEIOS_EXTERN_C const char   PANTHEIOS_FE_PROCESS_IDENTITY[];
+PANTHEIOS_EXTERN_C const PAN_CHAR_T     PANTHEIOS_FE_PROCESS_IDENTITY[];
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_FRONTENDS_H_STOCK */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

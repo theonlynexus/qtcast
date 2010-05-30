@@ -4,7 +4,7 @@
  * Purpose:     Pantheios Local/Remote Split Back-end library API
  *
  * Created:     26th June 2005
- * Updated:     18th April 2009
+ * Updated:     11th September 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_LRSPLIT_MAJOR    2
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_LRSPLIT_MINOR    0
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_LRSPLIT_REVISION 2
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_LRSPLIT_EDIT     9
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_LRSPLIT_MINOR    1
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_LRSPLIT_REVISION 1
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_LRSPLIT_EDIT     11
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -93,9 +93,9 @@
  *  pantheios_be_init(), except it applies to the local backend only
  */
 PANTHEIOS_CALL(int) pantheios_be_local_init(
-    char const* processIdentity
-,   void*       reserved
-,   void**      ptoken
+    PAN_CHAR_T const*   processIdentity
+,   void*               reserved
+,   void**              ptoken
 );
 
 /** Initialises the remote back-end API.
@@ -107,9 +107,9 @@ PANTHEIOS_CALL(int) pantheios_be_local_init(
  *  pantheios_be_init(), except it applies to the remote backend only
  */
 PANTHEIOS_CALL(int) pantheios_be_remote_init(
-    char const* processIdentity
-,   void*       reserved
-,   void**      ptoken
+    PAN_CHAR_T const*   processIdentity
+,   void*               reserved
+,   void**              ptoken
 );
 
 /** Uninitialises the local back-end API.
@@ -144,11 +144,11 @@ PANTHEIOS_CALL(void) pantheios_be_remote_uninit(
  *  pantheios_be_logEntry(), except it applies to the local backend only
  */
 PANTHEIOS_CALL(int) pantheios_be_local_logEntry(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 /** Passes a log-entry to the remote back-end API.
  *
@@ -159,15 +159,15 @@ PANTHEIOS_CALL(int) pantheios_be_local_logEntry(
  *  pantheios_be_logEntry(), except it applies to the remote backend only
  */
 PANTHEIOS_CALL(int) pantheios_be_remote_logEntry(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_BACKENDS_H_BE_LRSPLIT */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

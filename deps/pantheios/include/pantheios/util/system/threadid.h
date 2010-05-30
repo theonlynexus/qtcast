@@ -4,11 +4,11 @@
  * Purpose:     Functions for eliciting thread identifier
  *
  * Created:     4th January 2008
- * Updated:     14th October 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2008-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,7 +55,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_THREADID_MAJOR    3
 # define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_THREADID_MINOR    0
 # define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_THREADID_REVISION 1
-# define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_THREADID_EDIT     7
+# define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_THREADID_EDIT     8
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -121,4 +121,4 @@ inline stlsoft_ns_qual(ss_sint64_t) getCurrentThreadId()
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_SYSTEM_H_THREADID */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

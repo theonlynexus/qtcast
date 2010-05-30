@@ -4,11 +4,11 @@
  * Purpose:     String inserter for host identity.
  *
  * Created:     14th March 2008
- * Updated:     18th November 2008
+ * Updated:     23rd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2008-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_HOSTID_MAJOR     1
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_HOSTID_MINOR     2
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_HOSTID_MINOR     3
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_HOSTID_REVISION  1
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_HOSTID_EDIT      7
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_HOSTID_EDIT      10
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -170,7 +170,11 @@ namespace shims
 {
 # endif /* !PANTHEIOS_NO_NAMESPACE */
 
+#  ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline PANTHEIOS_INSERTERS_DECLARE_host_id_t c_str_data_w(PANTHEIOS_INSERTERS_DECLARE_host_id_t::id_type const*)
+#  else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline PANTHEIOS_INSERTERS_DECLARE_host_id_t c_str_data_a(PANTHEIOS_INSERTERS_DECLARE_host_id_t::id_type const*)
+#  endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return PANTHEIOS_INSERTERS_DECLARE_host_id_t();
 }
@@ -179,7 +183,11 @@ inline PANTHEIOS_INSERTERS_DECLARE_host_id_t c_str_data(PANTHEIOS_INSERTERS_DECL
     return PANTHEIOS_INSERTERS_DECLARE_host_id_t();
 }
 
+#  ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline PANTHEIOS_INSERTERS_DECLARE_host_id_t c_str_len_w(PANTHEIOS_INSERTERS_DECLARE_host_id_t::id_type const*)
+#  else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline PANTHEIOS_INSERTERS_DECLARE_host_id_t c_str_len_a(PANTHEIOS_INSERTERS_DECLARE_host_id_t::id_type const*)
+#  endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return PANTHEIOS_INSERTERS_DECLARE_host_id_t();
 }
@@ -188,7 +196,11 @@ inline PANTHEIOS_INSERTERS_DECLARE_host_id_t c_str_len(PANTHEIOS_INSERTERS_DECLA
     return PANTHEIOS_INSERTERS_DECLARE_host_id_t();
 }
 
+#  ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline PANTHEIOS_INSERTERS_DECLARE_host_id_t c_str_ptr_w(PANTHEIOS_INSERTERS_DECLARE_host_id_t::id_type const*)
+#  else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline PANTHEIOS_INSERTERS_DECLARE_host_id_t c_str_ptr_a(PANTHEIOS_INSERTERS_DECLARE_host_id_t::id_type const*)
+#  endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return PANTHEIOS_INSERTERS_DECLARE_host_id_t();
 }
@@ -206,13 +218,17 @@ inline PANTHEIOS_INSERTERS_DECLARE_host_id_t c_str_ptr(PANTHEIOS_INSERTERS_DECLA
      * shims into the same namespace as the inserter class
      * in order that ADL can suffice instead.
      */
+#   ifdef PANTHEIOS_USE_WIDE_STRINGS
+    using ::pantheios::shims::c_str_data_w;
+    using ::pantheios::shims::c_str_len_w;
+    using ::pantheios::shims::c_str_ptr_w;
+#   else /* ? PANTHEIOS_USE_WIDE_STRINGS */
     using ::pantheios::shims::c_str_data_a;
-    using ::pantheios::shims::c_str_data;
-
     using ::pantheios::shims::c_str_len_a;
-    using ::pantheios::shims::c_str_len;
-
     using ::pantheios::shims::c_str_ptr_a;
+#   endif /* PANTHEIOS_USE_WIDE_STRINGS */
+    using ::pantheios::shims::c_str_data;
+    using ::pantheios::shims::c_str_len;
     using ::pantheios::shims::c_str_ptr;
 #  endif /* compiler */
 
@@ -237,14 +253,19 @@ namespace stlsoft
     // may find a legitimate use for the conversion classes additional to
     // the type-tunneling of the Pantheios API.
 
+#ifdef PANTHEIOS_USE_WIDE_STRINGS
+    using ::pantheios::shims::c_str_data_w;
+    using ::pantheios::shims::c_str_len_w;
+    using ::pantheios::shims::c_str_ptr_w;
+#else /* ? PANTHEIOS_USE_WIDE_STRINGS */
     using ::pantheios::shims::c_str_data_a;
-    using ::pantheios::shims::c_str_data;
-
     using ::pantheios::shims::c_str_len_a;
-    using ::pantheios::shims::c_str_len;
-
     using ::pantheios::shims::c_str_ptr_a;
+#endif /* PANTHEIOS_USE_WIDE_STRINGS */
+    using ::pantheios::shims::c_str_data;
+    using ::pantheios::shims::c_str_len;
     using ::pantheios::shims::c_str_ptr;
+
 }
 
 #endif /* !PANTHEIOS_NO_NAMESPACE */
@@ -253,12 +274,12 @@ namespace stlsoft
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_INSERTERS_HPP_HOSTID */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

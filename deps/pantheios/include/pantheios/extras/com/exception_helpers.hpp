@@ -2,15 +2,15 @@
  * File:        pantheios/extras/com/exception_helpers.hpp (formerly pantheios/util/com/exception_helpers.hpp)
  *
  * Purpose:     Helper functions that invoke a given method and convert any
- *              thrown exceptions (that are derived from std::exception) into
- *              a pantheios log statement and an HRESULT return code.
+ *              thrown exceptions (that are derived from std::exception)
+ *              into a pantheios log statement and an HRESULT return code.
  *
  * Created:     1st May 2006
- * Updated:     8th July 2009
+ * Updated:     22nd February 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,7 +58,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_EXTRAS_COM_HPP_EXCEPTION_HELPERS_MAJOR     3
 # define PANTHEIOS_VER_PANTHEIOS_EXTRAS_COM_HPP_EXCEPTION_HELPERS_MINOR     2
 # define PANTHEIOS_VER_PANTHEIOS_EXTRAS_COM_HPP_EXCEPTION_HELPERS_REVISION  2
-# define PANTHEIOS_VER_PANTHEIOS_EXTRAS_COM_HPP_EXCEPTION_HELPERS_EDIT      24
+# define PANTHEIOS_VER_PANTHEIOS_EXTRAS_COM_HPP_EXCEPTION_HELPERS_EDIT      26
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -1619,4 +1619,4 @@ out_of_memory:
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_EXTRAS_COM_HPP_EXCEPTION_HELPERS */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

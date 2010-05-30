@@ -5,7 +5,7 @@
  *              ends.
  *
  * Created:     3rd November 2007
- * Updated:     18th April 2009
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -55,9 +55,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_UTIL_CORE_HPP_APIDEFS_MAJOR    2
-# define PANTHEIOS_VER_PANTHEIOS_UTIL_CORE_HPP_APIDEFS_MINOR    0
-# define PANTHEIOS_VER_PANTHEIOS_UTIL_CORE_HPP_APIDEFS_REVISION 3
-# define PANTHEIOS_VER_PANTHEIOS_UTIL_CORE_HPP_APIDEFS_EDIT     13
+# define PANTHEIOS_VER_PANTHEIOS_UTIL_CORE_HPP_APIDEFS_MINOR    1
+# define PANTHEIOS_VER_PANTHEIOS_UTIL_CORE_HPP_APIDEFS_REVISION 1
+# define PANTHEIOS_VER_PANTHEIOS_UTIL_CORE_HPP_APIDEFS_EDIT     15
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -97,7 +97,7 @@ typedef int (PANTHEIOS_CALLCONV* pantheios_fe_X_uninit_pfn_t)(
 );
 
 /** Function pointer typedef for front-end process-identity */
-typedef char const* (PANTHEIOS_CALLCONV* pantheios_fe_X_getProcessIdentity_pfn_t)(void* token);
+typedef PAN_CHAR_T const* (PANTHEIOS_CALLCONV* pantheios_fe_X_getProcessIdentity_pfn_t)(void* token);
 
 /** Function pointer typedef for front-end severity arbitration */
 typedef int (PANTHEIOS_CALLCONV* pantheios_fe_X_isSeverityLogged_pfn_t)(
@@ -109,11 +109,11 @@ typedef int (PANTHEIOS_CALLCONV* pantheios_fe_X_isSeverityLogged_pfn_t)(
 
 /** Generic function pointer typedef for back-end initialisation */
 typedef int (PANTHEIOS_CALLCONV* pantheios_be_X_init_pfn_t)(
-    char const* processIdentity
-,   int         backEndId
-,   void const* init
-,   void*       reserved
-,   void**      ptoken
+    PAN_CHAR_T const*   processIdentity
+,   int                 backEndId
+,   void const*         init
+,   void*               reserved
+,   void**              ptoken
 );
 
 /** Function pointer typedef for back-end uninitialisation */
@@ -123,11 +123,11 @@ typedef int (PANTHEIOS_CALLCONV* pantheios_be_X_uninit_pfn_t)(
 
 /** Function pointer typedef for back-end entry logging */
 typedef int (PANTHEIOS_CALLCONV* pantheios_be_X_logEntry_pfn_t)(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -184,12 +184,12 @@ inline int pantheios_call_fe_uninit(pantheios_fe_X_uninit_pfn_t pfn, void* token
  * \param pfn The front-end process-identity function
  * \param token The <code>token</code> parameter to be passed to <code>pfn</code>
  */
-PANTHEIOS_CALL(char const*) pantheios_call_fe_getProcessIdentity(
+PANTHEIOS_CALL(PAN_CHAR_T const*) pantheios_call_fe_getProcessIdentity(
     pantheios_fe_X_getProcessIdentity_pfn_t pfn
 ,   void*                                   token
 );
 #else /* ? STLSOFT_CF_EXCEPTION_SUPPORT */
-inline char const* pantheios_call_fe_getProcessIdentity(pantheios_fe_X_getProcessIdentity_pfn_t pfn, void* token)
+inline PAN_CHAR_T const* pantheios_call_fe_getProcessIdentity(pantheios_fe_X_getProcessIdentity_pfn_t pfn, void* token)
 {
     return pfn(token);
 }
@@ -244,7 +244,7 @@ inline int pantheios_call_fe_isSeverityLogged(pantheios_fe_X_isSeverityLogged_pf
  */
 PANTHEIOS_CALL(int) pantheios_call_be_void_init(
     pantheios_be_X_init_pfn_t   pfn
-,   char const*                 processIdentity
+,   PAN_CHAR_T const*           processIdentity
 ,   int                         backEndId
 ,   void const*                 init
 ,   void*                       reserved
@@ -253,7 +253,7 @@ PANTHEIOS_CALL(int) pantheios_call_be_void_init(
 #else /* ? STLSOFT_CF_EXCEPTION_SUPPORT */
 inline int pantheios_call_be_void_init(
     pantheios_be_X_init_pfn_t   pfn
-,   char const*                 processIdentity
+,   PAN_CHAR_T const*           processIdentity
 ,   int                         backEndId
 ,   void const*                 init
 ,   void*                       reserved
@@ -278,11 +278,11 @@ inline int pantheios_call_be_void_init(
 template <typename T>
 inline int pantheios_call_be_X_init(
 #ifdef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
-    int (*                      pfn)(char const*, int, T const*, void*, void**)
+    int (*                      pfn)(PAN_CHAR_T const*, int, T const*, void*, void**)
 #else /* ? PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
-    int (PANTHEIOS_CALLCONV*    pfn)(char const*, int, T const*, void*, void**)
+    int (PANTHEIOS_CALLCONV*    pfn)(PAN_CHAR_T const*, int, T const*, void*, void**)
 #endif /* PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
-,   char const*                 processIdentity
+,   PAN_CHAR_T const*           processIdentity
 ,   int                         backEndId
 ,   T const*                    init
 ,   void*                       reserved
@@ -330,7 +330,7 @@ PANTHEIOS_CALL(int) pantheios_call_be_logEntry(
 ,   void*                           feToken
 ,   void*                           beToken
 ,   int                             severity
-,   char const*                     entry
+,   PAN_CHAR_T const*               entry
 ,   size_t                          cchEntry
 );
 #else /* ? STLSOFT_CF_EXCEPTION_SUPPORT */
@@ -339,7 +339,7 @@ inline int pantheios_call_be_logEntry(
 ,   void*                           feToken
 ,   void*                           beToken
 ,   int                             severity
-,   char const*                     entry
+,   PAN_CHAR_T const*               entry
 ,   size_t                          cchEntry
 )
 {
@@ -351,4 +351,4 @@ inline int pantheios_call_be_logEntry(
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_UTIL_CORE_HPP_APIDEFS */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

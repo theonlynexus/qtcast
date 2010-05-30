@@ -4,11 +4,11 @@
  * Purpose:     String inserter for thread identity.
  *
  * Created:     16th October 2006
- * Updated:     11th September 2008
+ * Updated:     22nd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_THREADID_MAJOR       2
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_THREADID_MINOR       1
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_THREADID_MINOR       2
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_THREADID_REVISION    1
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_THREADID_EDIT        15
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_THREADID_EDIT        18
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -133,15 +133,15 @@ public:
 
 public:
     operator size_t () const;
-    operator char const* () const;
+    operator pan_char_t const* () const;
 
 private:
     void construct_();
     void construct_() const;
 
 private:
-    char    m_value[21];
-    size_t  m_len;
+    pan_char_t  m_value[21];
+    size_t      m_len;
 };
 
 # if !defined(PANTHEIOS_NO_NAMESPACE)
@@ -156,7 +156,11 @@ namespace shims
 {
 # endif /* !PANTHEIOS_NO_NAMESPACE */
 
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline PANTHEIOS_INSERTERS_DECLARE_thread_id_t c_str_data_w(PANTHEIOS_INSERTERS_DECLARE_thread_id_t::id_type const*)
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline PANTHEIOS_INSERTERS_DECLARE_thread_id_t c_str_data_a(PANTHEIOS_INSERTERS_DECLARE_thread_id_t::id_type const*)
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return PANTHEIOS_INSERTERS_DECLARE_thread_id_t();
 }
@@ -165,7 +169,11 @@ inline PANTHEIOS_INSERTERS_DECLARE_thread_id_t c_str_data(PANTHEIOS_INSERTERS_DE
     return PANTHEIOS_INSERTERS_DECLARE_thread_id_t();
 }
 
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline PANTHEIOS_INSERTERS_DECLARE_thread_id_t c_str_len_w(PANTHEIOS_INSERTERS_DECLARE_thread_id_t::id_type const*)
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline PANTHEIOS_INSERTERS_DECLARE_thread_id_t c_str_len_a(PANTHEIOS_INSERTERS_DECLARE_thread_id_t::id_type const*)
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return PANTHEIOS_INSERTERS_DECLARE_thread_id_t();
 }
@@ -174,7 +182,11 @@ inline PANTHEIOS_INSERTERS_DECLARE_thread_id_t c_str_len(PANTHEIOS_INSERTERS_DEC
     return PANTHEIOS_INSERTERS_DECLARE_thread_id_t();
 }
 
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline PANTHEIOS_INSERTERS_DECLARE_thread_id_t c_str_ptr_w(PANTHEIOS_INSERTERS_DECLARE_thread_id_t::id_type const*)
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline PANTHEIOS_INSERTERS_DECLARE_thread_id_t c_str_ptr_a(PANTHEIOS_INSERTERS_DECLARE_thread_id_t::id_type const*)
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return PANTHEIOS_INSERTERS_DECLARE_thread_id_t();
 }
@@ -223,13 +235,17 @@ namespace stlsoft
     // may find a legitimate use for the conversion classes additional to
     // the type-tunneling of the Pantheios API.
 
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+    using ::pantheios::shims::c_str_data_w;
+    using ::pantheios::shims::c_str_len_w;
+    using ::pantheios::shims::c_str_ptr_w;
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
     using ::pantheios::shims::c_str_data_a;
-    using ::pantheios::shims::c_str_data;
-
     using ::pantheios::shims::c_str_len_a;
-    using ::pantheios::shims::c_str_len;
-
     using ::pantheios::shims::c_str_ptr_a;
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
+    using ::pantheios::shims::c_str_data;
+    using ::pantheios::shims::c_str_len;
     using ::pantheios::shims::c_str_ptr;
 }
 
@@ -239,12 +255,12 @@ namespace stlsoft
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_INSERTERS_HPP_THREADID */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

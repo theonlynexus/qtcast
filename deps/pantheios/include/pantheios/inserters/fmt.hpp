@@ -4,11 +4,11 @@
  * Purpose:     Format constants for Pantheios inserter classes.
  *
  * Created:     21st June 2005
- * Updated:     11th September 2008
+ * Updated:     14th February 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2005-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2005-2010, Matthew Wilson and Synesis Software
  * Copyright (c) 1999-2005, Synesis Software and Matthew Wilson
  * All rights reserved.
  *
@@ -55,8 +55,8 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_FMT_MAJOR    2
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_FMT_MINOR    0
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_FMT_REVISION 10
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_FMT_EDIT     18
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_FMT_REVISION 11
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_FMT_EDIT     20
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -124,12 +124,12 @@ struct fmt
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_INSERTERS_HPP_FMT */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

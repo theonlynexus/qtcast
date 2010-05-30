@@ -4,7 +4,7 @@
  * Purpose:     Back-/Front-end initialisation codes.
  *
  * Created:     27th September 2007
- * Updated:     15th April 2009
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -58,7 +58,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_H_INIT_CODES_MAJOR     2
 # define PANTHEIOS_VER_PANTHEIOS_H_INIT_CODES_MINOR     2
 # define PANTHEIOS_VER_PANTHEIOS_H_INIT_CODES_REVISION  1
-# define PANTHEIOS_VER_PANTHEIOS_H_INIT_CODES_EDIT      13
+# define PANTHEIOS_VER_PANTHEIOS_H_INIT_CODES_EDIT      14
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -307,4 +307,4 @@
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_H_INIT_CODES */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

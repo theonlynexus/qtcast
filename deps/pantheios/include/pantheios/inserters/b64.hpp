@@ -4,11 +4,11 @@
  * Purpose:     String inserter for binary regions in Base-64.
  *
  * Created:     31st July 2006
- * Updated:     8th July 2009
+ * Updated:     22nd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,8 +56,8 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_B64_MAJOR    1
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_B64_MINOR    4
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_B64_REVISION 1
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_B64_EDIT     18
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_B64_REVISION 3
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_B64_EDIT     21
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -298,7 +298,11 @@ inline pan_char_t const* c_str_data(b64 const& i)
 }
 
 /** \overload c_str_len_a(b64 const&) */
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline size_t c_str_len_w(b64 const& i)
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline size_t c_str_len_a(b64 const& i)
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return i.length();
 }
@@ -389,12 +393,12 @@ namespace stlsoft
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_INSERTERS_HPP_B64 */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

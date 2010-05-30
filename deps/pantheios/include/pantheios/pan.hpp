@@ -6,11 +6,11 @@
  *              namespace to pan.
  *
  * Created:     13th January 2008
- * Updated:     11th September 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2008-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,7 +58,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_HPP_PAN_MAJOR      1
 # define PANTHEIOS_VER_PANTHEIOS_HPP_PAN_MINOR      0
 # define PANTHEIOS_VER_PANTHEIOS_HPP_PAN_REVISION   2
-# define PANTHEIOS_VER_PANTHEIOS_HPP_PAN_EDIT       3
+# define PANTHEIOS_VER_PANTHEIOS_HPP_PAN_EDIT       4
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -89,4 +89,4 @@ namespace pan = ::pantheios;
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_HPP_PAN */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

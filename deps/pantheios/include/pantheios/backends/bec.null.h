@@ -4,7 +4,7 @@
  * Purpose:     Declaration of the Pantheios NULL Stock Back-end API.
  *
  * Created:     10th July 2006
- * Updated:     18th April 2009
+ * Updated:     11th September 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_NULL_MAJOR      1
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_NULL_MINOR      1
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_NULL_REVISION   2
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_NULL_EDIT       9
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_NULL_MINOR      2
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_NULL_REVISION   1
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_NULL_EDIT       11
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -88,11 +88,11 @@
  * \ingroup group__backend__stock_backends__null
  */
 PANTHEIOS_CALL(int) pantheios_be_null_init(
-    char const* processIdentity
-,   int         id
-,   void*       unused
-,   void*       reserved
-,   void**      ptoken
+    PAN_CHAR_T const*   processIdentity
+,   int                 id
+,   void*               unused
+,   void*               reserved
+,   void**              ptoken
 );
 
 /** Implements the functionality for pantheios_be_uninit() over the NULL API.
@@ -106,11 +106,11 @@ PANTHEIOS_CALL(void) pantheios_be_null_uninit(
  * \ingroup group__backend__stock_backends__null
  */
 PANTHEIOS_CALL(int) pantheios_be_null_logEntry(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
 /** \def pantheios_be_null_parseArgs
@@ -130,4 +130,4 @@ PANTHEIOS_CALL(int) pantheios_be_null_logEntry(
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_BACKENDS_H_NULL_SRC */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

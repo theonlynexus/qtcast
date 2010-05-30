@@ -4,7 +4,7 @@
  * Purpose:     Declaration of the be.test library.
  *
  * Created:     1st November 2006
- * Updated:     29th June 2009
+ * Updated:     22nd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_BACKENDS_H_BEC_TEST_MAJOR     2
-# define PANTHEIOS_VER_BACKENDS_H_BEC_TEST_MINOR     1
-# define PANTHEIOS_VER_BACKENDS_H_BEC_TEST_REVISION  6
-# define PANTHEIOS_VER_BACKENDS_H_BEC_TEST_EDIT      21
+# define PANTHEIOS_VER_BACKENDS_H_BEC_TEST_MINOR     2
+# define PANTHEIOS_VER_BACKENDS_H_BEC_TEST_REVISION  1
+# define PANTHEIOS_VER_BACKENDS_H_BEC_TEST_EDIT      24
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -95,11 +95,11 @@
  * \ingroup group__backend__stock_backends__test
  */
 PANTHEIOS_CALL(int) pantheios_be_test_init(
-    char const* processIdentity
-,   int         id
-,   void*       unused
-,   void*       reserved
-,   void**      ptoken
+    PAN_CHAR_T const*   processIdentity
+,   int                 id
+,   void*               unused
+,   void*               reserved
+,   void**              ptoken
 );
 
 /** Implements the functionality for pantheios_be_uninit() over the Test API.
@@ -113,11 +113,11 @@ PANTHEIOS_CALL(void) pantheios_be_test_uninit(
  * \ingroup group__backend__stock_backends__test
  */
 PANTHEIOS_CALL(int) pantheios_be_test_logEntry(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
 /** \def pantheios_be_test_parseArgs
@@ -241,4 +241,4 @@ namespace test
 
 #endif /* PANTHEIOS_INCL_BACKENDS_H_BEC_TEST */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

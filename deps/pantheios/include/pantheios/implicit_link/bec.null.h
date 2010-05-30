@@ -4,11 +4,11 @@
  * Purpose: Implicitly links in the Pantheios Null Back-End Common Library
  *
  * Created: 19th July 2006
- * Updated: 11th September 2008
+ * Updated: 10th August 2009
  *
  * Home:    http://pantheios.org/
  *
- * Copyright (c) 2006-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_NULL_MAJOR      1
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_NULL_MINOR      0
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_NULL_REVISION   2
-# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_NULL_EDIT       4
+# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_NULL_EDIT       5
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -103,4 +103,4 @@
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_IMPLICIT_LINK_H_BEC_NULL */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

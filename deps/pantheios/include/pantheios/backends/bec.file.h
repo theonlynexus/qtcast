@@ -4,11 +4,11 @@
  * Purpose:     Declaration of the Pantheios file Stock Back-end API.
  *
  * Created:     10th July 2006
- * Updated:     18th April 2009
+ * Updated:     23rd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FILE_MAJOR      4
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FILE_MINOR      0
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FILE_MINOR      1
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FILE_REVISION   1
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FILE_EDIT       26
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_FILE_EDIT       28
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -114,20 +114,29 @@
  * \ingroup group__backend__stock_backends__file__flags
  */
 
-#define PANTHEIOS_BE_FILE_F_TRUNCATE                (0x00100000)
-#define PANTHEIOS_BE_FILE_F_DISCARD_CACHED_CONTENTS (0x00200000)
-#define PANTHEIOS_BE_FILE_F_SHARE_ON_WINDOWS        (0x00400000)
+/** \def PANTHEIOS_BE_FILE_F_WRITE_WIDE_CONTENTS
+ * By default, files are written in multibyte string format. Specifying
+ * this flag outputs in widestring format.
+ *
+ * \ingroup group__backend__stock_backends__file__flags
+ */
+
+#define PANTHEIOS_BE_FILE_F_TRUNCATE                    (0x00100000)
+#define PANTHEIOS_BE_FILE_F_DISCARD_CACHED_CONTENTS     (0x00200000)
+#define PANTHEIOS_BE_FILE_F_SHARE_ON_WINDOWS            (0x00400000)
+#define PANTHEIOS_BE_FILE_F_WRITE_WIDE_CONTENTS         (0x00800000)
+#define PANTHEIOS_BE_FILE_F_WRITE_MULTIBYTE_CONTENTS    (0x00080000)
 
 #if 0 /* None of the following are yet supported: */
-#define PANTHEIOS_BE_FILE_F_ROLL_ON_SIZE            (0x01000000)
-#define PANTHEIOS_BE_FILE_F_ROLL_ON_ENTRY_COUNT     (0x02000000)
-#define PANTHEIOS_BE_FILE_F_ROLL_ON_DATETIME        (0x04000000)
+#define PANTHEIOS_BE_FILE_F_ROLL_ON_SIZE                (0x01000000)
+#define PANTHEIOS_BE_FILE_F_ROLL_ON_ENTRY_COUNT         (0x02000000)
+#define PANTHEIOS_BE_FILE_F_ROLL_ON_DATETIME            (0x04000000)
 
-#define PANTHEIOS_BE_FILE_F_ROLL_ON_1MB             (0x10000000 | PANTHEIOS_BE_FILE_F_ROLL_ON_SIZE)
-#define PANTHEIOS_BE_FILE_F_ROLL_ON_8K_ENTRIES      (0x10000000 | PANTHEIOS_BE_FILE_F_ROLL_ON_ENTRY_COUNT)
-#define PANTHEIOS_BE_FILE_F_ROLL_ON_DAY             (0x10000000 | PANTHEIOS_BE_FILE_F_ROLL_ON_DATETIME)
+#define PANTHEIOS_BE_FILE_F_ROLL_ON_1MB                 (0x10000000 | PANTHEIOS_BE_FILE_F_ROLL_ON_SIZE)
+#define PANTHEIOS_BE_FILE_F_ROLL_ON_8K_ENTRIES          (0x10000000 | PANTHEIOS_BE_FILE_F_ROLL_ON_ENTRY_COUNT)
+#define PANTHEIOS_BE_FILE_F_ROLL_ON_DAY                 (0x10000000 | PANTHEIOS_BE_FILE_F_ROLL_ON_DATETIME)
 
-#define PANTHEIOS_BE_FILE_F_ROLL_TO_SELF            (0x20000000)
+#define PANTHEIOS_BE_FILE_F_ROLL_TO_SELF                (0x20000000)
 #endif /* 0 */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -167,8 +176,8 @@ struct pan_be_file_init_t
 
     pan_uint32_t        version;    /*!< Must be initialised to the value of PANTHEIOS_VER */
     pan_uint32_t        flags;      /*!< \ref group__backend__stock_backends__file__flags "Flags" that control the information displayed. */
-    char                buff[1 + (PANTHEIOS_BE_FILE_MAX_FILE_LEN)]; /*!< Buffer for use by client to write file name, to which \link pan_be_file_init_t::fileName fileName\endlink can be pointed. \see PANTHEIOS_BE_FILE_MAX_FILE_LEN*/
-    char const*         fileName;  /*!< Must be pointed to the file name. */
+    PAN_CHAR_T          buff[1 + (PANTHEIOS_BE_FILE_MAX_FILE_LEN)]; /*!< Buffer for use by client to write file name, to which \link pan_be_file_init_t::fileName fileName\endlink can be pointed. \see PANTHEIOS_BE_FILE_MAX_FILE_LEN*/
+    PAN_CHAR_T const*   fileName;  /*!< Must be pointed to the file name. */
 #if 0
     union
     {
@@ -246,7 +255,7 @@ PANTHEIOS_CALL(void) pantheios_be_file_getDefaultAppInit(
  * \ingroup group__backend__stock_backends__file
  */
 PANTHEIOS_CALL(int) pantheios_be_file_init(
-    char const*                 processIdentity
+    PAN_CHAR_T const*           processIdentity
 ,   int                         id
 ,   pan_be_file_init_t const*   init
 ,   void*                       reserved
@@ -264,14 +273,14 @@ PANTHEIOS_CALL(void) pantheios_be_file_uninit(void* token);
  * \ingroup group__backend__stock_backends__file
  */
 PANTHEIOS_CALL(int) pantheios_be_file_logEntry(
-    void*          feToken
-,   void*          beToken
-,   int            severity
-,   char const*    entry
-,   size_t         cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
-/** \fn pantheios_be_file_setFilePath(char const*, pan_be_file_init_t::pan_uint32_t, pan_be_file_init_t::pan_uint32_t, int)
+/** \fn pantheios_be_file_setFilePath(PAN_CHAR_T const*, pan_be_file_init_t::pan_uint32_t, pan_be_file_init_t::pan_uint32_t, int)
  *
  * Sets/changes the log file name for a single back-end.
  *
@@ -298,7 +307,7 @@ PANTHEIOS_CALL(int) pantheios_be_file_logEntry(
  *   the file.
  */
 PANTHEIOS_CALL(int) pantheios_be_file_setFilePath(
-    char const*                         fileName
+    PAN_CHAR_T const*                   fileName
 #ifndef PANTHEIOS_NO_NAMESPACE
 ,   pan_be_file_init_t::pan_uint32_t    fileMask
 ,   pan_be_file_init_t::pan_uint32_t    fileFlags
@@ -310,7 +319,7 @@ PANTHEIOS_CALL(int) pantheios_be_file_setFilePath(
 );
 
 #ifdef __cplusplus
-/** \overload int pantheios_be_file_setFilePath(char const*)
+/** \overload int pantheios_be_file_setFilePath(PAN_CHAR_T const*)
  *
  * Sets/changes the log file name for all back-ends.
  *
@@ -319,12 +328,12 @@ PANTHEIOS_CALL(int) pantheios_be_file_setFilePath(
  * \param fileName The (absolute or relative) name of the log file to be used
  *   with the given back-end.
  */
-inline int pantheios_be_file_setFilePath(char const* fileName)
+inline int pantheios_be_file_setFilePath(PAN_CHAR_T const* fileName)
 {
     return pantheios_be_file_setFilePath(fileName, 0, 0, PANTHEIOS_BEID_ALL);
 }
 
-/** \overload int pantheios_be_file_setFilePath(char const*, int)
+/** \overload int pantheios_be_file_setFilePath(PAN_CHAR_T const*, int)
  *
  * Sets/changes the log file name for all back-ends.
  *
@@ -336,7 +345,7 @@ inline int pantheios_be_file_setFilePath(char const* fileName)
  *   \ref PANTHEIOS_BEID_ALL,
  *   then all back-ends will be initialised with the file-name.
  */
-inline int pantheios_be_file_setFilePath(char const* fileName, int backEndId)
+inline int pantheios_be_file_setFilePath(PAN_CHAR_T const* fileName, int backEndId)
 {
     return pantheios_be_file_setFilePath(fileName, 0, 0, backEndId);
 }
@@ -367,6 +376,8 @@ inline int pantheios_be_file_setFilePath(char const* fileName, int backEndId)
  * - "fileName"                 (String)
  * - "truncate"                 (Boolean)
  * - "discardCachedContents"    (Boolean)
+ * - "writeMultibyteContents"   (Boolean)
+ * - "writeWideContents"        (Boolean)
  */
 PANTHEIOS_CALL(int) pantheios_be_file_parseArgs(
     size_t                          numArgs
@@ -393,4 +404,4 @@ inline pan_be_file_init_t::pan_be_file_init_t()
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_BACKENDS_H_BEC_FILE */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

@@ -1,17 +1,17 @@
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * File:        b64/b64.h
  *
  * Purpose:     Header file for the b64 library
  *
  * Created:     18th October 2004
- * Updated:     24th August 2008
+ * Updated:     18th November 2009
  *
  * Thanks:      To Adam McLaurin, for ideas regarding the b64_decode2() and
  *              b64_encode2().
  *
  * Home:        http://synesis.com.au/software/
  *
- * Copyright (c) 2004-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * ////////////////////////////////////////////////////////////////////////// */
+ * ////////////////////////////////////////////////////////////////////// */
 
 
 /** \file b64/b64.h
@@ -49,15 +49,15 @@
 #ifndef B64_INCL_B64_H_B64
 #define B64_INCL_B64_H_B64
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
 #ifndef B64_DOCUMENTATION_SKIP_SECTION
 # define B64_VER_B64_H_B64_MAJOR    1
-# define B64_VER_B64_H_B64_MINOR    5
-# define B64_VER_B64_H_B64_REVISION 4
-# define B64_VER_B64_H_B64_EDIT     28
+# define B64_VER_B64_H_B64_MINOR    6
+# define B64_VER_B64_H_B64_REVISION 1
+# define B64_VER_B64_H_B64_EDIT     31
 #endif /* !B64_DOCUMENTATION_SKIP_SECTION */
 
 /** \def B64_VER_MAJOR
@@ -77,40 +77,52 @@
  */
 
 #ifndef B64_DOCUMENTATION_SKIP_SECTION
-# define B64_VER_1_0_1      0x01000100
-# define B64_VER_1_0_2      0x01000200
-# define B64_VER_1_0_3      0x01000300
-# define B64_VER_1_1_1      0x01010100
-# define B64_VER_1_1_2      0x01010200
-# define B64_VER_1_1_3      0x01010300
-# define B64_VER_1_2_1      0x01020100
-# define B64_VER_1_2_2      0x01020200
-# define B64_VER_1_2_3      0x01020300
-# define B64_VER_1_2_4      0x01020400
-# define B64_VER_1_2_5      0x01020500
-# define B64_VER_1_2_6      0x01020600
-# define B64_VER_1_2_7      0x01020700
-# define B64_VER_1_3_1      0x010301ff
-# define B64_VER_1_3_2      0x010302ff
-# define B64_VER_1_3_3      0x010303ff
-# define B64_VER_1_3_4      0x010304ff
-
-# define B64_VER            B64_VER_1_3_4
-#else /* ? B64_DOCUMENTATION_SKIP_SECTION */
-# define B64_VER            0x010304ff
+# define B64_VER_1_0_1          0x01000100
+# define B64_VER_1_0_2          0x01000200
+# define B64_VER_1_0_3          0x01000300
+# define B64_VER_1_1_1          0x01010100
+# define B64_VER_1_1_2          0x01010200
+# define B64_VER_1_1_3          0x01010300
+# define B64_VER_1_2_1          0x01020100
+# define B64_VER_1_2_2          0x01020200
+# define B64_VER_1_2_3          0x01020300
+# define B64_VER_1_2_4          0x01020400
+# define B64_VER_1_2_5          0x01020500
+# define B64_VER_1_2_6          0x01020600
+# define B64_VER_1_2_7          0x01020700
+# define B64_VER_1_3_1          0x010301ff
+# define B64_VER_1_3_2          0x010302ff
+# define B64_VER_1_3_3          0x010303ff
+# define B64_VER_1_3_4          0x010304ff
+# define B64_VER_1_4_1_ALPHA_1  0x01040101
 #endif /* !B64_DOCUMENTATION_SKIP_SECTION */
 
 #define B64_VER_MAJOR       1
-#define B64_VER_MINOR       3
-#define B64_VER_REVISION    4
+#define B64_VER_MINOR       4
+#define B64_VER_REVISION    1
+#define B64_VER             0x01040101
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Includes
  */
 
 #include <stddef.h>
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
+ * Features
+ */
+
+/* If the Synesis pre-processor symbol SYNESIS_VARIANT_TEST is defined, then we
+ * automatically define B64_VARIANT_TEST, which requests a test build: i.e.
+ * debug information off, optimisations on, contract enforcements on
+ */
+#if defined(SYNESIS_VARIANT_TEST)
+# if !defined(B64_VARIANT_TEST)
+#  define B64_VARIANT_TEST
+# endif /* !B64_VARIANT_TEST */
+#endif /* SYNESIS_VARIANT_TEST */
+
+/* /////////////////////////////////////////////////////////////////////////
  * Namespace
  */
 
@@ -144,7 +156,7 @@
 # endif /* B64_CUSTOM_NAMESPACE && B64_CUSTOM_NAMESPACE_QUALIFIER */
 
 
-/** \brief [C/C++] The b64 namespace, within which the core library types and functions
+/** [C/C++] The b64 namespace, within which the core library types and functions
  * reside in C++ compilation. In C compilation, they all reside in the global
  * namespace.
  *
@@ -156,11 +168,17 @@ namespace B64_NAMESPACE
 {
 #endif /* !B64_NO_NAMESPACE */
 
-/* /////////////////////////////////////////////////////////////////////////////
- * Enumerations
+/* /////////////////////////////////////////////////////////////////////////
+ * Typedefs
  */
 
-/** \brief Return codes (from b64_encode2() / b64_decode2())
+/** The ambient character type of the library
+ *
+ * \note Currently, this is always \c char, supporting only multibyte strings
+ */
+typedef char    b64_char_t;
+
+/** Return codes (from b64_encode2() / b64_decode2())
  */
 enum B64_RC
 {
@@ -177,7 +195,7 @@ enum B64_RC
 typedef enum B64_RC B64_RC;
 #endif /* !__cplusplus */
 
-/** \brief Coding behaviour modification flags (for b64_encode2() / b64_decode2())
+/** Coding behaviour modification flags (for b64_encode2() / b64_decode2())
  */
 enum B64_FLAGS
 {
@@ -196,7 +214,7 @@ enum B64_FLAGS
 typedef enum B64_FLAGS  B64_FLAGS;
 #endif /* !__cplusplus */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Functions
  */
 
@@ -204,7 +222,7 @@ typedef enum B64_FLAGS  B64_FLAGS;
 extern "C" {
 #endif /* __cplusplus */
 
-/** \brief Encodes a block of binary data into Base-64
+/** Encodes a block of binary data into Base-64
  *
  * \param src Pointer to the block to be encoded. May not be NULL, except when
  *   \c dest is NULL, in which case it is ignored.
@@ -227,9 +245,14 @@ extern "C" {
  *
  * \see b64::encode()
  */
-size_t b64_encode(void const *src, size_t srcSize, char *dest, size_t destLen);
+size_t b64_encode(
+    void const* src
+,   size_t      srcSize
+,   b64_char_t* dest
+,   size_t      destLen
+);
 
-/** \brief Encodes a block of binary data into Base-64
+/** Encodes a block of binary data into Base-64
  *
  * \param src Pointer to the block to be encoded. May not be NULL, except when
  *   \c dest is NULL, in which case it is ignored.
@@ -257,15 +280,17 @@ size_t b64_encode(void const *src, size_t srcSize, char *dest, size_t destLen);
  *
  * \see b64::encode()
  */
-size_t b64_encode2( void const  *src
-                ,   size_t      srcSize
-                ,   char        *dest
-                ,   size_t      destLen
-                ,   unsigned    flags
-                ,   int         lineLen /* = 0 */
-                ,   B64_RC      *rc     /* = NULL */);
+size_t b64_encode2(
+    void const* src
+,   size_t      srcSize
+,   b64_char_t* dest
+,   size_t      destLen
+,   unsigned    flags
+,   int         lineLen /* = 0 */
+,   B64_RC*     rc     /* = NULL */
+);
 
-/** \brief Decodes a sequence of Base-64 into a block of binary data
+/** Decodes a sequence of Base-64 into a block of binary data
  *
  * \param src Pointer to the Base-64 block to be decoded. May not be NULL, except when
  *   \c dest is NULL, in which case it is ignored. If \c dest is NULL, and \c src is
@@ -298,9 +323,14 @@ size_t b64_encode2( void const  *src
  *
  * \see b64::decode()
  */
-size_t b64_decode(char const *src, size_t srcLen, void *dest, size_t destSize);
+size_t b64_decode(
+    b64_char_t const*   src
+,   size_t              srcLen
+,   void*               dest
+,   size_t              destSize
+);
 
-/** \brief Decodes a sequence of Base-64 into a block of binary data
+/** Decodes a sequence of Base-64 into a block of binary data
  *
  * \param src Pointer to the Base-64 block to be decoded. May not be NULL, except when
  * \c dest is NULL, in which case it is ignored. If \c dest is NULL, and \c src is
@@ -340,22 +370,23 @@ size_t b64_decode(char const *src, size_t srcLen, void *dest, size_t destSize);
  *
  * \see b64::decode()
  */
-size_t b64_decode2( char const  *src
-                ,   size_t      srcLen
-                ,   void        *dest
-                ,   size_t      destSize
-                ,   unsigned    flags
-                ,   char const  **badChar   /* = NULL */
-                ,   B64_RC      *rc         /* = NULL */);
+size_t b64_decode2(
+    b64_char_t const*   src
+,   size_t              srcLen
+,   void*               dest
+,   size_t              destSize
+,   unsigned            flags
+,   b64_char_t const**  badChar /* = NULL */
+,   B64_RC*             rc      /* = NULL */
+);
 
-
-/** \brief Returns the textual description of the error
+/** Returns the textual description of the error
  *
  * \param code The \link b64::B64_RC error code\endlink
  */
-char const *b64_getErrorString(B64_RC code);
+char const* b64_getErrorString(B64_RC code);
 
-/** \brief Returns the length of the textual description of the error
+/** Returns the length of the textual description of the error
  *
  * \see b64_getErrorString()
  *
@@ -368,7 +399,7 @@ size_t b64_getErrorStringLength(B64_RC code);
 } /* extern "C" */
 #endif /* __cplusplus */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Namespace
  */
 
@@ -413,8 +444,8 @@ namespace stlsoft
 
 #endif /* !B64_NO_NAMESPACE */
 
-/* ////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* B64_INCL_B64_H_B64 */
 
-/* ////////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

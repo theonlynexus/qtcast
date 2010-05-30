@@ -5,14 +5,14 @@
  *              Unicode specialisations thereof.
  *
  * Created:     15th November 2002
- * Updated:     10th August 2009
+ * Updated:     31st March 2010
  *
  * Thanks to:   Austin Ziegler for spotting the defective pre-condition
  *              enforcement of expand_environment_strings().
  *
  * Home:        http://stlsoft.org/
  *
- * Copyright (c) 2002-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2002-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in seource and binary forms, with or without
@@ -54,9 +54,9 @@
 
 #ifndef STLSOFT_DOCUMENTATION_SKIP_SECTION
 # define WINSTL_VER_WINSTL_SYSTEM_HPP_SYSTEM_TRAITS_MAJOR       5
-# define WINSTL_VER_WINSTL_SYSTEM_HPP_SYSTEM_TRAITS_MINOR       3
-# define WINSTL_VER_WINSTL_SYSTEM_HPP_SYSTEM_TRAITS_REVISION    4
-# define WINSTL_VER_WINSTL_SYSTEM_HPP_SYSTEM_TRAITS_EDIT        121
+# define WINSTL_VER_WINSTL_SYSTEM_HPP_SYSTEM_TRAITS_MINOR       4
+# define WINSTL_VER_WINSTL_SYSTEM_HPP_SYSTEM_TRAITS_REVISION    1
+# define WINSTL_VER_WINSTL_SYSTEM_HPP_SYSTEM_TRAITS_EDIT        124
 #endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -193,6 +193,10 @@ public:
     static char_type*   str_pbrk(char_type const* s, char_type const* charSet);
     /// Returns a pointer to the end of the string
     static char_type*   str_end(char_type const* s);
+    /// Sets each character in \c s to the character \c c
+    ///
+    /// \return s + n
+    static char_type*   str_set(char_type* s, size_type n, char_type c);
 /// @}
 
 /// \name Locale management
@@ -486,6 +490,18 @@ public:
         return const_cast<char_type*>(s);
     }
 
+    static char_type* str_set(char_type* s, size_type n, char_type c)
+    {
+        WINSTL_ASSERT(NULL != s || 0u == n);
+
+        for(; 0u != n; --n, ++s)
+        {
+            *s = c;
+        }
+
+        return s;
+    }
+
 public:
 #ifndef NONLS
     static int_type get_locale_info(LCID locale, LCTYPE type, char_type* data, int cchData)
@@ -501,7 +517,7 @@ public:
 
         if(0 == cchBuffer)
         {
-            char_type   buff[1 + _MAX_PATH];
+            char_type   buff[1 + WINSTL_CONST_MAX_PATH];
 
             return get_module_filename(hModule, &buff[0], STLSOFT_NUM_ELEMENTS(buff));
         }
@@ -867,6 +883,18 @@ public:
         return const_cast<char_type*>(s);
     }
 
+    static char_type* str_set(char_type* s, size_type n, char_type c)
+    {
+        WINSTL_ASSERT(NULL != s || 0u == n);
+
+        for(; 0u != n; --n, ++s)
+        {
+            *s = c;
+        }
+
+        return s;
+    }
+
 public:
 #ifndef NONLS
     static int_type get_locale_info(LCID locale, LCTYPE type, char_type* data, int cchData)
@@ -882,7 +910,7 @@ public:
 
         if(0 == cchBuffer)
         {
-            char_type   buff[1 + _MAX_PATH];
+            char_type   buff[1 + WINSTL_CONST_MAX_PATH];
             size_type   cch =   get_module_filename(hModule, &buff[0], STLSOFT_NUM_ELEMENTS(buff));
 
             if(0 == str_compare(L"\\\\?\\", buff))

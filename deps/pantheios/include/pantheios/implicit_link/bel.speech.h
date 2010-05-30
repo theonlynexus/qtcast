@@ -4,11 +4,11 @@
  * Purpose: Implicitly links in the Pantheios Speech Local Back-End Library
  *
  * Created: 10th April 2008
- * Updated: 11th September 2008
+ * Updated: 10th August 2009
  *
  * Home:    http://pantheios.org/
  *
- * Copyright (c) 2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2008-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_SPEECH_MAJOR       1
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_SPEECH_MINOR       0
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_SPEECH_REVISION    1
-# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_SPEECH_EDIT        1
+# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_SPEECH_EDIT        2
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -106,4 +106,4 @@
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_IMPLICIT_LINK_H_BEL_SPEECH */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

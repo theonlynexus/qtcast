@@ -4,11 +4,11 @@
  * Purpose: Implicitly links in the Pantheios Windows Console Local Back-End Library
  *
  * Created: 4th January 2006
- * Updated: 11th September 2008
+ * Updated: 10th August 2009
  *
  * Home:    http://pantheios.org/
  *
- * Copyright (c) 2006-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSCONSOLE_MAJOR       2
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSCONSOLE_MINOR       0
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSCONSOLE_REVISION    1
-# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSCONSOLE_EDIT        5
+# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSCONSOLE_EDIT        6
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -106,4 +106,4 @@
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSCONSOLE */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

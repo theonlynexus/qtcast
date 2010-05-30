@@ -4,11 +4,11 @@
  * Purpose:     Implementation class to assist in the creation of back-ends.
  *
  * Created:     16th December 2006
- * Updated:     21st May 2009
+ * Updated:     22nd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -54,8 +54,8 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_UTIL_BACKENDS_HPP_CONTEXT_MAJOR    3
 # define PANTHEIOS_VER_PANTHEIOS_UTIL_BACKENDS_HPP_CONTEXT_MINOR    3
-# define PANTHEIOS_VER_PANTHEIOS_UTIL_BACKENDS_HPP_CONTEXT_REVISION 1
-# define PANTHEIOS_VER_PANTHEIOS_UTIL_BACKENDS_HPP_CONTEXT_EDIT     29
+# define PANTHEIOS_VER_PANTHEIOS_UTIL_BACKENDS_HPP_CONTEXT_REVISION 2
+# define PANTHEIOS_VER_PANTHEIOS_UTIL_BACKENDS_HPP_CONTEXT_EDIT     31
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -222,9 +222,9 @@ public:
 /// @{
 protected:
     pan_char_t* const   m_processIdentity;
-    const int           m_id;
-    const pan_uint32_t  m_flags;
-    const int           m_severityMask;
+    int const           m_id;
+    pan_uint32_t const  m_flags;
+    int const           m_severityMask;
 private:
     // 0: "["
     // 1: process Id
@@ -267,4 +267,4 @@ private:
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_UTIL_BACKENDS_HPP_CONTEXT */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

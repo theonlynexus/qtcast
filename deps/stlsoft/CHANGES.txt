@@ -2,7 +2,7 @@
 STLSoft - Changes
 
 ; Created:  29th March 2002
-; Updated:  11th August 2009
+; Updated:  4th April 2010
 
 ============================================================================
 
@@ -16,6 +16,456 @@ STLSoft - Changes
    *                                    *
    **************************************
 
+
+============================================================================
+
+Changes for 1.9.97 (4th April 2010)
+
+Summary:
+========
+
+ * added stlsoft::copy_preinc() and stlsoft::copy_postinc() algorithms
+ * added str_set() method to unixstl::/winstl::system_traits
+ * added unixstl/shims/conversion/to_uint64/stat.hpp
+ * added missing widestring specialisation of inetstl::filesystem_traits::is_path_name_separator()
+ * stlsoft::basic_error_desc synthesises widestring functionality if wcserror() is not available
+ * exposes widestring version of platformstl::system_traits from UNIXSTL
+ * comstl::variant compatibility with exception-support disabled
+ * removed erroneous definitions of strtol(), strtoul(), strtod()
+ * added missing 'mode' parameter to unixstl::module::load(), and uses 'mode' parameter passed to constructor template
+ * typename corrections to platformstl::basic_file_path_buffer and platformstl::basic_path
+ * improved discrimination of Visual C++ 9 / 10
+ * fixed defective arithmetic in unixstl::/winstl::memory_mapped_file
+ * refactored implementation of winstl::reg_key::create_key() to avoid infinite loop faults
+
+Changes:
+========
+
+ STLSoft:
+ ========
+
+ ~ stlsoft/algorithms/debug.hpp:
+    + copy_preinc()
+    + copy_postinc()
+
+ ~ stlsoft/error/error_desc.hpp:
+    + synthesises widestring functionality - in terms of strerror() - if not available as wcserror (or "safe string" equivalent)
+
+ ~ stlsoft/std/cstdlib.hpp:
+    - removed erroneous definitions of strtol(), strtoul(), strtod(): they used string access shims to elicit the string form of their arguments, and returned a pointer into the parsed string (which may no longer exist by the time the function returns)
+    + added strtol(char const*, ...) and strtol(wchar_t const*, ...)
+    + added strtoul(char const*, ...) and strtoul(wchar_t const*, ...)
+    + added strtod(char const*, ...) and strtod(wchar_t const*, ...)
+
+ ~ stlsoft/util/std/library_discriminator.hpp:
+    ~ better discrimination of VC++ 9 & 10
+
+ COMSTL:
+ =======
+
+ ~ comstl/collections/enumerator_sequence.hpp:
+    ~ minor warning workaround
+
+ ~ comstl/util/variant.hpp:
+    ~ compatibility with exception-support disabled
+
+ InetSTL:
+ ========
+
+ ~ inetstl/filesystem/filesystem_traits.hpp:
+    + added missing is_path_name_separator for wide specialisation
+
+ PlatformSTL:
+ ============
+
+ ~ platformstl/filesystem/file_path_buffer.hpp:
+ ~ platformstl/filesystem/path.hpp:
+    ~ correct use of typename to indicate dependent types in default template arguments
+
+ ~ platformstl/system/system_traits.hpp:
+    ~ exposes wide version from UNIXSTL
+
+ UNIXSTL:
+ ========
+
+ ~ unixstl/dl/module.hpp:
+    + added missing 'mode' parameter to load()
+    ~ used 'mode' parameter passed to constructor template
+
+ ~ unixstl/filesystem/memory_mapped_file.hpp:
+    ~ fixed defective arithmetic when validating non-0 request size
+
+ ~ unixstl/filesystem/path_functions.hpp:
+    ~ refactored implementation
+
+ ~ unixstl/shims/conversion/to_uint64/stat.hpp:
+    + added unixstl/shims/conversion/to_uint64/stat.hpp
+
+ ~ unixstl/synch/atomic_functions.h:
+ ~ unixstl/synch/util/features.h:
+    ~ preparation for future refinement
+
+ ~ unixstl/system/system_traits.hpp:
+    + str_set() method
+    ~ other widestring compatibility changes
+
+ WinSTL:
+ =======
+
+ ~ winstl/filesystem/memory_mapped_file.hpp:
+    ~ fixed defective arithmetic when validating non-0 request size
+
+ ~ winstl/filesystem/path_functions.hpp:
+    ~ minor restructuring
+
+ ~ winstl/registry/reg_key.hpp:
+    ~ refactored implementation of create_key() to avoid infinite loop fault in case of passing string types of non-matching character encodings
+
+ ~ winstl/system/system_traits.hpp:
+    + str_set() method
+
+============================================================================
+
+Changes for 1.9.96 (10th March 2010)
+
+Summary:
+========
+
+ * Visual C++ 10 compatibility
+
+Changes:
+========
+
+ STLSoft:
+ ========
+
+ ~ include/stlsoft/internal/cccap/msvc.h:
+    + VC++ 10 compatibility
+
+ ~ include/stlsoft/stlsoft.h:
+    + Visual C++ 10 support
+
+ ~ include/stlsoft/util/std/iterator_helper.hpp:
+    + added support for Dinkumware 10 (as well as making explicit support for Dinkumware 8 & 9)
+
+ ~ include/stlsoft/util/std/library_discriminator.hpp:
+    ~ refactored Dinkumware detection, to discriminate 8, 9 and 10
+
+============================================================================
+
+Changes for 1.9.95 (7th March 2010)
+
+Summary:
+========
+
+ * minor interface modifications to comstl::com_exception
+
+Changes:
+========
+
+ COMSTL:
+ ========
+
+ ~ include/comstl/error/exceptions.hpp:
+    + added get_hr()
+    ~ deprecated hr()
+
+============================================================================
+
+Changes for 1.9.94 (5th March 2010)
+
+Summary:
+========
+
+ * corrected omission of inline from swap for unixstl::memory_mapped_file
+ * corrected omission of inline from swap for winstl::memory_mapped_file
+
+Changes:
+========
+
+ UNIXSTL:
+ ========
+
+ ~ include/unixstl/filesystem/memory_mapped_file.hpp:
+    ~ corrected omission of inline from swap for unixstl::memory_mapped_file
+
+ WinSTL:
+ =======
+
+ ~ include/winstl/filesystem/memory_mapped_file.hpp:
+    ~ corrected omission of inline from swap for winstl::memory_mapped_file
+
+============================================================================
+
+Changes for 1.9.93 (15th February 2010)
+
+Summary:
+========
+
+ * STLSOFT_CF_NAMESPACE_SUPPORT is now only defined in C++ compilation units
+ * added WINSTL_CONST_MAX_PATH, which is now used instead of _MAX_PATH throughout winstl
+
+Changes:
+========
+
+ STLSoft:
+ ========
+
+ ~ include/stlsoft/internal/cccap/borland.h:
+ ~ include/stlsoft/internal/cccap/como.h:
+ ~ include/stlsoft/internal/cccap/dmc.h:
+ ~ include/stlsoft/internal/cccap/gcc.h:
+ ~ include/stlsoft/internal/cccap/intel.h:
+ ~ include/stlsoft/internal/cccap/msvc.h:
+ ~ include/stlsoft/internal/cccap/mwerks.h:
+ ~ include/stlsoft/internal/cccap/unknown.h:
+ ~ include/stlsoft/internal/cccap/vectorc.h:
+ ~ include/stlsoft/internal/cccap/watcom.h:
+    ~ STLSOFT_CF_NAMESPACE_SUPPORT is now only defined in C++ compilation units
+
+ COMSTL:
+ =======
+
+ ~ include/comstl/error/errorinfo_desc.hpp:
+    ~ cast change
+
+ WinSTL:
+ =======
+
+ ~ include/winstl/winstl.h:
+    + added WINSTL_CONST_MAX_PATH
+
+ ~ include/winstl/filesystem/file_path_buffer.hpp:
+ ~ include/winstl/filesystem/filesystem_traits.hpp:
+ ~ include/winstl/filesystem/findvolume_sequence.hpp:
+ ~ include/winstl/filesystem/path.hpp:
+ ~ include/winstl/shell/browse_for_folder.hpp:
+ ~ include/winstl/shell/drophandle_sequence.hpp:
+ ~ include/winstl/shell/file_operations.hpp:
+ ~ include/winstl/system/searchpath_sequence.hpp:
+ ~ include/winstl/system/system_traits.hpp:
+ ~ include/winstl/system/version_info.hpp:
+    ~ now uses WINSTL_CONST_MAX_PATH
+
+============================================================================
+
+Changes for 1.9.92 (11th February 2010)
+
+Summary:
+========
+
+ * added inetstl::filesystem_traits<>::is_path_name_separator()
+
+Changes:
+========
+
+ InetSTL:
+ ========
+
+ ~ inetstl/filesystem/filesystem_traits.hpp:
+    + added is_path_name_separator()
+
+
+
+============================================================================
+
+Changes for 1.9.91 (2nd February 2010)
+
+Summary:
+========
+
+ * introducing unixstl::/winstl::remove_directory_recurse() into platformstl namespace
+ * removal of dependency on so-called "unsafe" string functions
+ * elimination of calls to memcpy() in path classes
+ * throwing of exception in make_absolute() if failed to get full path
+
+Changes:
+========
+
+ PlatformSTL:
+ ============
+
+ ~ platformstl/filesystem/directory_functions.hpp:
+    + introducing unixstl::/winstl::remove_directory_recurse() into platformstl namespace
+
+ UNIXSTL:
+ ========
+
+ ~ unixstl/filesystem/path.hpp:
+    ~ elimination of calls to memcpy()
+    ~ throwing of exception in make_absolute() if failed to get full path
+
+ WinSTL:
+ =======
+
+ ~ winstl/filesystem/directory_functions.hpp:
+    - removal of dependency on so-called "unsafe" string functions
+
+ ~ winstl/filesystem/path.hpp:
+    ~ elimination of calls to memcpy()
+
+
+
+============================================================================
+
+Changes for 1.9.90 (21st January 2010)
+
+Summary:
+========
+
+ * fixed defect in unixstl::filesystem_traits<>::get_full_path_name() when passed "."
+ * header ordering workaround for GCC 3.4's strange COM headers on Windows
+
+Changes:
+========
+
+ UNIXSTL:
+ ========
+
+ ~ include/unixstl/filesystem/filesystem_traits.hpp:
+    ~ fixed defect in get_full_path_name() when passed "."
+
+ WinSTL:
+ =======
+
+ ~ include/winstl/winstl.h:
+    ~ header ordering, for GCC 3.4
+
+============================================================================
+
+Changes for 1.9.89 (19th January 2010)
+
+Summary:
+========
+
+ * fixed defective stream inserter for stlsoft::error_desc
+ * fixed erroneous push-pop in include/acestl/reactor/custom_event_handler.hpp:
+ * safe-string compatibility for various UNIXSTL system/filesystem components
+
+Changes:
+========
+
+ general:
+ =======
+
+ STLSoft:
+ ========
+
+ ~ include/stlsoft/error/error_desc.hpp:
+    ~ fixed defective stream inserter definition
+
+ ACESTL:
+ =======
+
+ ~ include/acestl/reactor/custom_event_handler.hpp:
+    ~ corrected warning suppression push-pop
+
+ UNIXSTL:
+ ========
+
+ ~ include/unixstl/filesystem/filesystem_traits.hpp:
+ ~ include/unixstl/filesystem/glob_sequence.hpp:
+ ~ include/unixstl/filesystem/path_functions.hpp:
+ ~ include/unixstl/filesystem/readdir_sequence.hpp:
+ ~ include/unixstl/system/system_traits.hpp:
+    ~ safe string compatibility
+
+============================================================================
+
+Changes for 1.9.88 (12th January 2010)
+
+Summary:
+========
+
+ * added throwOnAccessFailure search flag to winstl::basic_findfile_sequence, along with supporting code
+ * added winstl::access_exception
+ * full integer handling for comstl::variant
+ * addition of max_size() static method to basic_file_path_buffer class template
+ * change of max_size() method to be static in basic_path
+ * fixed longstanding incompatibility between reverse_iterator and const_reverse_iterator
+ * C compatibility fixes
+ * compatibility with GCC 3.4
+ * truncation_test is now a function template (rather than a macro to an internal function)
+ * deprecation/removal of reserved symbols, and replacement with valid symbols
+
+Changes:
+========
+
+ general:
+ =======
+
+ STLSoft:
+ ========
+
+ ~ stlsoft/internal/cccap/unknown.h:
+    ~ changed to "modern" form of feature discrimination mechanisms
+
+ ~ stlsoft/conversion/truncation_test.hpp:
+    ~ truncation_test is now a function template (rather than a macro to an internal function)
+
+ ~ stlsoft/internal/cccap/msvc.h:
+    ~ C compatibility fixes
+
+ ~ stlsoft/util/std/iterator_helper.hpp:
+    ~ compatibility between reverse_iterator and const_reverse_iterator
+
+ COMSTL:
+ =======
+
+ ~ comstl/comstl.h:
+ ~ comstl/error/errorinfo_functions.h:
+    ~ compatibility with GCC 3.4
+
+ ~ comstl/util/rot_functions.h:
+    ~ conversion of deprecated comstl__??? form to comstl_C_??? form
+
+ ~ comstl/util/variant.hpp:
+    + added ctors for unsigned integral types
+    ~ full handling of integers
+
+ MFCSTL:
+ =======
+
+ ~ mfcstl/shims/access/string/cwnd.hpp:
+    ~ removing use of reserved symbols
+
+ UNIXSTL:
+ ========
+
+ ~ unixstl/filesystem/file_path_buffer.hpp:
+    + added max_size() static method
+
+ ~ unixstl/filesystem/path.hpp:
+    ~ changed max_size() method to be static
+
+ WinSTL:
+ =======
+
+ ~ winstl/controls/listview_sequence.hpp:
+    ~ introduction of lvs_string_t from global namespace (where it should not be defined) to the winstl namespace (where it should be)
+
+ ~ winstl/error/exceptions.hpp:
+    + added winstl::access_exception
+
+ ~ winstl/filesystem/file_path_buffer.hpp:
+    + added max_size() static method
+
+ ~ winstl/filesystem/findfile_sequence.hpp:
+    + added throwOnAccessFailure search flag, along with supporting code
+
+ ~ winstl/filesystem/path.hpp:
+    ~ changed max_size() method to be static
+
+ ~ winstl/performance/threadtimes_counter.hpp:
+    ~ refactored in preparation of throwing of exceptions when timing information cannot be elicited
+
+ ~ winstl/shims/access/string/HWND.hpp:
+    ~ removing use of reserved symbols
+
+ ~ winstl/winstl.h:
+    ~ compatibility with GCC 3.4
+    + added MAKEINTRESOURCEA
+    + added MAKEINTRESOURCEW
 
 ============================================================================
 

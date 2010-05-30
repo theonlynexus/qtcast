@@ -4,11 +4,11 @@
  * Purpose:     Declaration of the Pantheios fe.WindowsRegistry Stock Front-end API.
  *
  * Created:     28th October 2007
- * Updated:     11th September 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2007-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2007-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,7 +55,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_WINDOWSREGISTRY_MAJOR       2
 # define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_WINDOWSREGISTRY_MINOR       1
 # define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_WINDOWSREGISTRY_REVISION    3
-# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_WINDOWSREGISTRY_EDIT        8
+# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_WINDOWSREGISTRY_EDIT        9
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -89,4 +89,4 @@ struct _pantheios_no_longer_uses_the_symbol_PAN_FE_PROCESS_IDENTITY_all_front_en
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_FRONTENDS_H_FE_WINDOWSREGISTRY */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

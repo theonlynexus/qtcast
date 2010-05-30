@@ -5,11 +5,11 @@
  *              wide string
  *
  * Created:     14th November 2008
- * Updated:     16th April 2009
+ * Updated:     22nd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2008-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2008-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -59,6 +59,10 @@
  * Macros
  */
 
+#ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
+# define PANTHEIOS_LITERAL_w_(x)            L ## x
+#endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
+
 /** \def PANTHEIOS_LITERAL_STRING(s)
  *
  * Defines the literal string as a multibyte or wide string, depending on
@@ -72,8 +76,8 @@
  */
 
 #ifdef PANTHEIOS_USE_WIDE_STRINGS
-# define PANTHEIOS_LITERAL_STRING(x)        L ## x
-# define PANTHEIOS_LITERAL_CHAR(x)          L ## x
+# define PANTHEIOS_LITERAL_STRING(x)        PANTHEIOS_LITERAL_w_(x)
+# define PANTHEIOS_LITERAL_CHAR(x)          PANTHEIOS_LITERAL_w_(x)
 #else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 # define PANTHEIOS_LITERAL_STRING(x)        x
 # define PANTHEIOS_LITERAL_CHAR(x)          x
@@ -83,4 +87,4 @@
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_INTERNAL_H_STRING_ENCODING */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

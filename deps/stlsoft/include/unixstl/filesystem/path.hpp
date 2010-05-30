@@ -4,11 +4,11 @@
  * Purpose:     Simple class that represents a path.
  *
  * Created:     1st May 1993
- * Updated:     10th August 2009
+ * Updated:     30th January 2010
  *
  * Home:        http://stlsoft.org/
  *
- * Copyright (c) 1993-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 1993-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -49,9 +49,9 @@
 
 #ifndef STLSOFT_DOCUMENTATION_SKIP_SECTION
 # define UNIXSTL_VER_UNIXSTL_FILESYSTEM_HPP_PATH_MAJOR      6
-# define UNIXSTL_VER_UNIXSTL_FILESYSTEM_HPP_PATH_MINOR      5
-# define UNIXSTL_VER_UNIXSTL_FILESYSTEM_HPP_PATH_REVISION   7
-# define UNIXSTL_VER_UNIXSTL_FILESYSTEM_HPP_PATH_EDIT       232
+# define UNIXSTL_VER_UNIXSTL_FILESYSTEM_HPP_PATH_MINOR      6
+# define UNIXSTL_VER_UNIXSTL_FILESYSTEM_HPP_PATH_REVISION   2
+# define UNIXSTL_VER_UNIXSTL_FILESYSTEM_HPP_PATH_EDIT       234
 #endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -67,6 +67,11 @@
 #ifndef UNIXSTL_INCL_UNIXSTL_FILESYSTEM_HPP_FILE_PATH_BUFFER
 # include <unixstl/filesystem/file_path_buffer.hpp>
 #endif /* !UNIXSTL_INCL_UNIXSTL_FILESYSTEM_HPP_FILE_PATH_BUFFER */
+#ifdef STLSOFT_CF_EXCEPTION_SUPPORT
+# ifndef UNIXSTL_INCL_UNIXSTL_ERROR_HPP_WINDOWS_EXCEPTIONS
+#  include <unixstl/error/exceptions.hpp>
+# endif /* !UNIXSTL_INCL_UNIXSTL_ERROR_HPP_WINDOWS_EXCEPTIONS */
+#endif /* STLSOFT_CF_EXCEPTION_SUPPORT */
 #ifndef STLSOFT_INCL_STLSOFT_MEMORY_HPP_ALLOCATOR_BASE
 # include <stlsoft/memory/allocator_base.hpp>       // for STLSOFT_LF_ALLOCATOR_REBIND_SUPPORT
 #endif /* !STLSOFT_INCL_STLSOFT_MEMORY_HPP_ALLOCATOR_BASE */
@@ -296,6 +301,8 @@ public:
     ///
     /// \remarks Equivalent to length()
     size_type       size() const;
+    /// The maximum possible length of a path
+    static size_type  max_size();
     /// Determines whether the path is empty
     bool_type       empty() const;
     /// Conversion to a non-mutable (const) pointer to the path
@@ -856,16 +863,14 @@ inline /* ss_explicit_k */ basic_path<C, T, A>::basic_path(ss_typename_type_k ba
     {
         size_type cch = traits_type::str_len(path);
 
-        UNIXSTL_ASSERT(cch < m_buffer.size());
+        UNIXSTL_MESSAGE_ASSERT("path too long", cch < m_buffer.size());
 
-        traits_type::char_copy(&m_buffer[0], path, cch + 1); // +1 to get the NUL terminator
+        traits_type::char_copy(&m_buffer[0], path, cch);
 
         m_len = cch;
     }
-    else
-    {
-        m_buffer[0] = '\0';
-    }
+
+    m_buffer[m_len] = '\0';
 }
 
 template<   ss_typename_param_k C
@@ -880,9 +885,9 @@ inline basic_path<C, T, A>::basic_path( ss_typename_type_k basic_path<C, T, A>::
 
     if(0 != cch)
     {
-        UNIXSTL_ASSERT(cch < m_buffer.size());
+        UNIXSTL_MESSAGE_ASSERT("path too long", cch < m_buffer.size());
 
-        traits_type::str_n_copy(&m_buffer[0], path, cch);
+        traits_type::char_copy(&m_buffer[0], path, cch);
     }
     m_buffer[cch] = '\0';
 }
@@ -1192,16 +1197,29 @@ template<   ss_typename_param_k C
         >
 inline basic_path<C, T, A>& basic_path<C, T, A>::make_absolute(us_bool_t bRemoveTrailingPathNameSeparator /* = true */)
 {
-    buffer_type_    buffer;
-    size_type       cch = traits_type::get_full_path_name(c_str(), buffer.size(), &buffer[0]);
-    class_type      newPath(buffer.c_str(), cch);
-
-    if(bRemoveTrailingPathNameSeparator)
+    if(0 != size())
     {
-        newPath.pop_sep();
-    }
+        buffer_type_    buffer;
+        size_type       cch = traits_type::get_full_path_name(c_str(), buffer.size(), &buffer[0]);
 
-    swap(newPath);
+        if(0 == cch)
+        {
+#ifdef STLSOFT_CF_EXCEPTION_SUPPORT
+            STLSOFT_THROW_X(unix_exception("could not determine the absolute path", errno));
+#else /* ?STLSOFT_CF_EXCEPTION_SUPPORT */
+            return *this;
+#endif /* STLSOFT_CF_EXCEPTION_SUPPORT */
+        }
+
+        class_type      newPath(buffer.c_str(), cch);
+
+        if(bRemoveTrailingPathNameSeparator)
+        {
+            newPath.pop_sep();
+        }
+
+        swap(newPath);
+    }
 
     return *this;
 }
@@ -1471,6 +1489,16 @@ template<   ss_typename_param_k C
 inline ss_typename_type_ret_k basic_path<C, T, A>::size_type basic_path<C, T, A>::size() const
 {
     return length();
+}
+
+template<   ss_typename_param_k C
+        ,   ss_typename_param_k T
+        ,   ss_typename_param_k A
+        >
+inline ss_typename_type_ret_k basic_path<C, T, A>::size_type
+/* static */ basic_path<C, T, A>::max_size()
+{
+    return buffer_type_::max_size() - 1u;
 }
 
 template<   ss_typename_param_k C

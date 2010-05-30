@@ -5,11 +5,11 @@
  *              list.
  *
  * Created:     8th December 2007
- * Updated:     14th October 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2007-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2007-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -81,4 +81,4 @@
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_UTIL_TEST_H_COMPILER_WARNINGS_SUPPRESSION_FIRST_INCLUDE */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

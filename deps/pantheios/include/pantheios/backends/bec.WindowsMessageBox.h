@@ -4,7 +4,7 @@
  * Purpose:     Declaration of the Pantheios WindowsMessageBox Stock Back-end API.
  *
  * Created:     8th March 2008
- * Updated:     18th April 2009
+ * Updated:     11th September 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -76,11 +76,11 @@
  * \ingroup group__backend__stock_backends__WindowsMessageBox
  */
 PANTHEIOS_CALL(int) pantheios_be_WindowsMessageBox_init(
-    char const* processIdentity
-,   int         id
-,   void*       unused
-,   void*       reserved
-,   void**      ptoken
+    PAN_CHAR_T const*   processIdentity
+,   int                 id
+,   void*               unused
+,   void*               reserved
+,   void**              ptoken
 );
 
 /** Implements the functionality for pantheios_be_uninit() over the Windows Message Box API.
@@ -94,15 +94,15 @@ PANTHEIOS_CALL(void) pantheios_be_WindowsMessageBox_uninit(
  * \ingroup group__backend__stock_backends__WindowsMessageBox
  */
 PANTHEIOS_CALL(int) pantheios_be_WindowsMessageBox_logEntry(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_BACKENDS_H_WINDOWSMESSAGEBOX */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

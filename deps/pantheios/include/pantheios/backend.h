@@ -4,7 +4,7 @@
  * Purpose:     Pantheios back end API
  *
  * Created:     21st June 2005
- * Updated:     8th July 2009
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -54,9 +54,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_H_BACKEND_MAJOR      3
-# define PANTHEIOS_VER_PANTHEIOS_H_BACKEND_MINOR      10
+# define PANTHEIOS_VER_PANTHEIOS_H_BACKEND_MINOR      11
 # define PANTHEIOS_VER_PANTHEIOS_H_BACKEND_REVISION   1
-# define PANTHEIOS_VER_PANTHEIOS_H_BACKEND_EDIT       28
+# define PANTHEIOS_VER_PANTHEIOS_H_BACKEND_EDIT       30
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -281,7 +281,7 @@
  * \retval >=0 Initialisation succeeded
  */
 PANTHEIOS_CALL(int) pantheios_be_init(
-    char const*         processIdentity
+    PAN_CHAR_T const*   processIdentity
 ,   void*               reserved
 ,   void**              ptoken
 );
@@ -330,7 +330,7 @@ PANTHEIOS_CALL(int) pantheios_be_logEntry(
     void*               feToken
 ,   void*               beToken
 ,   int                 severity
-,   char const*         entry
+,   PAN_CHAR_T const*   entry
 ,   size_t              cchEntry
 );
 
@@ -361,11 +361,11 @@ PANTHEIOS_CALL(int) pantheios_be_logEntry(
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_BE_DEFINE_BE_FUNCTIONS_(fullId)                                                                               \
                                                                                                                                 \
-    PANTHEIOS_CALL(int) pantheios_be_init(char const* processIdentity, void* reserved, void** ptoken)                           \
+    PANTHEIOS_CALL(int) pantheios_be_init(PAN_CHAR_T const* processIdentity, void* reserved, void** ptoken)                           \
     { return fullId##_init(processIdentity, PANTHEIOS_BEID_LOCAL, NULL, reserved, ptoken); }                                    \
     PANTHEIOS_CALL(void) pantheios_be_uninit(void* token)                                                                       \
     { fullId##_uninit(token); }                                                                                                 \
-    PANTHEIOS_CALL(int) pantheios_be_logEntry(void* feToken, void* beToken, int severity, char const* entry, size_t cchEntry)   \
+    PANTHEIOS_CALL(int) pantheios_be_logEntry(void* feToken, void* beToken, int severity, PAN_CHAR_T const* entry, size_t cchEntry)   \
     { STLSOFT_SUPPRESS_UNUSED(feToken); return fullId##_logEntry(feToken, beToken, severity, entry, cchEntry); }
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
@@ -395,11 +395,11 @@ PANTHEIOS_CALL(int) pantheios_be_logEntry(
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_BE_DEFINE_BEL_FUNCTIONS_(fullId)                                                                                  \
                                                                                                                                     \
-    PANTHEIOS_CALL(int) pantheios_be_local_init(char const* processIdentity, void* reserved, void** ptoken)                         \
+    PANTHEIOS_CALL(int) pantheios_be_local_init(PAN_CHAR_T const* processIdentity, void* reserved, void** ptoken)                         \
     { return fullId##_init(processIdentity, PANTHEIOS_BEID_LOCAL, NULL, reserved, ptoken); }                                        \
     PANTHEIOS_CALL(void) pantheios_be_local_uninit(void* token)                                                                     \
     { fullId##_uninit(token); }                                                                                                     \
-    PANTHEIOS_CALL(int) pantheios_be_local_logEntry(void* feToken, void* beToken, int severity, char const* entry, size_t cchEntry) \
+    PANTHEIOS_CALL(int) pantheios_be_local_logEntry(void* feToken, void* beToken, int severity, PAN_CHAR_T const* entry, size_t cchEntry) \
     { STLSOFT_SUPPRESS_UNUSED(feToken); return fullId##_logEntry(feToken, beToken, severity, entry, cchEntry); }
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
@@ -426,11 +426,11 @@ PANTHEIOS_CALL(int) pantheios_be_logEntry(
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_BE_DEFINE_BER_FUNCTIONS_(fullId)                                                                                      \
                                                                                                                                         \
-    PANTHEIOS_CALL(int) pantheios_be_remote_init(char const* processIdentity, void* reserved, void** ptoken)                            \
+    PANTHEIOS_CALL(int) pantheios_be_remote_init(PAN_CHAR_T const* processIdentity, void* reserved, void** ptoken)                            \
     { return fullId##_init(processIdentity, PANTHEIOS_BEID_REMOTE, NULL, reserved, ptoken); }                                           \
     PANTHEIOS_CALL(void) pantheios_be_remote_uninit(void* token)                                                                        \
     { fullId##_uninit(token); }                                                                                                         \
-    PANTHEIOS_CALL(int) pantheios_be_remote_logEntry(void* feToken, void* beToken, int severity, char const* entry, size_t cchEntry)    \
+    PANTHEIOS_CALL(int) pantheios_be_remote_logEntry(void* feToken, void* beToken, int severity, PAN_CHAR_T const* entry, size_t cchEntry)    \
     { STLSOFT_SUPPRESS_UNUSED(feToken); return fullId##_logEntry(feToken, beToken, severity, entry, cchEntry); }
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
@@ -440,4 +440,4 @@ PANTHEIOS_CALL(int) pantheios_be_logEntry(
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_H_BACKEND */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

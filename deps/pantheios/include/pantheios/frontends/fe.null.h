@@ -4,11 +4,11 @@
  * Purpose:     Declaration of the Pantheios fe.null Stock Front-end API.
  *
  * Created:     5th January 2008
- * Updated:     11th October 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2008-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,7 +55,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_NULL_MAJOR      1
 # define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_NULL_MINOR      0
 # define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_NULL_REVISION   3
-# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_NULL_EDIT       4
+# define PANTHEIOS_VER_PANTHEIOS_FRONTENDS_H_FE_NULL_EDIT       5
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -82,4 +82,4 @@
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_FRONTENDS_H_FE_NULL */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

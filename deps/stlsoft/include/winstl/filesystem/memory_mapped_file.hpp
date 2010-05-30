@@ -4,39 +4,40 @@
  * Purpose:     Memory mapped file class.
  *
  * Created:     15th December 1996
- * Updated:     10th August 2009
+ * Updated:     27th March 2010
  *
  * Thanks:      To Pablo Aguilar for requesting multibyte / wide string
  *              ambivalence. To Joe Mariadassou for requesting swap().
  *
  * Home:        http://stlsoft.org/
  *
- * Copyright (c) 1996-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 1996-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * modification, are permitted provided that the following conditions are
+ * met:
  *
- * - Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
- * - Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
- *   and/or other materials provided with the distribution.
- * - Neither the name(s) of Matthew Wilson and Synesis Software nor the names of
- *   any contributors may be used to endorse or promote products derived from
- *   this software without specific prior written permission.
+ * - Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ * - Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
+ * - Neither the name(s) of Matthew Wilson and Synesis Software nor the
+ *   names of any contributors may be used to endorse or promote products
+ *   derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * ////////////////////////////////////////////////////////////////////// */
 
@@ -53,8 +54,8 @@
 #ifndef STLSOFT_DOCUMENTATION_SKIP_SECTION
 # define WINSTL_VER_WINSTL_FILESYSTEM_HPP_MEMORY_MAPPED_FILE_MAJOR     4
 # define WINSTL_VER_WINSTL_FILESYSTEM_HPP_MEMORY_MAPPED_FILE_MINOR     6
-# define WINSTL_VER_WINSTL_FILESYSTEM_HPP_MEMORY_MAPPED_FILE_REVISION  3
-# define WINSTL_VER_WINSTL_FILESYSTEM_HPP_MEMORY_MAPPED_FILE_EDIT      87
+# define WINSTL_VER_WINSTL_FILESYSTEM_HPP_MEMORY_MAPPED_FILE_REVISION  5
+# define WINSTL_VER_WINSTL_FILESYSTEM_HPP_MEMORY_MAPPED_FILE_EDIT      89
 #endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -246,21 +247,34 @@ private:
                 if( /* 0 != offset && \
                      */0 != requestSize)
                 {
-                    offset_type maxSize = offset + requestSize;
+                    offset_type maxSize     =   offset + requestSize;
+                    offset_type actualSize  =   (offset_type(fileSizeHigh) << 32) + fileSizeLow;
+
+                    if(maxSize > actualSize)
+                    {
+                        WINSTL_ASSERT(actualSize >= offset);
+
+                        requestSize = static_cast<ws_uint32_t>(actualSize - offset);
+                        maxSize = 0;
+                    }
 
                     maxSizeHi = static_cast<DWORD>(maxSize >> 32);
                     maxSizeLo = static_cast<DWORD>(maxSize);
                 }
 #endif /* !STLSOFT_CF_64BIT_INT_SUPPORT */
 
-                scoped_handle<HANDLE>   hmap(   ::CreateFileMappingA(   hFile
-                                                                    ,   NULL
-                                                                    ,   PAGE_READONLY
-                                                                    ,   maxSizeHi
-                                                                    ,   maxSizeLo
-                                                                    ,   NULL)
-                                    ,   CloseHandle
-                                    ,   NULL);
+                scoped_handle<HANDLE>   hmap(
+                                            ::CreateFileMappingA(
+                                                hFile
+                                            ,   NULL
+                                            ,   PAGE_READONLY
+                                            ,   maxSizeHi
+                                            ,   maxSizeLo
+                                            ,   NULL
+                                            )
+                                        ,   CloseHandle
+                                        ,   NULL
+                                        );
 
                 if(hmap.empty())
                 {
@@ -268,11 +282,13 @@ private:
                 }
                 else
                 {
-                    void* memory = ::MapViewOfFile( hmap.get()
-                                                ,   FILE_MAP_READ
-                                                ,   static_cast<ws_uint32_t>(offset >> 32)
-                                                ,   static_cast<ws_uint32_t>(offset)
-                                                ,   requestSize);
+                    void* memory = ::MapViewOfFile(
+                                        hmap.get()
+                                    ,   FILE_MAP_READ
+                                    ,   static_cast<ws_uint32_t>(offset >> 32)
+                                    ,   static_cast<ws_uint32_t>(offset)
+                                    ,   requestSize
+                                    );
 
                     if(NULL == memory)
                     {
@@ -508,12 +524,7 @@ private:
 namespace std
 {
 
-    void swap(
-        winstl_ns_qual(memory_mapped_file)& lhs
-    ,   winstl_ns_qual(memory_mapped_file)& rhs
-    );
-
-    void swap(
+    inline void swap(
         winstl_ns_qual(memory_mapped_file)& lhs
     ,   winstl_ns_qual(memory_mapped_file)& rhs
     )

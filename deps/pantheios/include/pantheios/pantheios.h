@@ -4,11 +4,11 @@
  * Purpose:     Pantheios Core and Util APIs.
  *
  * Created:     21st June 2005
- * Updated:     8th July 2009
+ * Updated:     4th April 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2005-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2005-2010, Matthew Wilson and Synesis Software
  * Copyright (c) 1999-2005, Synesis Software and Matthew Wilson
  * All rights reserved.
  *
@@ -56,8 +56,8 @@
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_H_PANTHEIOS_MAJOR      3
 # define PANTHEIOS_VER_PANTHEIOS_H_PANTHEIOS_MINOR      42
-# define PANTHEIOS_VER_PANTHEIOS_H_PANTHEIOS_REVISION   4
-# define PANTHEIOS_VER_PANTHEIOS_H_PANTHEIOS_EDIT       313
+# define PANTHEIOS_VER_PANTHEIOS_H_PANTHEIOS_REVISION   8
+# define PANTHEIOS_VER_PANTHEIOS_H_PANTHEIOS_EDIT       319
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /** \def PANTHEIOS_VER_MAJOR
@@ -264,6 +264,10 @@
 # define PANTHEIOS_VER_1_0_1_B190               0x010001be
 # define PANTHEIOS_VER_1_0_1_B191               0x010001bf
 # define PANTHEIOS_VER_1_0_1_B192               0x010001c0
+# define PANTHEIOS_VER_1_0_1_B193               0x010001c1
+# define PANTHEIOS_VER_1_0_1_B194               0x010001c2
+# define PANTHEIOS_VER_1_0_1_B195               0x010001c3
+# define PANTHEIOS_VER_1_0_1_B196               0x010001c4
 # define PANTHEIOS_VER_1_0_1                    0x010001ff
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
@@ -271,7 +275,7 @@
 #define PANTHEIOS_VER_MINOR                     0
 #define PANTHEIOS_VER_REVISION                  1
 
-#define PANTHEIOS_VER                           PANTHEIOS_VER_1_0_1_B192
+#define PANTHEIOS_VER                           PANTHEIOS_VER_1_0_1_B196
 
 /* /////////////////////////////////////////////////////////////////////////
  * Includes - 1
@@ -285,8 +289,8 @@
 #endif /* !STLSOFT_INCL_STLSOFT_H_STLSOFT */
 
 #if !defined(_STLSOFT_VER) || \
-    _STLSOFT_VER < 0x010955ff
-# error This version Pantheios requires STLSoft 1.9.85, or later. (www.stlsoft.org)
+    _STLSOFT_VER < 0x010961ff
+# error This version Pantheios requires STLSoft 1.9.97, or later. (www.stlsoft.org)
 #endif /* STLSoft version */
 
 #ifndef PANTHEIOS_INCL_H_STDARG
@@ -469,7 +473,15 @@
  * Namespace
  */
 
-#if !defined(__cplusplus) && \
+#if defined(STLSOFT_CF_NAMESPACE_SUPPORT)
+# define PANTHEIOS_CF_NAMESPACE_SUPPORT
+#else /* STLSOFT_CF_NAMESPACE_SUPPORT */
+# ifdef PANTHEIOS_CF_NAMESPACE_SUPPORT
+#  undef PANTHEIOS_CF_NAMESPACE_SUPPORT
+# endif /* PANTHEIOS_CF_NAMESPACE_SUPPORT */
+#endif /* STLSOFT_CF_NAMESPACE_SUPPORT */
+
+#if !defined(PANTHEIOS_CF_NAMESPACE_SUPPORT) && \
     !defined(PANTHEIOS_DOCUMENTATION_SKIP_SECTION) && \
     !defined(PANTHEIOS_NO_NAMESPACE)
 # define PANTHEIOS_NO_NAMESPACE
@@ -561,8 +573,10 @@ typedef char        pan_char_t;
 
 /** \def PAN_CHAR_T
  *
- * A convenient shorthand for <code>::pantheios::pan_char_t</code> when in
- * C++ (and namespace not suppressed) or <code>pan_char_t</code> otherwise.
+ * The type \c pan_char_t, suitably namespace qualified in the contexts in
+ * which the \c pantheios namespace is operative. Acts as a convenient
+ * shorthand for <code>::pantheios::pan_char_t</code> when in C++ (and
+ * namespace not suppressed) or <code>pan_char_t</code> otherwise.
  */
 #define PAN_CHAR_T  PANTHEIOS_NS_QUAL(pan_char_t)
 
@@ -1081,6 +1095,14 @@ PANTHEIOS_CALL(void) pantheios_logputs(pan_sev_t severity, pan_char_t const* mes
  *   version of Pantheios; instead use pantheios_logputs()
  */
 PANTHEIOS_CALL_DEPRECATED(void, pantheios_puts, pantheios_logputs) pantheios_puts(pan_sev_t severity, pan_char_t const* message);
+
+#ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
+PANTHEIOS_CALL(void) pantheios_logassertfail(
+    pan_sev_t   severity
+,   char const* fileLine
+,   char const* message
+);
+#endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
  * Back-end map functions
@@ -1835,12 +1857,12 @@ namespace stlsoft
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_H_PANTHEIOS */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

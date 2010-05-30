@@ -4,11 +4,11 @@
  * Purpose:     Runtime checking for numeric conversions.
  *
  * Created:     10th August 2006
- * Updated:     10th August 2009
+ * Updated:     3rd February 2010
  *
  * Home:        http://stlsoft.org/
  *
- * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -50,8 +50,8 @@
 #ifndef STLSOFT_DOCUMENTATION_SKIP_SECTION
 # define STLSOFT_VER_STLSOFT_CONVERSION_HPP_TRUNCATION_TEST_MAJOR      1
 # define STLSOFT_VER_STLSOFT_CONVERSION_HPP_TRUNCATION_TEST_MINOR      0
-# define STLSOFT_VER_STLSOFT_CONVERSION_HPP_TRUNCATION_TEST_REVISION   4
-# define STLSOFT_VER_STLSOFT_CONVERSION_HPP_TRUNCATION_TEST_EDIT       43
+# define STLSOFT_VER_STLSOFT_CONVERSION_HPP_TRUNCATION_TEST_REVISION   5
+# define STLSOFT_VER_STLSOFT_CONVERSION_HPP_TRUNCATION_TEST_EDIT       47
 #endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -151,11 +151,11 @@ else
     // 1b FROM signed | TO signed | sizeof(FROM) = sizeof(TO)       =>  Always yes
     // 1c FROM signed | TO signed | sizeof(FROM) > sizeof(TO)       =>  Runtime test
     //
-    // 2a FROM unsigned | TO signed | sizeof(FROM) < sizeof(TO)     =>  Runtime test
+    // 2a FROM unsigned | TO signed | sizeof(FROM) < sizeof(TO)     =>  Always yes
     // 2b FROM unsigned | TO signed | sizeof(FROM) = sizeof(TO)     =>  Runtime test
     // 2c FROM unsigned | TO signed | sizeof(FROM) > sizeof(TO)     =>  Runtime test
     //
-    // 3a FROM signed | TO unsigned | sizeof(FROM) < sizeof(TO)     =>  Always yes
+    // 3a FROM signed | TO unsigned | sizeof(FROM) < sizeof(TO)     =>  Runtime test
     // 3b FROM signed | TO unsigned | sizeof(FROM) = sizeof(TO)     =>  Runtime test
     // 3c FROM signed | TO unsigned | sizeof(FROM) > sizeof(TO)     =>  Runtime test
     //
@@ -388,9 +388,6 @@ inline bool truncation_test_helper_runtime_test(T, yes_type, ...)
     return true;
 }
 
-#endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
-
-
 
 template<   ss_typename_param_k TO
         ,   ss_typename_param_k FROM
@@ -484,7 +481,37 @@ private:
     const bool m_b;
 };
 #else /* ? 0 */
-# define truncation_test    truncation_test_
+
+#endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
+
+/** Indicates whether a given value can be cast to a given type without
+ * truncation
+ *
+ * \ingroup group__library__conversion
+ *
+ * Example:
+<pre>
+  truncation_cast&lt;unsigned>(-1); // Will return false, since negatives cannot fit in unsigned
+  truncation_cast&lt;short>(30000); // Will return true, since 30000 will fit inside short (assuming short has >= 16-bits)
+</pre>
+ *
+ * \param from The value to be tested
+ *
+ * \retval false The value will experience truncation
+ * \retval true The value will not be truncated
+ */
+template<   ss_typename_param_k TO
+        ,   ss_typename_param_k FROM
+        >
+#ifndef STLSOFT_DOCUMENTATION_SKIP_SECTION
+inline bool truncation_test(FROM from, TO dummy = TO())    // The use of the dummy variable is to fix a bug with VC++ 5-7.0
+#else /* ? STLSOFT_DOCUMENTATION_SKIP_SECTION */
+inline bool truncation_test(FROM from)
+#endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
+{
+    return truncation_test_(from, dummy);
+}
+
 #endif /* 0 */
 
 ////////////////////////////////////////////////////////////////////////////

@@ -4,11 +4,11 @@
  * Purpose:     Declaration of the Pantheios be.N Stock Back-end API.
  *
  * Created:     18th October 2006
- * Updated:     11th September 2008
+ * Updated:     22nd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2010, Matthew Wilson and Synesis Software
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -52,9 +52,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_N_MAJOR      1
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_N_MINOR      5
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_N_MINOR      6
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_N_REVISION   2
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_N_EDIT       16
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BE_N_EDIT       20
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -67,6 +67,8 @@
 #ifndef PANTHEIOS_INCL_PANTHEIOS_H_BACKEND
 # include <pantheios/backend.h>
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_H_BACKEND */
+
+#include <limits.h>
 
 /* /////////////////////////////////////////////////////////////////////////
  * Documentation
@@ -147,19 +149,26 @@ struct pan_be_N_t
      */
     int     backEndId;
     /** Pointer to the back-end's initialisation function */
-    int     (PANTHEIOS_CALLCONV *pfnInit)(      char const*
-                                            ,   int
-                                            ,   void const*
-                                            ,   void*
-                                            ,   void**);
+    int     (PANTHEIOS_CALLCONV *pfnInit)(
+                PAN_CHAR_T const*
+            ,   int
+            ,   void const*
+            ,   void*
+            ,   void**
+            );
     /** Pointer to the back-end's uninitialisation function */
     void    (PANTHEIOS_CALLCONV *pfnUninit)(    void*);
     /** Pointer to the back-end's log-entry function */
-    int     (PANTHEIOS_CALLCONV *pfnLogEntry)(  void*
-                                            ,   void*
-                                            ,   int
-                                            ,   char const*
-                                            ,   size_t);
+    int     (PANTHEIOS_CALLCONV *pfnLogEntry)(
+                void*
+            ,   void*
+            ,   int
+            ,   PAN_CHAR_T const*
+            ,   size_t
+            );
+    /** A per-back-end static severity ceiling
+     */
+    int     severityCeiling;
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
     /* INTERNAL USE ONLY */
     void*   token;
@@ -169,16 +178,9 @@ struct pan_be_N_t
 typedef struct pan_be_N_t   pan_be_N_t;
 #endif /* __cplusplus */
 
-/** \def PANTHEIOS_BE_N_ENTRY
- *
- * Defines an entry in an array of pan_be_N_t.
- *
- * \ingroup group__backend__stock_backends__N
- *
- * \deprecated Will be removed from a future version. Use
- *   PANTHEIOS_BE_N_STDFORM_ENTRY instead.
- */
-#define PANTHEIOS_BE_N_ENTRY(flags, backEndId, be_prefix)       PANTHEIOS_BE_N_STDFORM_ENTRY(backEndId, be_prefix, flags)
+
+/* PANTHEIOS_BE_N_ENTRY has been removed */
+
 
 /** \def PANTHEIOS_BE_N_STDFORM_ENTRY
  *
@@ -217,10 +219,57 @@ pan_be_N_t  PAN_BE_N_BACKEND_LIST[] =
     {                                                               \
             flags                                                   \
         ,   backEndId                                               \
-        ,   (int(PANTHEIOS_CALLCONV *)(char const*,int,void const*,void*,void**))be_prefix ## _init \
+        ,   (int(PANTHEIOS_CALLCONV *)(PAN_CHAR_T const*,int,void const*,void*,void**))be_prefix ## _init \
         ,   be_prefix ## _uninit                                    \
         ,   be_prefix ## _logEntry                                  \
+        ,   INT_MAX                                                 \
         ,   NULL                                                    \
+    }
+
+/** \def PANTHEIOS_BE_N_FILTERED_ENTRY
+ *
+ * Defines an entry in an array of pan_be_N_t.
+ *
+ * \param backEndId The back-end identifier. Must be >0
+ * \param be_prefix The prefix of all the back-end functions, e.g. <b>pantheios_be_speech</b>
+ * \param flags A combination of the
+ *   \ref group__backend__stock_backends__N__flags "be.N flags" that control
+ *   the behaviour of the given back-end
+ *
+ * This is used in combination with PANTHEIOS_BE_N_TERMINATOR_ENTRY to
+ * define the set of concrete back-ends are to be attached to the program:
+<pre>
+pan_be_N_t  PAN_BE_N_BACKEND_LIST[] =
+{
+    PANTHEIOS_BE_N_STDFORM_ENTRY(1, pantheios_be_file, 0)
+  , PANTHEIOS_BE_N_STDFORM_ENTRY(2, pantheios_be_fprintf, 0)
+  , PANTHEIOS_BE_N_STDFORM_ENTRY(3, pantheios_be_null, 0)
+\#if defined(PLATFORMSTL_OS_IS_UNIX)
+  , PANTHEIOS_BE_N_FILTERED_ENTRY(4, pantheios_be_syslog, PANTHEIOS_SEV_WARNING, 0)
+\#elif defined(PLATFORMSTL_OS_IS_WIN32) || \
+      defined(PLATFORMSTL_OS_IS_WIN64)
+  , PANTHEIOS_BE_N_FILTERED_ENTRY(4, pantheios_be_WindowsSyslog, PANTHEIOS_SEV_WARNING, 0)
+\#endif
+  , PANTHEIOS_BE_N_STDFORM_ENTRY(5, pantheios_be_file, 0)
+  , PANTHEIOS_BE_N_TERMINATOR_ENTRY
+};
+</pre>
+ *
+ * The output to back-end 4 is statically filtered, so that any statement
+ * with severity less than or equal to the specified level will be output,
+ * subject to dynamic filtering via pantheios_fe_isSeverityLogged().
+ *
+ * \ingroup group__backend__stock_backends__N
+ */
+#define PANTHEIOS_BE_N_FILTERED_ENTRY(backEndId, be_prefix, severityCeiling, flags)                         \
+    {                                                                                                       \
+            flags                                                                                           \
+        ,   backEndId                                                                                       \
+        ,   (int(PANTHEIOS_CALLCONV*)(PAN_CHAR_T const*,int,void const*,void*,void**))be_prefix ## _init    \
+        ,   be_prefix ## _uninit                                                                            \
+        ,   be_prefix ## _logEntry                                                                          \
+        ,   severityCeiling                                                                                 \
+        ,   NULL                                                                                            \
     }
 
 /** \def PANTHEIOS_BE_N_TERMINATOR_ENTRY
@@ -231,7 +280,7 @@ pan_be_N_t  PAN_BE_N_BACKEND_LIST[] =
  *
  * \see PANTHEIOS_BE_N_STDFORM_ENTRY
  */
-#define PANTHEIOS_BE_N_TERMINATOR_ENTRY                 { 0, 0, NULL, NULL, NULL, NULL }
+#define PANTHEIOS_BE_N_TERMINATOR_ENTRY                 { 0, 0, NULL, NULL, NULL, -1, NULL }
 
 /* /////////////////////////////////////////////////////////////////////////
  * External Declarations
@@ -251,4 +300,4 @@ PANTHEIOS_EXTERN_C pan_be_N_t       PAN_BE_N_BACKEND_LIST[];
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_FRONTENDS_H_BE_N */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

@@ -4,11 +4,11 @@
  * Purpose:     Automatic initialisation of Pantheios Core API
  *
  * Created:     21st June 2005
- * Updated:     14th October 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2005-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2005-2009, Matthew Wilson and Synesis Software
  * Copyright (c) 1999-2005, Synesis Software and Matthew Wilson
  * All rights reserved.
  *
@@ -154,4 +154,4 @@ namespace
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_HPP_INITIALISER */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

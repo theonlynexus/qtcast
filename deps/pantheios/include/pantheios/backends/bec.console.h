@@ -115,9 +115,9 @@
  */
 
 #if defined(PLATFORMSTL_OS_IS_WINDOWS)
-# define PANTHEIOS_BE_CONSOLE_F_NO_COLOURS			PANTHEIOS_BE_WINDOWSCONSOLE_F_NO_COLOURS
+# define PANTHEIOS_BE_CONSOLE_F_NO_COLOURS          PANTHEIOS_BE_WINDOWSCONSOLE_F_NO_COLOURS
 #else /* ? OS */
-# define PANTHEIOS_BE_CONSOLE_F_NO_COLOURS			(0)
+# define PANTHEIOS_BE_CONSOLE_F_NO_COLOURS          (0)
 #endif /* OS */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -130,9 +130,9 @@
  */
 
 #if defined(PLATFORMSTL_OS_IS_WINDOWS)
-typedef pan_be_WindowsConsole_init_t		pan_be_console_init_t;
+typedef pan_be_WindowsConsole_init_t        pan_be_console_init_t;
 #else /* ? OS */
-typedef pan_be_fprintf_init_t				pan_be_console_init_t;
+typedef pan_be_fprintf_init_t               pan_be_console_init_t;
 #endif /* OS */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -171,9 +171,9 @@ typedef pan_be_fprintf_init_t				pan_be_console_init_t;
  */
 
 #if defined(PLATFORMSTL_OS_IS_WINDOWS)
-# define pan_be_console_init_t(backEndId, init)	pantheios_be_WindowsConsole_getAppInit(backEndId, init)
+# define pan_be_console_init_t(backEndId, init) pantheios_be_WindowsConsole_getAppInit(backEndId, init)
 #else /* ? OS */
-# define pan_be_console_init_t(backEndId, init)	pantheios_be_fprintf_getAppInit(backEndId, init)
+# define pan_be_console_init_t(backEndId, init) pantheios_be_fprintf_getAppInit(backEndId, init)
 #endif /* OS */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -194,9 +194,9 @@ typedef pan_be_fprintf_init_t				pan_be_console_init_t;
  */
 
 #if defined(PLATFORMSTL_OS_IS_WINDOWS)
-# define pantheios_be_console_getDefaultAppInit(init)	pantheios_be_WindowsConsole_getAppInit(init)
+# define pantheios_be_console_getDefaultAppInit(init)   pantheios_be_WindowsConsole_getAppInit(init)
 #else /* ? OS */
-# define pantheios_be_console_getDefaultAppInit(init)	pantheios_be_fprintf_getAppInit(init)
+# define pantheios_be_console_getDefaultAppInit(init)   pantheios_be_fprintf_getAppInit(init)
 #endif /* OS */
 
 
@@ -207,9 +207,9 @@ typedef pan_be_fprintf_init_t				pan_be_console_init_t;
  */
 
 #if defined(PLATFORMSTL_OS_IS_WINDOWS)
-# define pantheios_be_console_init		pantheios_be_WindowsConsole_init
+# define pantheios_be_console_init      pantheios_be_WindowsConsole_init
 #else /* ? OS */
-# define pantheios_be_console_init		pantheios_be_fprintf_init
+# define pantheios_be_console_init      pantheios_be_fprintf_init
 #endif /* OS */
 
 
@@ -220,9 +220,9 @@ typedef pan_be_fprintf_init_t				pan_be_console_init_t;
  */
 
 #if defined(PLATFORMSTL_OS_IS_WINDOWS)
-# define pantheios_be_console_uninit	pantheios_be_WindowsConsole_uninit
+# define pantheios_be_console_uninit    pantheios_be_WindowsConsole_uninit
 #else /* ? OS */
-# define pantheios_be_console_uninit	pantheios_be_fprintf_uninit
+# define pantheios_be_console_uninit    pantheios_be_fprintf_uninit
 #endif /* OS */
 
 
@@ -233,9 +233,9 @@ typedef pan_be_fprintf_init_t				pan_be_console_init_t;
  */
 
 #if defined(PLATFORMSTL_OS_IS_WINDOWS)
-# define pantheios_be_console_logEntry	pantheios_be_WindowsConsole_logEntry
+# define pantheios_be_console_logEntry  pantheios_be_WindowsConsole_logEntry
 #else /* ? OS */
-# define pantheios_be_console_logEntry	pantheios_be_fprintf_logEntry
+# define pantheios_be_console_logEntry  pantheios_be_fprintf_logEntry
 #endif /* OS */
 
 
@@ -268,9 +268,9 @@ typedef pan_be_fprintf_init_t				pan_be_console_init_t;
  */
 
 #if defined(PLATFORMSTL_OS_IS_WINDOWS)
-# define pantheios_be_console_parseArgs(numArgs, args, init)		pantheios_be_WindowsConsole_parseArgs(numArgs, args, init)
+# define pantheios_be_console_parseArgs(numArgs, args, init)        pantheios_be_WindowsConsole_parseArgs(numArgs, args, init)
 #else /* ? OS */
-# define pantheios_be_console_parseArgs(numArgs, args, init)		pantheios_be_fprintf_parseArgs(numArgs, args, init)
+# define pantheios_be_console_parseArgs(numArgs, args, init)        pantheios_be_fprintf_parseArgs(numArgs, args, init)
 #endif /* OS */
 
 /* ////////////////////////////////////////////////////////////////////// */

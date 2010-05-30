@@ -4,7 +4,7 @@
  * Purpose:     Declaration of the Pantheios WindowsConsole Stock Back-end API.
  *
  * Created:     17th July 2006
- * Updated:     18th April 2009
+ * Updated:     22nd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_WINDOWSCONSOLE_MAJOR    5
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_WINDOWSCONSOLE_MINOR    0
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_WINDOWSCONSOLE_MINOR    1
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_WINDOWSCONSOLE_REVISION 1
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_WINDOWSCONSOLE_EDIT     21
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_WINDOWSCONSOLE_EDIT     23
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -188,7 +188,7 @@ PANTHEIOS_CALL(void) pantheios_be_WindowsConsole_getDefaultAppInit(
  * \ingroup group__backend__stock_backends__WindowsConsole
  */
 PANTHEIOS_CALL(int) pantheios_be_WindowsConsole_init(
-    char const*                         processIdentity
+    PAN_CHAR_T const*                   processIdentity
 ,   int                                 id
 ,   pan_be_WindowsConsole_init_t const* init
 ,   void*                               param
@@ -206,11 +206,11 @@ PANTHEIOS_CALL(void) pantheios_be_WindowsConsole_uninit(
  * \ingroup group__backend__stock_backends__WindowsConsole
  */
 PANTHEIOS_CALL(int) pantheios_be_WindowsConsole_logEntry(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
 /** Parses the be.WindowsConsole back-end flags
@@ -263,4 +263,4 @@ inline pan_be_WindowsConsole_init_t::pan_be_WindowsConsole_init_t()
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_BACKENDS_H_BEC_WINDOWSCONSOLE */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

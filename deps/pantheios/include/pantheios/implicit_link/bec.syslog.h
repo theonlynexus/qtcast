@@ -4,11 +4,11 @@
  * Purpose: Implicitly links in the Pantheios syslog Back-End Common Library
  *
  * Created: 30th May 2006
- * Updated: 11th September 2008
+ * Updated: 10th August 2009
  *
  * Home:    http://pantheios.org/
  *
- * Copyright (c) 2006-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_SYSLOG_MAJOR      1
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_SYSLOG_MINOR      0
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_SYSLOG_REVISION   2
-# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_SYSLOG_EDIT       4
+# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEC_SYSLOG_EDIT       5
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -103,4 +103,4 @@
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_IMPLICIT_LINK_H_BEC_SYSLOG */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

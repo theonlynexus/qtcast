@@ -4,11 +4,11 @@
  * Purpose:     Class for inserting wide strings.
  *
  * Created:     2nd September 2008
- * Updated:     8th July 2009
+ * Updated:     11th March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2008-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2008-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_W2M_MAJOR    1
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_W2M_MINOR    1
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_W2M_REVISION 1
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_W2M_EDIT     6
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_W2M_MINOR    2
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_W2M_REVISION 2
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_W2M_EDIT     10
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -69,9 +69,13 @@
 # include <pantheios/inserters/fmt.hpp>
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_INSERTERS_HPP_FMT */
 
-#ifndef STLSOFT_INCL_STLSOFT_SHIMS_ACCESS_STRING_H_FWD
-# include <stlsoft/shims/access/string/fwd.h>
-#endif /* !STLSOFT_INCL_STLSOFT_SHIMS_ACCESS_STRING_H_FWD */
+#ifndef STLSOFT_INCL_STLSOFT_SHIMS_ACCESS_HPP_STRING
+# include <stlsoft/shims/access/string.hpp>
+#endif /* !STLSOFT_INCL_STLSOFT_SHIMS_ACCESS_HPP_STRING */
+
+#ifdef PANTHEIOS_USE_WIDE_STRINGS
+# include <stlsoft/string/string_view.hpp>
+#endif /* PANTHEIOS_USE_WIDE_STRINGS */
 
 /* /////////////////////////////////////////////////////////////////////////
  * Namespace
@@ -107,6 +111,13 @@ namespace pantheios
  *
  * &nbsp;&nbsp;&nbsp;&nbsp;<b>s=abc, c=abc, str=def</b>
  */
+
+#ifdef PANTHEIOS_USE_WIDE_STRINGS
+
+typedef stlsoft_ns_qual(wstring_view)   w2m;
+
+#else /* ? PANTHEIOS_USE_WIDE_STRINGS */
+
 class w2m
 {
 public: /// Member Types
@@ -118,6 +129,36 @@ public: /// Construction
     explicit w2m(wchar_t const* s);
     /// Construct from a pointer to a string and a given length
     w2m(wchar_t const* s, size_t len);
+    /// Construct from a widestring of unknown type
+    ///
+    /// \warning This method must only be used "inline", i.e. in a log
+    ///   statement. If you create a separate instance of w2m using this
+    ///   constructor and attempt to access its converted value - either
+    ///   directly, via c_str()/data(), or indirectly via inserting into a
+    ///   log statement - the program will have undefined behaviour.
+    template <typename WS>
+    explicit w2m(WS const& ws)
+    {
+        // If the init_() call fails to compile with an error message that
+        // mentions
+        //  'containing your_wide_type_relies_on_intermediate_shim_conversions_which_are_prohibited_unless_PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES_is_defined'
+        // then the (wide) shims for the type WS use intermediate instances
+        // of conversion classes, and would cause undefined behaviour if
+        // you were to use it any a non-"inline" log statement. If you are
+        // sure you are using the inserter correctly, then #define the
+        // pre-processor symbol PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES to
+        // allow it to compile.
+
+#ifndef PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES
+        int unused = 
+#endif /* !PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES */
+            
+            init_(::stlsoft::c_str_data_w(ws), ::stlsoft::c_str_len_w(ws));
+
+#ifndef PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES
+        STLSOFT_SUPPRESS_UNUSED(unused);
+#endif /* !PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES */
+    }
     /// Releases any resources allocated for the conversion
     ~w2m() stlsoft_throw_0();
 
@@ -136,6 +177,12 @@ public: /// Accessors
     size_t      length() const;
 
 private: /// Implementation
+    int  init_(wchar_t const* s, size_t n);
+#ifndef PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES
+    struct your_wide_type_relies_on_intermediate_shim_conversions_which_are_prohibited_unless_PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES_is_defined;
+    template <typename T0, typename T1>
+    your_wide_type_relies_on_intermediate_shim_conversions_which_are_prohibited_unless_PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES_is_defined init_(T0 const&, T1 const&);
+#endif /* !PANTHEIOS_SAFE_ALLOW_SHIM_INTERMEDIATES */
     void construct_() const;
     void construct_();
     static size_t sentinelLength_()
@@ -156,9 +203,13 @@ private: /// Member Variables
     size_t          m_length;
 };
 
+#endif /* PANTHEIOS_USE_WIDE_STRINGS */
+
 /* /////////////////////////////////////////////////////////////////////////
  * String Access Shims
  */
+
+#ifndef PANTHEIOS_USE_WIDE_STRINGS
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 
@@ -166,6 +217,7 @@ private: /// Member Variables
 namespace shims
 {
 # endif /* !PANTHEIOS_NO_NAMESPACE */
+
 
 /** \overload c_str_data_a(w2m const&) */
 inline char const* c_str_data_a(w2m const& r)
@@ -223,12 +275,16 @@ inline pan_char_t const* c_str_ptr(w2m const& r)
 
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
+#endif /* PANTHEIOS_USE_WIDE_STRINGS */
+
 /* /////////////////////////////////////////////////////////////////////////
  * Namespace
  */
 
 #if !defined(PANTHEIOS_NO_NAMESPACE)
 } /* namespace pantheios */
+
+#ifndef PANTHEIOS_USE_WIDE_STRINGS
 
 namespace stlsoft
 {
@@ -249,18 +305,20 @@ namespace stlsoft
     using ::pantheios::shims::c_str_ptr;
 }
 
+#endif /* PANTHEIOS_USE_WIDE_STRINGS */
+
 #endif /* !PANTHEIOS_NO_NAMESPACE */
 
 /* /////////////////////////////////////////////////////////////////////////
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_INSERTERS_HPP_W2M */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

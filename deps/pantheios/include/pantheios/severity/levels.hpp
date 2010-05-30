@@ -5,11 +5,11 @@
  *              be used to generate levels pseudo-constants.
  *
  * Created:     22nd July 2006
- * Updated:     14th October 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_SEVERITY_HPP_LEVELS_MAJOR      2
 # define PANTHEIOS_VER_PANTHEIOS_SEVERITY_HPP_LEVELS_MINOR      0
 # define PANTHEIOS_VER_PANTHEIOS_SEVERITY_HPP_LEVELS_REVISION   2
-# define PANTHEIOS_VER_PANTHEIOS_SEVERITY_HPP_LEVELS_EDIT       21
+# define PANTHEIOS_VER_PANTHEIOS_SEVERITY_HPP_LEVELS_EDIT       22
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -157,4 +157,4 @@ private:
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_SEVERITY_HPP_LEVELS */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

@@ -5,11 +5,11 @@
  *              Unicode specialisations thereof.
  *
  * Created:     15th November 2002
- * Updated:     10th August 2009
+ * Updated:     31st March 2010
  *
  * Home:        http://stlsoft.org/
  *
- * Copyright (c) 2002-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2002-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,9 +51,9 @@
 
 #ifndef STLSOFT_DOCUMENTATION_SKIP_SECTION
 # define UNIXSTL_VER_UNIXSTL_SYSTEM_HPP_SYSTEM_TRAITS_MAJOR     5
-# define UNIXSTL_VER_UNIXSTL_SYSTEM_HPP_SYSTEM_TRAITS_MINOR     1
-# define UNIXSTL_VER_UNIXSTL_SYSTEM_HPP_SYSTEM_TRAITS_REVISION  2
-# define UNIXSTL_VER_UNIXSTL_SYSTEM_HPP_SYSTEM_TRAITS_EDIT      105
+# define UNIXSTL_VER_UNIXSTL_SYSTEM_HPP_SYSTEM_TRAITS_MINOR     2
+# define UNIXSTL_VER_UNIXSTL_SYSTEM_HPP_SYSTEM_TRAITS_REVISION  1
+# define UNIXSTL_VER_UNIXSTL_SYSTEM_HPP_SYSTEM_TRAITS_EDIT      107
 #endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -221,6 +221,10 @@ public:
     static char_type*   str_pbrk(char_type const* s, char_type const* charSet);
     /// Returns a pointer to the end of the string
     static char_type*   str_end(char_type const* s);
+    /// Sets each character in \c s to the character \c c
+    ///
+    /// \return s + n
+    static char_type*   str_set(char_type* s, size_type n, char_type c);
 /// @}
 
 /// \name Dynamic Loading
@@ -359,6 +363,18 @@ public:
         return const_cast<char_type*>(s);
     }
 
+    static char_type* str_set(char_type* s, size_type n, char_type c)
+    {
+        UNIXSTL_ASSERT(NULL != s || 0u == n);
+
+        for(; 0u != n; --n, ++s)
+        {
+            *s = c;
+        }
+
+        return s;
+    }
+
 public:
     static module_type load_library(char_type const* name)
     {
@@ -370,7 +386,7 @@ public:
         return 0 == ::dlclose(hModule);
     }
 
-    static void *find_symbol(module_type hModule, char const* symbolName)
+    static void* find_symbol(module_type hModule, char const* symbolName)
     {
         return ::dlsym(hModule, symbolName);
     }
@@ -378,7 +394,13 @@ public:
 public:
     static bool_type close_handle(handle_type h)
     {
+#if defined(_WIN32) && \
+    (   defined(STLSOFT_COMPILER_IS_MSVC) || \
+        defined(STLSOFT_COMPILER_IS_INTEL))
+        return 0 == ::_close(h);
+#else /* ? _WIN32 */
         return 0 == ::close(h);
+#endif /* _WIN32 */
     }
 
 public:
@@ -393,9 +415,18 @@ public:
     }
 
 public:
+#if (   defined(STLSOFT_COMPILER_IS_MSVC) || \
+        defined(STLSOFT_COMPILER_IS_INTEL)) && \
+    defined(STLSOFT_USING_SAFE_STR_FUNCTIONS)
+# if _MSC_VER >= 1200
+#  pragma warning(push)
+# endif /* compiler */
+# pragma warning(disable : 4996)
+#endif /* compiler */
+
     static size_type get_environment_variable(char_type const* name, char_type* buffer, size_type cchBuffer)
     {
-        char const *var = ::getenv(name);
+        char const* var = ::getenv(name);
 
         if(NULL == var)
         {
@@ -423,6 +454,16 @@ public:
             }
         }
     }
+
+#if (   defined(STLSOFT_COMPILER_IS_MSVC) || \
+        defined(STLSOFT_COMPILER_IS_INTEL)) && \
+    defined(STLSOFT_USING_SAFE_STR_FUNCTIONS)
+# if _MSC_VER >= 1200
+#  pragma warning(pop)
+# else /* ? compiler */
+#  pragma warning(default : 4996)
+# endif /* _MSC_VER */
+#endif /* compiler */
 
     static size_type expand_environment_strings(char_type const* src, char_type* buffer, size_type cchBuffer);
 };
@@ -517,15 +558,40 @@ public:
         return const_cast<char_type*>(s);
     }
 
+    static char_type* str_set(char_type* s, size_type n, char_type c)
+    {
+        UNIXSTL_ASSERT(NULL != s || 0u == n);
+
+        for(; 0u != n; --n, ++s)
+        {
+            *s = c;
+        }
+
+        return s;
+    }
+
 public:
     static module_type load_library(char_type const* name);
-    static bool_type free_library(module_type hModule);
-    static void *find_symbol(module_type hModule, char const* symbolName);
+
+    static bool_type free_library(module_type hModule)
+    {
+        return 0 == ::dlclose(hModule);
+    }
+
+    static void* find_symbol(module_type hModule, char const* symbolName)
+    {
+        return ::dlsym(hModule, symbolName);
+    }
 
 public:
     static bool_type close_handle(handle_type h)
     {
+#if defined(_WIN32) && \
+    defined(STLSOFT_COMPILER_IS_MSVC)
+        return 0 == ::_close(h);
+#else /* ? _WIN32 */
         return 0 == ::close(h);
+#endif /* _WIN32 */
     }
 
 public:

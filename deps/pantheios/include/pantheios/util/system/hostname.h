@@ -4,11 +4,11 @@
  * Purpose:     Functions for eliciting host name
  *
  * Created:     14th April 2008
- * Updated:     18th November 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2008-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,7 +55,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_HOSTNAME_MAJOR    1
 # define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_HOSTNAME_MINOR    2
 # define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_HOSTNAME_REVISION 1
-# define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_HOSTNAME_EDIT     11
+# define PANTHEIOS_VER_PANTHEIOS_SYSTEM_H_HOSTNAME_EDIT     12
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -194,4 +194,4 @@ inline size_t getHostName(stlsoft::auto_buffer<pan_char_t, A, N>& buffer)
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_SYSTEM_H_HOSTNAME */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

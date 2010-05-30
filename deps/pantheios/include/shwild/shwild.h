@@ -1,14 +1,14 @@
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * File:    shwild/shwild.h
  *
  * Purpose: Root header file for the shwild library
  *
  * Created: 17th June 2005
- * Updated: 2nd June 2008
+ * Updated: 8th March 2010
  *
  * Home:    http://shwild.org/
  *
- * Copyright (c) 2005-2008, Matthew Wilson and Sean Kelly
+ * Copyright (c) 2005-2010, Matthew Wilson and Sean Kelly
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * ////////////////////////////////////////////////////////////////////////// */
+ * ////////////////////////////////////////////////////////////////////// */
 
 
 /** \file shwild/shwild.h [C/C++] This is the root file of the shwild C-API
@@ -44,15 +44,15 @@
 #ifndef SHWILD_INCL_SHWILD_H_SHWILD
 #define SHWILD_INCL_SHWILD_H_SHWILD
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
 #ifndef SHWILD_DOCUMENTATION_SKIP_SECTION
 # define SHWILD_VER_SHWILD_H_SHWILD_MAJOR       1
 # define SHWILD_VER_SHWILD_H_SHWILD_MINOR       2
-# define SHWILD_VER_SHWILD_H_SHWILD_REVISION    18
-# define SHWILD_VER_SHWILD_H_SHWILD_EDIT        28
+# define SHWILD_VER_SHWILD_H_SHWILD_REVISION    19
+# define SHWILD_VER_SHWILD_H_SHWILD_EDIT        29
 #endif /* !SHWILD_DOCUMENTATION_SKIP_SECTION */
 
 /** \def SHWILD_VER_MAJOR
@@ -90,21 +90,22 @@
 # define SHWILD_VER_0_9_16      0x000910ff
 # define SHWILD_VER_0_9_17      0x000911ff
 # define SHWILD_VER_0_9_18      0x000912ff
+# define SHWILD_VER_0_9_19      0x000913ff
 #endif /* !SHWILD_DOCUMENTATION_SKIP_SECTION */
 
 #define SHWILD_VER_MAJOR        0
 #define SHWILD_VER_MINOR        9
-#define SHWILD_VER_REVISION     18
+#define SHWILD_VER_REVISION     19
 
-#define SHWILD_VER              SHWILD_VER_0_9_18
+#define SHWILD_VER              SHWILD_VER_0_9_19
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Includes
  */
 
 #include <stddef.h>     /* for size_t */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Documentation
  */
 
@@ -121,7 +122,7 @@
  * \brief These types, constants and functions form the core of the shwild API.
  */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Typedefs
  */
 
@@ -168,7 +169,7 @@ public:
 typedef struct shwild_slice_t   shwild_slice_t;
 #endif /* !SHWILD_DOCUMENTATION_SKIP_SECTION */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Constants and definitions
  */
 
@@ -230,7 +231,7 @@ typedef struct shwild_slice_t   shwild_slice_t;
 
 /** @} */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * C API
  */
 
@@ -321,7 +322,7 @@ void shwild_destroy_pattern(shwild_handle_t hCompiledPattern);
 } /* extern "C" */
 #endif /* __cplusplus */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Namespace
  */
 
@@ -338,7 +339,7 @@ namespace shwild
 {
 #endif /* !SHWILD_NO_NAMESPACE */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * C++ functions
  */
 
@@ -390,7 +391,7 @@ inline void destroy_pattern(shwild_handle_t hCompiledPattern)
 
 #endif /* __cplusplus */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Namespace
  */
 
@@ -398,7 +399,7 @@ inline void destroy_pattern(shwild_handle_t hCompiledPattern)
 } /* namespace shwild */
 #endif /* !SHWILD_NO_NAMESPACE */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Implementation
  */
 
@@ -434,8 +435,8 @@ inline shwild_slice_t::shwild_slice_t(size_t n, char const* s)
 
 #endif /* !SHWILD_DOCUMENTATION_SKIP_SECTION */
 
-/* ////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !SHWILD_INCL_SHWILD_H_SHWILD */
 
-/* ////////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

@@ -6,11 +6,11 @@
  *              a pantheios log statement and an HRESULT return code.
  *
  * Created:     1st May 2006
- * Updated:     17th October 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,7 +58,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_UTIL_COM_HPP_EXCEPTION_HELPERS_MAJOR       2
 # define PANTHEIOS_VER_PANTHEIOS_UTIL_COM_HPP_EXCEPTION_HELPERS_MINOR       0
 # define PANTHEIOS_VER_PANTHEIOS_UTIL_COM_HPP_EXCEPTION_HELPERS_REVISION    2
-# define PANTHEIOS_VER_PANTHEIOS_UTIL_COM_HPP_EXCEPTION_HELPERS_EDIT        19
+# define PANTHEIOS_VER_PANTHEIOS_UTIL_COM_HPP_EXCEPTION_HELPERS_EDIT        20
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -100,4 +100,4 @@ namespace com
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_UTIL_COM_HPP_EXCEPTION_HELPERS */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

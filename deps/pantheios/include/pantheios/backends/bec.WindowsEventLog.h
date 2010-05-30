@@ -4,7 +4,7 @@
  * Purpose:     Declaration of the Pantheios WindowsEventLog Stock Back-end API.
  *
  * Created:     8th May 2006
- * Updated:     18th April 2009
+ * Updated:     11th September 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_WINDOWSEVENTLOG_MAJOR       1
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_WINDOWSEVENTLOG_MINOR       1
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_WINDOWSEVENTLOG_MINOR       2
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_WINDOWSEVENTLOG_REVISION    1
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_WINDOWSEVENTLOG_EDIT        25
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_WINDOWSEVENTLOG_EDIT        26
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -124,11 +124,11 @@ PANTHEIOS_CALL(void) pantheios_be_WindowsEventLog_calcCategoryAndEventId(
  * \ingroup group__backend__stock_backends__WindowsEventLog
  */
 PANTHEIOS_CALL(int) pantheios_be_WindowsEventLog_init(
-    char const* processIdentity
-,   int         id
-,   void*       unused
-,   void*       reserved
-,   void**      ptoken
+    PAN_CHAR_T const*   processIdentity
+,   int                 id
+,   void*               unused
+,   void*               reserved
+,   void**              ptoken
 );
 
 /** Implements the functionality for pantheios_be_uninit() over the Windows EventLog API.
@@ -142,11 +142,11 @@ PANTHEIOS_CALL(void) pantheios_be_WindowsEventLog_uninit(
  * \ingroup group__backend__stock_backends__WindowsEventLog
  */
 PANTHEIOS_CALL(int) pantheios_be_WindowsEventLog_logEntry(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
 
@@ -171,11 +171,11 @@ PANTHEIOS_CALL(void) pantheios_be_WindowsEventLog_getPantheiosDotComCategoryAndE
 
 /** Registers an event source for use with Pantheios.COM
  */
-PANTHEIOS_CALL(int) pantheios_be_WindowsEventLog_registerEventSourceUsingPantheiosDotCom(char const* sourceName, char const* pantheiosDotComPath);
+PANTHEIOS_CALL(int) pantheios_be_WindowsEventLog_registerEventSourceUsingPantheiosDotCom(PAN_CHAR_T const* sourceName, PAN_CHAR_T const* pantheiosDotComPath);
 
 /** Unregisters an event source for use with Pantheios.COM
  */
-PANTHEIOS_CALL(int) pantheios_be_WindowsEventLog_unregisterEventSourceUsingPantheiosDotCom(char const* sourceName, char const* pantheiosDotComPath);
+PANTHEIOS_CALL(int) pantheios_be_WindowsEventLog_unregisterEventSourceUsingPantheiosDotCom(PAN_CHAR_T const* sourceName, PAN_CHAR_T const* pantheiosDotComPath);
 
 #endif /* 0 */
 
@@ -183,4 +183,4 @@ PANTHEIOS_CALL(int) pantheios_be_WindowsEventLog_unregisterEventSourceUsingPanth
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_BACKENDS_H_WINDOWSEVENTLOG */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

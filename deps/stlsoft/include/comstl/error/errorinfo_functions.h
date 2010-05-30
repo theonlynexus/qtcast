@@ -4,11 +4,11 @@
  * Purpose:     Error info functions.
  *
  * Created:     5th Feburary 2004
- * Updated:     10th August 2009
+ * Updated:     15th February 2010
  *
  * Home:        http://stlsoft.org/
  *
- * Copyright (c) 2004-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2004-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -50,8 +50,8 @@
 #ifndef STLSOFT_DOCUMENTATION_SKIP_SECTION
 # define COMSTL_VER_COMSTL_ERROR_H_ERRORINFO_FUNCTIONS_MAJOR    4
 # define COMSTL_VER_COMSTL_ERROR_H_ERRORINFO_FUNCTIONS_MINOR    2
-# define COMSTL_VER_COMSTL_ERROR_H_ERRORINFO_FUNCTIONS_REVISION 3
-# define COMSTL_VER_COMSTL_ERROR_H_ERRORINFO_FUNCTIONS_EDIT     41
+# define COMSTL_VER_COMSTL_ERROR_H_ERRORINFO_FUNCTIONS_REVISION 4
+# define COMSTL_VER_COMSTL_ERROR_H_ERRORINFO_FUNCTIONS_EDIT     43
 #endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -61,14 +61,14 @@
 #ifndef COMSTL_INCL_COMSTL_H_COMSTL
 # include <comstl/comstl.h>
 #endif /* !COMSTL_INCL_COMSTL_H_COMSTL */
-#ifndef STLSOFT_INCL_H_OAIDL
-# define STLSOFT_INCL_H_OAIDL
-# include <oaidl.h>
-#endif /* !STLSOFT_INCL_H_OAIDL */
 #ifndef STLSOFT_INCL_H_OLEAUTO
 # define STLSOFT_INCL_H_OLEAUTO
 # include <oleauto.h>
 #endif /* !STLSOFT_INCL_H_OLEAUTO */
+#ifndef STLSOFT_INCL_H_OAIDL
+# define STLSOFT_INCL_H_OAIDL
+# include <oaidl.h>
+#endif /* !STLSOFT_INCL_H_OAIDL */
 
 #ifdef STLSOFT_UNITTEST
 # include <wchar.h>
@@ -344,6 +344,7 @@ namespace comstl
  */
 
 #ifdef __cplusplus
+
 /** \brief Sets the description of the current error object to the given ANSI string
  *
  * \ingroup group__library__error
@@ -413,6 +414,7 @@ inline HRESULT set_error_info(cs_char_w_t const* description, cs_char_w_t const*
 {
     return comstl__set_error_info_w_(description, source, &guid, NULL, NULL);
 }
+
 #endif /* __cplusplus */
 
 /* /////////////////////////////////////////////////////////////////////////

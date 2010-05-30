@@ -4,11 +4,11 @@
  * Purpose:     String inserters for fundamental types
  *
  * Created:     21st June 2005
- * Updated:     8th July 2009
+ * Updated:     22nd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2005-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2005-2010, Matthew Wilson and Synesis Software
  * Copyright (c) 1999-2005, Synesis Software and Matthew Wilson
  * All rights reserved.
  *
@@ -55,9 +55,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_CHARACTER_MAJOR      1
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_CHARACTER_MINOR      3
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_CHARACTER_MINOR      4
 # define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_CHARACTER_REVISION   1
-# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_CHARACTER_EDIT       16
+# define PANTHEIOS_VER_PANTHEIOS_INSERTERS_HPP_CHARACTER_EDIT       19
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -161,7 +161,11 @@ namespace shims
 # endif /* !PANTHEIOS_NO_NAMESPACE */
 
 /** \overload c_str_data_a(character const&) */
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline wchar_t const* c_str_data_w(character const& r)
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline char const* c_str_data_a(character const& r)
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return r.data();
 }
@@ -172,7 +176,11 @@ inline pan_char_t const* c_str_data(character const& r)
 }
 
 /** \overload c_str_len_a(character const&) */
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline size_t c_str_len_w(character const& r)
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline size_t c_str_len_a(character const& r)
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return r.length();
 }
@@ -183,7 +191,11 @@ inline size_t c_str_len(character const& r)
 }
 
 /** \overload c_str_ptr_a(character const&) */
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+inline wchar_t const* c_str_ptr_a(character const& r)
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
 inline char const* c_str_ptr_a(character const& r)
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
 {
     return r.c_str();
 }
@@ -202,13 +214,17 @@ inline pan_char_t const* c_str_ptr(character const& r)
      * shims into the same namespace as the inserter class
      * in order that ADL can suffice instead.
      */
+#   ifdef PANTHEIOS_USE_WIDE_STRINGS
+    using ::pantheios::shims::c_str_data_w;
+    using ::pantheios::shims::c_str_len_w;
+    using ::pantheios::shims::c_str_ptr_w;
+#   else /* ? PANTHEIOS_USE_WIDE_STRINGS */
     using ::pantheios::shims::c_str_data_a;
-    using ::pantheios::shims::c_str_data;
-
     using ::pantheios::shims::c_str_len_a;
-    using ::pantheios::shims::c_str_len;
-
     using ::pantheios::shims::c_str_ptr_a;
+#   endif /* PANTHEIOS_USE_WIDE_STRINGS */
+    using ::pantheios::shims::c_str_data;
+    using ::pantheios::shims::c_str_len;
     using ::pantheios::shims::c_str_ptr;
 #  endif /* compiler */
 
@@ -257,13 +273,17 @@ namespace stlsoft
     // may find a legitimate use for the conversion classes additional to
     // the type-tunneling of the Pantheios API.
 
+# ifdef PANTHEIOS_USE_WIDE_STRINGS
+    using ::pantheios::shims::c_str_data_w;
+    using ::pantheios::shims::c_str_len_w;
+    using ::pantheios::shims::c_str_ptr_w;
+# else /* ? PANTHEIOS_USE_WIDE_STRINGS */
     using ::pantheios::shims::c_str_data_a;
-    using ::pantheios::shims::c_str_data;
-
     using ::pantheios::shims::c_str_len_a;
-    using ::pantheios::shims::c_str_len;
-
     using ::pantheios::shims::c_str_ptr_a;
+# endif /* PANTHEIOS_USE_WIDE_STRINGS */
+    using ::pantheios::shims::c_str_data;
+    using ::pantheios::shims::c_str_len;
     using ::pantheios::shims::c_str_ptr;
 }
 
@@ -273,12 +293,12 @@ namespace stlsoft
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_INSERTERS_HPP_CHARACTER */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

@@ -4,11 +4,11 @@
  * Purpose:     Pantheios Tracing API.
  *
  * Created:     11th November 2007
- * Updated:     11th September 2008
+ * Updated:     23rd March 2010
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2007-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2007-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_H_TRACE_MAJOR      1
-# define PANTHEIOS_VER_PANTHEIOS_H_TRACE_MINOR      2
+# define PANTHEIOS_VER_PANTHEIOS_H_TRACE_MINOR      3
 # define PANTHEIOS_VER_PANTHEIOS_H_TRACE_REVISION   1
-# define PANTHEIOS_VER_PANTHEIOS_H_TRACE_EDIT       10
+# define PANTHEIOS_VER_PANTHEIOS_H_TRACE_EDIT       15
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -65,6 +65,15 @@
 #ifndef PANTHEIOS_INCL_PANTHEIOS_H_PANTHEIOS
 # include <pantheios/pantheios.h>
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_H_PANTHEIOS */
+#ifndef PANTHEIOS_INCL_PANTHEIOS_H_FILELINE
+# include <pantheios/fileline.h>
+#endif /* !PANTHEIOS_INCL_PANTHEIOS_H_FILELINE */
+
+#ifdef PANTHEIOS_USE_WIDE_STRINGS
+# error The Pantheios Tracing API is currently only supported in multibyte builds
+#endif /* PANTHEIOS_USE_WIDE_STRINGS */
+
+#include <stlsoft/stlsoft.h>
 
 /* /////////////////////////////////////////////////////////////////////////
  * Tracing features
@@ -113,23 +122,6 @@
 
 
 
-/** \def PANTHEIOS_FILELINE_A
- *
- * Default file+line format for \ref group__tracing
- *
- * \ingroup group__tracing
- */
-
-/** \def PANTHEIOS_FILELINE
- *
- * Default file+line format for \ref group__tracing
- *
- * \ingroup group__tracing
- *
- * \remarks Because Pantheios is currently multibyte-only, this resolves to
- *   PANTHEIOS_FILELINE_A
- */
-
 /** \def PANTHEIOS_TRACE_PREFIX
  *
  * The file-line prefix uses by the \ref group__tracing for C constructs. It
@@ -148,10 +140,6 @@
  * \ingroup group__tracing
  */
 
-
- /* Define the defaults here, in case we use them below. */
-# define PANTHEIOS_FILELINE_A                   __FILE__ "(" PANTHEIOS_STRINGIZE(__LINE__) "): "
-# define PANTHEIOS_FILELINE                     PANTHEIOS_FILELINE_A
 
  /* Now define the prefix, if the user has not already done so. */
 # if !defined(PANTHEIOS_TRACE_PREFIX)
@@ -183,9 +171,9 @@
 
 # if !defined(PANTHEIOS_NO_NAMESPACE) || \
      defined(PANTHEIOS_DOCUMENTATION_SKIP_SECTION)
-#  define PANTHEIOS_TRACE_PRINTF(sev, fmt, ...) ::pantheios::pantheios_logprintf((sev), "%s" fmt, PANTHEIOS_TRACE_PREFIX, __VA_ARGS__)
+#  define PANTHEIOS_TRACE_PRINTF(sev, fmt, ...) ::pantheios::pantheios_logprintf((sev), "%s" fmt, stlsoft_static_cast(PANTHEIOS_NS_QUAL(pan_char_t) const*, PANTHEIOS_TRACE_PREFIX), __VA_ARGS__)
 # else /* ? __cplusplus */
-#  define PANTHEIOS_TRACE_PRINTF(sev, fmt, ...) pantheios_logprintf((sev), "%s" fmt, PANTHEIOS_TRACE_PREFIX, __VA_ARGS__)
+#  define PANTHEIOS_TRACE_PRINTF(sev, fmt, ...)              pantheios_logprintf((sev), "%s" fmt, stlsoft_static_cast(PANTHEIOS_NS_QUAL(pan_char_t) const*, PANTHEIOS_TRACE_PREFIX), __VA_ARGS__)
 # endif /* __cplusplus */
 
 # if !defined(PANTHEIOS_NO_NAMESPACE) || \
@@ -284,12 +272,12 @@
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_H_TRACE */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

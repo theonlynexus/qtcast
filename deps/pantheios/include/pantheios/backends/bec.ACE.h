@@ -4,7 +4,7 @@
  * Purpose:     Declaration of the Pantheios ACE Stock Back-end API.
  *
  * Created:     21st June 2005
- * Updated:     8th July 2009
+ * Updated:     11th September 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -53,9 +53,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_ACE_MAJOR       1
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_ACE_MINOR       0
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_ACE_REVISION    2
-# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_ACE_EDIT        10
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_ACE_MINOR       1
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_ACE_REVISION    1
+# define PANTHEIOS_VER_PANTHEIOS_BACKENDS_H_BEC_ACE_EDIT        12
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -87,11 +87,11 @@
  * \ingroup group__backend__stock_backends__ACE
  */
 PANTHEIOS_CALL(int) pantheios_be_ACE_init(
-    char const* processIdentity
-,   int         id
-,   void*       unused
-,   void*       reserved
-,   void**      ptoken
+    PAN_CHAR_T const*   processIdentity
+,   int                 id
+,   void*               unused
+,   void*               reserved
+,   void**              ptoken
 );
 
 /** Implements the functionality for pantheios_be_uninit() over the ACE Diagnostic Logging API.
@@ -105,15 +105,15 @@ PANTHEIOS_CALL(void) pantheios_be_ACE_uninit(
  * \ingroup group__backend__stock_backends__ACE
  */
 PANTHEIOS_CALL(int) pantheios_be_ACE_logEntry(
-    void*       feToken
-,   void*       beToken
-,   int         severity
-,   char const* entry
-,   size_t      cchEntry
+    void*               feToken
+,   void*               beToken
+,   int                 severity
+,   PAN_CHAR_T const*   entry
+,   size_t              cchEntry
 );
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* PANTHEIOS_INCL_PANTHEIOS_BACKENDS_H_ACE_SRC */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

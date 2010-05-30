@@ -4,13 +4,13 @@
  * Purpose:     Pantheios Assertion API.
  *
  * Created:     8th May 2009
- * Updated:     8th July 2009
+ * Updated:     23rd March 2010
  *
  * Thanks to:   markitus82 for requesting this functionality
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2009-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@
 
 /** \file pantheios/assert.h
  *
- * [C, C++] Include file for the \ref group_assertion
+ * [C, C++] Include file for the \ref group__assertion
  */
 
 #ifndef PANTHEIOS_INCL_PANTHEIOS_H_ASSERT
@@ -55,9 +55,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_H_ASSERT_MAJOR     1
-# define PANTHEIOS_VER_PANTHEIOS_H_ASSERT_MINOR     0
+# define PANTHEIOS_VER_PANTHEIOS_H_ASSERT_MINOR     1
 # define PANTHEIOS_VER_PANTHEIOS_H_ASSERT_REVISION  1
-# define PANTHEIOS_VER_PANTHEIOS_H_ASSERT_EDIT      3
+# define PANTHEIOS_VER_PANTHEIOS_H_ASSERT_EDIT      7
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -67,9 +67,9 @@
 #ifndef PANTHEIOS_INCL_PANTHEIOS_H_PANTHEIOS
 # include <pantheios/pantheios.h>
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_H_PANTHEIOS */
-#ifndef PANTHEIOS_INCL_PANTHEIOS_H_TRACE
-# include <pantheios/trace.h>
-#endif /* !PANTHEIOS_INCL_PANTHEIOS_H_TRACE */
+#ifndef PANTHEIOS_INCL_PANTHEIOS_H_FILELINE
+# include <pantheios/fileline.h>
+#endif /* !PANTHEIOS_INCL_PANTHEIOS_H_FILELINE */
 
 #include <stlsoft/stlsoft.h>
 
@@ -77,7 +77,7 @@
  * Assertion features
  */
 
-/** \defgroup group_assertion Pantheios Assertion API
+/** \defgroup group__assertion Pantheios Assertion API
  *
  * Pantheios Assertion API
  *
@@ -87,7 +87,7 @@
 <pre>
   int main()
   {
-    PANTHEIOS_ASSERT(false); // Will assert, and will log (to debug)
+    PANTHEIOS_ASSERT(false); // Will assert, and will log
 
     return 0;
   }
@@ -101,13 +101,13 @@
  * The level at which log statements will be submitted by
  * \c PANTHEIOS_ASSERT and \c PANTHEIOS_MESSAGE_ASSERT.
  *
- * Defaults to \c PANTHEIOS_SEV_DEBUG
+ * Defaults to \c PANTHEIOS_SEV_EMERGENCY
  *
- * \ingroup group_assertion
+ * \ingroup group__assertion
  */
 
 #ifndef PANTHEIOS_ASSERT_SEVERITY_LEVEL
-# define PANTHEIOS_ASSERT_SEVERITY_LEVEL    PANTHEIOS_SEV_DEBUG
+# define PANTHEIOS_ASSERT_SEVERITY_LEVEL    PANTHEIOS_SEV_EMERGENCY
 #endif /* !PANTHEIOS_ASSERT_SEVERITY_LEVEL */
 
 
@@ -122,7 +122,7 @@
  * emitted if that level is currently switched on. The expression will also
  * be subjected to an assert, via \c STLSOFT_ASSERT()
  *
- * \ingroup group_assertion
+ * \ingroup group__assertion
  */
 
 #define PANTHEIOS_ASSERT(expr)              \
@@ -131,7 +131,7 @@
     {                                       \
         if(!expr)                           \
         {                                   \
-            PANTHEIOS_NS_QUAL(pantheios_logputs)(PANTHEIOS_ASSERT_SEVERITY_LEVEL, PANTHEIOS_FILELINE_A "assertion failed: " #expr); \
+            PANTHEIOS_NS_QUAL(pantheios_logassertfail)(PANTHEIOS_ASSERT_SEVERITY_LEVEL, PANTHEIOS_FILELINE_A, "assertion failed: " #expr); \
         }                                   \
                                             \
         STLSOFT_ASSERT(expr);               \
@@ -150,7 +150,7 @@
  * emitted if that level is currently switched on. The expression will also
  * be subjected to an assert, via \c STLSOFT_MESSAGE_ASSERT()
  *
- * \ingroup group_assertion
+ * \ingroup group__assertion
  */
 
 #define PANTHEIOS_MESSAGE_ASSERT(expr, msg) \
@@ -159,7 +159,7 @@
     {                                       \
         if(!expr)                           \
         {                                   \
-            PANTHEIOS_NS_QUAL(pantheios_logputs)(PANTHEIOS_ASSERT_SEVERITY_LEVEL, PANTHEIOS_FILELINE_A "assertion failed: " #expr "; message: " msg);   \
+            PANTHEIOS_NS_QUAL(pantheios_logassertfail)(PANTHEIOS_ASSERT_SEVERITY_LEVEL, PANTHEIOS_FILELINE_A, "assertion failed: " #expr "; message: " msg); \
         }                                   \
                                             \
         STLSOFT_MESSAGE_ASSERT(msg, expr);  \
@@ -170,12 +170,12 @@
  * Inclusion
  */
 
-#ifdef STLSOFT_CF_PRAGMA_ONCE_SUPPORT
+#ifdef STLSOFT_PPF_pragma_once_SUPPORT
 # pragma once
-#endif /* STLSOFT_CF_PRAGMA_ONCE_SUPPORT */
+#endif /* STLSOFT_PPF_pragma_once_SUPPORT */
 
 /* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_H_ASSERT */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

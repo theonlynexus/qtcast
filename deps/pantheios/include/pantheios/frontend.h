@@ -4,7 +4,7 @@
  * Purpose:     Pantheios front end API
  *
  * Created:     21st June 2005
- * Updated:     17th April 2009
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
@@ -54,9 +54,9 @@
 
 #ifndef PANTHEIOS_DOCUMENTATION_SKIP_SECTION
 # define PANTHEIOS_VER_PANTHEIOS_H_FRONTEND_MAJOR       3
-# define PANTHEIOS_VER_PANTHEIOS_H_FRONTEND_MINOR       0
-# define PANTHEIOS_VER_PANTHEIOS_H_FRONTEND_REVISION    6
-# define PANTHEIOS_VER_PANTHEIOS_H_FRONTEND_EDIT        16
+# define PANTHEIOS_VER_PANTHEIOS_H_FRONTEND_MINOR       1
+# define PANTHEIOS_VER_PANTHEIOS_H_FRONTEND_REVISION    1
+# define PANTHEIOS_VER_PANTHEIOS_H_FRONTEND_EDIT        18
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -153,7 +153,7 @@ PANTHEIOS_CALL(void) pantheios_fe_uninit(void* token);
  *   It will also be called if the application, or the front-end or
  *   back-end(s) invoke pantheios_onBailOut4() at any other time.
  */
-PANTHEIOS_CALL(char const*) pantheios_fe_getProcessIdentity(void* token);
+PANTHEIOS_CALL(PAN_CHAR_T const*) pantheios_fe_getProcessIdentity(void* token);
 
 /** Determines whether a given severity is being logged
  *
@@ -196,4 +196,4 @@ PANTHEIOS_CALL(int) pantheios_fe_isSeverityLogged(
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_H_FRONTEND */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

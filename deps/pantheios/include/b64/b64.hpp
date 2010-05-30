@@ -1,14 +1,14 @@
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * File:        b64/b64.hpp
  *
  * Purpose:     Header file for the b64 C++-API.
  *
  * Created:     18th October 2004
- * Updated:     24th August 2008
+ * Updated:     20th January 2010
  *
  * Home:        http://synesis.com.au/software/
  *
- * Copyright 2004-2008, Matthew Wilson and Synesis Software
+ * Copyright 2004-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without 
@@ -35,7 +35,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * ////////////////////////////////////////////////////////////////////////// */
+ * ////////////////////////////////////////////////////////////////////// */
 
 
 /** \file b64/b64.hpp [C++ only] Header file for the b64 C++-API
@@ -57,18 +57,18 @@
 #ifndef B64_INCL_B64_HPP_B64
 #define B64_INCL_B64_HPP_B64
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Version information
  */
 
 #ifndef B64_DOCUMENTATION_SKIP_SECTION
 # define B64_VER_B64_HPP_B64_MAJOR      2
 # define B64_VER_B64_HPP_B64_MINOR      1
-# define B64_VER_B64_HPP_B64_REVISION   5
-# define B64_VER_B64_HPP_B64_EDIT       30
+# define B64_VER_B64_HPP_B64_REVISION   8
+# define B64_VER_B64_HPP_B64_EDIT       33
 #endif /* !B64_DOCUMENTATION_SKIP_SECTION */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Includes
  */
 
@@ -85,8 +85,8 @@
 #endif /* !STLSOFT_INCL_STLSOFT_H_STLSOFT */
 
 #if !defined(_STLSOFT_VER) || \
-    _STLSOFT_VER < 0x010930ff
-# error Requires STLSoft 1.9.48, or later. (www.stlsoft.org/downloads.html)
+    _STLSOFT_VER < 0x010957ff
+# error Requires STLSoft 1.9.87, or later. (www.stlsoft.org/downloads.html)
 #endif /* STLSoft version */
 
 #ifdef STLSOFT_CF_std_NAMESPACE
@@ -155,7 +155,7 @@
 # endif /* compiler */
 #endif /* STLSOFT_CF_EXCEPTION_SUPPORT */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Namespace
  */
 
@@ -164,7 +164,7 @@ namespace B64_NAMESPACE
 {
 #endif /* !B64_NO_NAMESPACE */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Classes
  */
 
@@ -203,7 +203,7 @@ public:
 public:
     void resize(size_t n)
     {
-        String  &this_  =   *this;
+        String& this_ = *this;
 
         this_ = String(*this, n);
     }
@@ -219,25 +219,24 @@ class coding_exception
 public:
     typedef stlsoft_ns_qual_std(runtime_error)  parent_class_type;
     typedef coding_exception                    class_type;
+private:
+#if defined(B64_USE_CUSTOM_STRING)
+    typedef B64_CUSTOM_STRING_TYPE              string_type;
+#else /* B64_USE_CUSTOM_STRING */
+    typedef std::string                         string_type;
+#endif /* !B64_USE_CUSTOM_STRING */
 
 public:
     /** Constructs an exception based on the error code, and a pointer to the bad character. */
-    coding_exception(B64_RC rc, char const *badChar)
-        : parent_class_type("decoding error")
+    coding_exception(B64_RC rc, char const* badChar)
+        : parent_class_type(make_message_(rc))
         , m_rc(rc)
         , m_badChar(badChar)
     {}
 
 public:
-    /** Pointer to a character describing the condition that caused the exception. */
-    virtual char const *what() const throw()
-    {
-        return "decoding error";
-    }
-
-public:
     /** The error code associated with the exception. */
-    B64_RC      get_rc() const
+    B64_RC get_rc() const
     {
         return m_rc;
     }
@@ -245,18 +244,24 @@ public:
      *
      * \note May be NULL, if the error is not associated with an invalid character encountered during decoding.
      */
-    char const  *get_badChar() const
+    char const* get_badChar() const
     {
         return m_badChar;
     }
 
 private:
+    static string_type make_message_(B64_RC rc)
+    {
+		return string_type("Decoding error: ") + b64_getErrorString(rc);
+    }
+
+private:
     B64_RC      m_rc;
-    char const  *m_badChar;
+    char const* m_badChar;
 };
 #endif /* STLSOFT_CF_EXCEPTION_SUPPORT */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Typedefs
  */
 
@@ -320,7 +325,7 @@ typedef std::vector< ::stlsoft::byte_t> blob_t;
 # endif /* !B64_DOCUMENTATION_SKIP_SECTION */
 #endif /* !B64_USE_CUSTOM_VECTOR */
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Functions
  */
 
@@ -354,7 +359,7 @@ typedef std::vector< ::stlsoft::byte_t> blob_t;
  *
  * \exception std::bad_alloc If insufficient memory is available to complete the operation
  */
-inline string_t encode(void const *src, size_t srcSize, unsigned flags, int lineLen = 0, B64_RC *rc = NULL)
+inline string_t encode(void const* src, size_t srcSize, int flags, int lineLen = 0, B64_RC* rc = NULL)
 {
     B64_RC  rc_;
 
@@ -365,7 +370,7 @@ inline string_t encode(void const *src, size_t srcSize, unsigned flags, int line
         rc = &rc_;
     }
 
-    size_t      n   =   B64_NAMESPACE_QUALIFIER::b64_encode2(src, srcSize, NULL, 0, flags, lineLen, rc);
+    size_t      n   =   B64_NAMESPACE_QUALIFIER::b64_encode2(src, srcSize, NULL, 0u, static_cast<unsigned>(flags), lineLen, rc);
 
 #ifdef B64_STRING_TYPE_IS_CONTIGUOUS
 
@@ -377,7 +382,7 @@ inline string_t encode(void const *src, size_t srcSize, unsigned flags, int line
 
     STLSOFT_MESSAGE_ASSERT("assumed contiguous string type is not so. Please report this error. To effect fix now, #define B64_NO_CONTIGUOUS_STRING_TYPE", 0 == n || &s[n - 1] == &s[0] + (n - 1));
 
-    size_t      n2  =   B64_NAMESPACE_QUALIFIER::b64_encode2(src, srcSize, &s[0], s.length(), flags, lineLen, rc);
+    size_t      n2  =   B64_NAMESPACE_QUALIFIER::b64_encode2(src, srcSize, &s[0], s.length(), static_cast<unsigned>(flags), lineLen, rc);
 
     s.resize(n2);
 
@@ -388,10 +393,10 @@ inline string_t encode(void const *src, size_t srcSize, unsigned flags, int line
     // data in excess of that will incur an additional (over the string's)
     // heap allocation.
 
-    typedef stlsoft::auto_buffer<char, 1024>        buffer_t;
+    typedef stlsoft::auto_buffer<b64_char_t, 1024>  buffer_t;
 
     buffer_t    buffer(n);
-    size_t      n2  =   B64_NAMESPACE_QUALIFIER::b64_encode2(src, srcSize, &buffer[0], buffer.size(), flags, lineLen, rc);
+    size_t      n2  =   B64_NAMESPACE_QUALIFIER::b64_encode2(src, srcSize, &buffer[0], buffer.size(), static_cast<unsigned>(flags), lineLen, rc);
 
     string_t    s(&buffer[0], n2);
 #endif /* B64_STRING_TYPE_IS_CONTIGUOUS */
@@ -431,7 +436,7 @@ inline string_t encode(void const *src, size_t srcSize, unsigned flags, int line
  *
  * \exception std::bad_alloc If insufficient memory is available to complete the operation
  */
-inline string_t encode(void const *src, size_t srcSize)
+inline string_t encode(void const* src, size_t srcSize)
 {
     return encode(src, srcSize, 0, 0, NULL);
 }
@@ -485,7 +490,7 @@ inline string_t encode(T (&ar)[N])
  */
 inline string_t encode(blob_t const &blob)
 {
-    return encode(&blob[0], blob.size());
+    return encode(blob.empty() ? NULL : &blob[0], blob.size());
 }
 
 /** \brief Encodes the given blob into base-64
@@ -512,9 +517,9 @@ inline string_t encode(blob_t const &blob)
  *
  * \exception std::bad_alloc If insufficient memory is available to complete the operation
  */
-inline string_t encode(blob_t const &blob, unsigned flags, int lineLen = 0, B64_RC *rc = NULL)
+inline string_t encode(blob_t const &blob, int flags, int lineLen = 0, B64_RC* rc = NULL)
 {
-    return encode(&blob[0], blob.size(), flags, lineLen, rc);
+    return encode(blob.empty() ? NULL : &blob[0], blob.size(), flags, lineLen, rc);
 }
 
 /** \brief Decodes the given base-64 block into binary
@@ -543,11 +548,11 @@ inline string_t encode(blob_t const &blob, unsigned flags, int lineLen = 0, B64_
  * \exception std::bad_alloc If insufficient memory is available to complete the operation
  * \exception b64::coding_exception If a bad character is encountered in the encoded block (as moderated by the flags parameter; see \link b64::B64_FLAGS B64_FLAGS\endlink)
  */
-inline blob_t decode(char const *src, size_t srcLen, unsigned flags, char const **badChar = NULL, B64_RC *rc = NULL)
+inline blob_t decode(b64_char_t const* src, size_t srcLen, int flags, b64_char_t const** badChar = NULL, B64_RC* rc = NULL)
 {
 #ifdef STLSOFT_CF_EXCEPTION_SUPPORT
-    B64_RC      rc_;
-    char const  *badChar_;
+    B64_RC				rc_;
+    b64_char_t const*	badChar_;
 
     if(NULL == rc)
     {
@@ -559,9 +564,9 @@ inline blob_t decode(char const *src, size_t srcLen, unsigned flags, char const 
     }
 #endif /* STLSOFT_CF_EXCEPTION_SUPPORT */
 
-    size_t  n   =   B64_NAMESPACE_QUALIFIER::b64_decode2(src, srcLen, NULL, 0, flags, badChar, rc);
+    size_t  n   =   B64_NAMESPACE_QUALIFIER::b64_decode2(src, srcLen, NULL, 0, static_cast<unsigned>(flags), badChar, rc);
     blob_t  v(n);
-    size_t  n2  =   v.empty() ? 0 : B64_NAMESPACE_QUALIFIER::b64_decode2(src, srcLen, &v[0], v.size(), flags, badChar, rc);
+    size_t  n2  =   v.empty() ? 0 : B64_NAMESPACE_QUALIFIER::b64_decode2(src, srcLen, &v[0], v.size(), static_cast<unsigned>(flags), badChar, rc);
 
     v.resize(n2);
 
@@ -570,7 +575,7 @@ inline blob_t decode(char const *src, size_t srcLen, unsigned flags, char const 
         0 == n2 &&
         rc == &rc_)
     {
-        throw coding_exception(*rc, *badChar);
+        throw coding_exception(*rc, (badChar == &badChar_) ? *badChar : NULL);
     }
 #endif /* STLSOFT_CF_EXCEPTION_SUPPORT */
 
@@ -595,10 +600,46 @@ inline blob_t decode(char const *src, size_t srcLen, unsigned flags, char const 
  *
  * \exception std::bad_alloc If insufficient memory is available to complete the operation
  */
-inline blob_t decode(char const *src, size_t srcLen)
+inline blob_t decode(b64_char_t const* src, size_t srcLen)
 {
-    return decode(src, srcLen, 0, NULL, NULL);
+    return decode(src, srcLen, B64_F_STOP_ON_BAD_CHAR, NULL, NULL);
 }
+
+#ifndef B64_DOCUMENTATION_SKIP_SECTION
+STLSOFT_OPEN_WORKER_NS_(impl)
+
+/** \brief Function template that decodes an instance of an arbitrary string type from base-64 into binary
+ *
+ * \param str The string whose contents are to be decoded
+ * \param flags Flags that moderate the decoding
+ *
+ * \return The binary form of the block, as a \c blob_t
+ *
+ * \note There is no error return. If insufficient memory can be allocated, an
+ * instance of \c std::bad_alloc will be thrown
+ *
+ * \note Threading: The function is fully re-entrant, assuming that the heap for the
+ * system is re-entrant.
+ *
+ * \note Exceptions: Provides the strong guarantee, assuming that the constructor for
+ * the string type (\c string_t) does so.
+ *
+ * \exception std::bad_alloc If insufficient memory is available to complete the operation
+ */
+template <class S>
+inline blob_t b64_impl_decode_(int flags, S const &str)
+{
+    stlsoft_ns_using(c_str_data_a);
+    stlsoft_ns_using(c_str_len_a);
+
+    b64_char_t const* dummy; // Cannot rely on badChar being available in str
+
+    return decode(c_str_data_a(str), c_str_len_a(str), static_cast<B64_FLAGS>(flags), &dummy, NULL);
+}
+
+STLSOFT_CLOSE_WORKER_NS_(ns)
+#endif /* !B64_DOCUMENTATION_SKIP_SECTION */
+
 
 /** \brief Function template that decodes an instance of an arbitrary string type from base-64 into binary
  *
@@ -620,10 +661,31 @@ inline blob_t decode(char const *src, size_t srcLen)
 template <class S>
 inline blob_t decode(S const &str)
 {
-    stlsoft_ns_using(c_str_data_a);
-    stlsoft_ns_using(c_str_len_a);
+    return STLSOFT_WORKER_NS_QUAL_(impl, b64_impl_decode_)(B64_F_STOP_ON_BAD_CHAR, str);
+}
 
-    return decode(c_str_data_a(str), c_str_len_a(str));
+/** \brief Function template that decodes an instance of an arbitrary string type from base-64 into binary
+ *
+ * \param str The string whose contents are to be decoded
+ * \param flags Flags that moderate the decoding
+ *
+ * \return The binary form of the block, as a \c blob_t
+ *
+ * \note There is no error return. If insufficient memory can be allocated, an
+ * instance of \c std::bad_alloc will be thrown
+ *
+ * \note Threading: The function is fully re-entrant, assuming that the heap for the
+ * system is re-entrant.
+ *
+ * \note Exceptions: Provides the strong guarantee, assuming that the constructor for
+ * the string type (\c string_t) does so.
+ *
+ * \exception std::bad_alloc If insufficient memory is available to complete the operation
+ */
+template <class S>
+inline blob_t decode(int flags, S const &str) // NOTE: This has to be overloaded, rather than use default arguments, otherwise VC has a spit
+{
+    return STLSOFT_WORKER_NS_QUAL_(impl, b64_impl_decode_)(flags, str);
 }
 
 /** \brief Decodes the given string from base-64 into binary
@@ -646,7 +708,7 @@ inline blob_t decode(S const &str)
  * \exception std::bad_alloc If insufficient memory is available to complete the operation
  * \exception b64::coding_exception If a bad character is encountered in the encoded block (as moderated by the flags parameter; see \link b64::B64_FLAGS B64_FLAGS\endlink)
  */
-inline blob_t decode(string_t const &str, unsigned flags = 0)
+inline blob_t decode(string_t const &str, int flags = B64_F_STOP_ON_BAD_CHAR)
 {
     stlsoft_ns_using(c_str_data_a);
     stlsoft_ns_using(c_str_len_a);
@@ -679,7 +741,7 @@ inline blob_t decode(string_t const &str, unsigned flags = 0)
  * \exception std::bad_alloc If insufficient memory is available to complete the operation
  * \exception b64::coding_exception If a bad character is encountered in the encoded block (as moderated by the flags parameter; see \link b64::B64_FLAGS B64_FLAGS\endlink)
  */
-inline blob_t decode(string_t const &str, unsigned flags, char const **badChar, B64_RC *rc = NULL)
+inline blob_t decode(string_t const &str, int flags, b64_char_t const** badChar, B64_RC* rc = NULL)
 {
     stlsoft_ns_using(c_str_data_a);
     stlsoft_ns_using(c_str_len_a);
@@ -687,7 +749,7 @@ inline blob_t decode(string_t const &str, unsigned flags, char const **badChar, 
     return decode(c_str_data_a(str), c_str_len_a(str), flags, badChar, rc);
 }
 
-/* /////////////////////////////////////////////////////////////////////////////
+/* /////////////////////////////////////////////////////////////////////////
  * Namespace
  */
 
@@ -716,8 +778,8 @@ namespace cpp
 } /* namespace B64_NAMESPACE */
 #endif /* !B64_NO_NAMESPACE */
 
-/* ////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////////// */
 
 #endif /* B64_INCL_B64_HPP_B64 */
 
-/* ////////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

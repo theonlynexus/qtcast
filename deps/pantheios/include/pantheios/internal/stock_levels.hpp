@@ -4,11 +4,11 @@
  * Purpose:     Custom level class.
  *
  * Created:     22nd July 2006
- * Updated:     14th October 2008
+ * Updated:     10th August 2009
  *
  * Home:        http://www.pantheios.org/
  *
- * Copyright (c) 2006-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -113,4 +113,4 @@ namespace
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_INTERNAL_HPP_STOCK_LEVELS */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */

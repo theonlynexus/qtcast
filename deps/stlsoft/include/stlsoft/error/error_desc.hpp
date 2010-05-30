@@ -4,11 +4,11 @@
  * Purpose:     Converts a standard rerror code (errno) to a printable string.
  *
  * Created:     18th July 2006
- * Updated:     10th August 2009
+ * Updated:     31st March 2010
  *
  * Home:        http://stlsoft.org/
  *
- * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2010, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -50,9 +50,9 @@
 
 #ifndef STLSOFT_DOCUMENTATION_SKIP_SECTION
 # define STLSOFT_VER_STLSOFT_ERROR_HPP_ERROR_DESC_MAJOR     1
-# define STLSOFT_VER_STLSOFT_ERROR_HPP_ERROR_DESC_MINOR     0
-# define STLSOFT_VER_STLSOFT_ERROR_HPP_ERROR_DESC_REVISION  7
-# define STLSOFT_VER_STLSOFT_ERROR_HPP_ERROR_DESC_EDIT      18
+# define STLSOFT_VER_STLSOFT_ERROR_HPP_ERROR_DESC_MINOR     2
+# define STLSOFT_VER_STLSOFT_ERROR_HPP_ERROR_DESC_REVISION  1
+# define STLSOFT_VER_STLSOFT_ERROR_HPP_ERROR_DESC_EDIT      20
 #endif /* !STLSOFT_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -78,10 +78,18 @@
 # include <stlsoft/internal/safestr.h>
 #endif /* !STLSOFT_INCL_STLSOFT_INTERNAL_H_SAFESTR */
 
+#ifndef STLSOFT_INCL_H_STDLIB
+# define STLSOFT_INCL_H_STDLIB
+# include <stdlib.h>                    // for mbstowcs()
+#endif /* !STLSOFT_INCL_H_STDLIB */
 #ifndef STLSOFT_INCL_H_STRING
 # define STLSOFT_INCL_H_STRING
 # include <string.h>                    // for strerror()
 #endif /* !STLSOFT_INCL_H_STRING */
+#ifndef STLSOFT_INCL_H_WCHAR
+# define STLSOFT_INCL_H_WCHAR
+# include <wchar.h>                     // for wcslen()
+#endif /* !STLSOFT_INCL_H_WCHAR */
 
 #ifdef STLSOFT_UNITTEST
 # include <errno.h>
@@ -112,6 +120,12 @@
 #  define STLSOFT_ERROR_DESC_WIDE_STRING_SUPPORT_
 # endif /* STLSOFT_ERROR_DESC_wcserror */
 #endif /* STLSOFT_USING_SAFE_STR_FUNCTIONS */
+
+#if !defined(STLSOFT_ERROR_DESC_wcserror_s) && \
+    !defined(STLSOFT_ERROR_DESC_wcserror)
+# include <stlsoft/string/shim_string.hpp>
+# include <string>
+#endif /* !STLSOFT_ERROR_DESC_wcserror_s && !STLSOFT_ERROR_DESC_wcserror */
 
 /* /////////////////////////////////////////////////////////////////////////
  * Namespace
@@ -167,7 +181,7 @@ struct error_desc_traits<ss_char_w_t>
 #  else /* ? STLSOFT_ERROR_DESC_wcserror_s */
 
 STLSOFT_TEMPLATE_SPECIALISATION
-struct error_desc_traits<ss_char_a_t>;
+struct error_desc_traits<ss_char_w_t>;
 
 #  endif /* STLSOFT_ERROR_DESC_wcserror_s */
 
@@ -187,7 +201,29 @@ struct error_desc_traits<ss_char_w_t>
 #  else /* ? STLSOFT_ERROR_DESC_wcserror_s */
 
 STLSOFT_TEMPLATE_SPECIALISATION
-struct error_desc_traits<ss_char_w_t>;
+struct error_desc_traits<ss_char_w_t>
+{
+    static basic_shim_string<ss_char_w_t, 64> invoke_strerror_(int code, ss_char_w_t const*)
+    {
+        typedef basic_shim_string<ss_char_w_t, 64>  return_t;
+
+        std::string const   s(::strerror(code));
+        return_t            ss(s.size());
+        size_t const        n = ::mbstowcs(ss.data(), s.data(), s.size());
+
+        if(size_t(-1) == n)
+        {
+          ss.truncate(0);
+          ss.append(L"could not determine error");
+        }
+        else
+        {
+          ;
+        }
+
+        return ss;
+    }
+};
 
 #  endif /* STLSOFT_ERROR_DESC_wcserror */
 
@@ -383,7 +419,7 @@ inline basic_error_desc<C>::basic_error_desc(ss_typename_type_k basic_error_desc
     // STLSOFT_ERROR_DESC_wcserror does not exist. If your platform has an
     // equivalental function, as does Microsoft's with _wcserror(), then
     // define STLSOFT_ERROR_DESC_wcserror to the name of your function
-    : m_str(string_dup(traits_type::invoke_strerror_(error, static_cast<char_type const*>(0)), get_allocator_(), &m_length))
+    : m_str(string_dup(static_cast<char_type const*>(traits_type::invoke_strerror_(error, static_cast<char_type const*>(0))), get_allocator_(), &m_length))
 {}
 #endif /* STLSOFT_USING_SAFE_STR_FUNCTIONS */
 
@@ -526,7 +562,6 @@ inline C const* get_ptr(stlsoft_ns_qual(basic_error_desc)<C> const& e)
  */
 template<   ss_typename_param_k S
         ,   ss_typename_param_k C
-        ,   ss_typename_param_k T
         >
 inline S& operator <<(S& s, stlsoft_ns_qual(basic_error_desc)<C> const& e)
 {
@@ -563,11 +598,13 @@ inline S& operator <<(S& s, stlsoft_ns_qual(basic_error_desc)<C> const& e)
 
 # include <iosfwd>
 
+#if 0
 template <ss_typename_param_k C>
 inline stlsoft_ns_qual_std(basic_ostream)<C>& operator <<(stlsoft_ns_qual_std(basic_ostream)<C> &stm, stlsoft_ns_qual(basic_error_desc)<C> const& desc)
 {
     return stm << desc.c_str();
 }
+#endif /* 0 */
 
 #endif /* library */
 

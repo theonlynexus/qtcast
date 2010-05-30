@@ -4,11 +4,11 @@
  * Purpose: Implicitly links in the Pantheios Windows-syslog Local Back-End Library
  *
  * Created: 25th August 2006
- * Updated: 11th September 2008
+ * Updated: 10th August 2009
  *
  * Home:    http://pantheios.org/
  *
- * Copyright (c) 2006-2008, Matthew Wilson and Synesis Software
+ * Copyright (c) 2006-2009, Matthew Wilson and Synesis Software
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSSYSLOG_CALLBACK_MAJOR       2
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSSYSLOG_CALLBACK_MINOR       0
 # define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSSYSLOG_CALLBACK_REVISION    1
-# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSSYSLOG_CALLBACK_EDIT        6
+# define PANTHEIOS_VER_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSSYSLOG_CALLBACK_EDIT        7
 #endif /* !PANTHEIOS_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -106,4 +106,4 @@
 
 #endif /* !PANTHEIOS_INCL_PANTHEIOS_IMPLICIT_LINK_H_BEL_WINDOWSSYSLOG_CALLBACK */
 
-/* ////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////// end of file //////////////////////////// */
