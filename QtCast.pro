@@ -84,10 +84,15 @@ TARGET = QtCast
 TEMPLATE = app
 SOURCES += main.cpp \
            qtcast.cpp \
-           podcast.cpp
+           podcast.cpp \
+           dialogoptions.cpp \
+           options.cpp
 HEADERS += qtcast.h \
-           podcast.h
+           podcast.h \
+           dialogoptions.h \
+           options.h
 FORMS += qtcast.ui
+FORMS += dialogoptions.ui
 RESOURCES += icons.qrc
 HEADERS += audiofile.h
 SOURCES += audiofile.cpp

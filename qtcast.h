@@ -34,6 +34,7 @@ private:
 
 
 private slots:
+    void on_actionOptions_triggered();
     void on_listTracks_clicked(QModelIndex index);
     void on_btnDelTrack_clicked();
     void on_actionAbout_triggered();

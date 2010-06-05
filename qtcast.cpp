@@ -4,6 +4,9 @@
 #include "audiofilemeta.h"
 #include "audiofilelistmodel.h"
 
+#include "dialogoptions.h"
+#include "ui_dialogoptions.h"
+
 #include <gst/gst.h>
 #include <glib.h>
 
@@ -203,4 +206,11 @@ void QtCast::on_listTracks_clicked(QModelIndex index)
          ui->lineTrackTitle->setText( meta.title );
          ui->lineTrackTitle->setCursorPosition(0);
     }
+}
+
+void QtCast::on_actionOptions_triggered()
+{
+    dialogOptions options( this );
+    options.setModal( true );
+    options.exec();
 }
