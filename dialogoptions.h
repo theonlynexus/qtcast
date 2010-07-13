@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QModelIndex>
+#include <QString>
+#include <QList>
 
 namespace Ui {
     class dialogOptions;
@@ -19,6 +21,7 @@ protected:
 
 private:
     Ui::dialogOptions *ui;
+    QList<QString> dialogOptions::getAlsaCards();
 
 private slots:
     void on_listSources_activated(QModelIndex index);

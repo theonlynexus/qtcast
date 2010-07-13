@@ -19,11 +19,14 @@ dialogOptions::dialogOptions(QWidget *parent) :
     GstPlugin* plugin = gst_registry_find_plugin( registry,"alsa");
 
     if( plugin )
+    {
         pantheios::log_DEBUG( "dialogOptions::on_listSources_activated: found ALSA plugin! ^.^");
+        getAlsaCards();
+    }
     else
+    {
         pantheios::log_DEBUG( "dialogOptions::on_listSources_activated: no ALSA plugin." );
-
-
+    }
 }
 
 dialogOptions::~dialogOptions()
@@ -46,6 +49,54 @@ void dialogOptions::changeEvent(QEvent *e)
 void dialogOptions::on_listSources_activated(QModelIndex index)
 {
 
+}
+
+QList<QString> dialogOptions::getAlsaCards()
+{
+//    for (add = 0; add + 1 < argc; i++) {
+//            if (!strcmp(argv[add+1],"--help")) {
+//                    usage();
+//                    return 0;
+//            }
+//            if (argv[add+1][0] == '-') {
+//                    add++;
+//                    if (argv[add][1] == 'c') {
+//                            card = snd_card_name(argv[++add]);
+//                            if (card < 0) {
+//                                    fprintf(stderr, "Invalid card: %s\n",argv[2]);
+//                                    exit(1);
+//                            }
+//                    } else if (argv[add][1] == 'd') {
+//                            device = atoi(argv[++add]);
+//                            if (device < 0 || device > 128) {
+//                                    fprintf(stderr, "Invalid device: %s\n",argv[2]);
+//                                    exit(1);
+//                            }
+//                    } else if (argv[add][1] == 'h') {
+//                            usage();
+//                            return 0;
+//                    } else if (argv[add][1] == 'p') {
+//                            pathind = ++add;
+//                    } else if (argv[add][1] == 'r') {
+//                            the_mixer = new Mixer(card,device);
+//                            if (the_mixer && the_mixer->Init()) read_config(the_mixer, pathind ? argv[pathind] : (const char *)NULL);
+//                            delete the_mixer;
+//                            return 0;
+//                    } else if (argv[add][1] == 'w') {
+//                            the_mixer = new Mixer(card,device);
+//                            if (the_mixer && the_mixer->Init()) write_config(the_mixer);
+//                            delete the_mixer;
+//                            return 0;
+//                    } else if (argv[add][1] == 'q') {
+//                            quiet = 1;
+//                    } else {
+//                            fprintf(stderr, "Invalid option: %s\n", argv[add]+1);
+//                            return 1;
+//                    }
+//            } else {
+//                    break;
+//            }
+//    }
 }
 
 //gboolean  dialogOptions::alsasrcPluginFilter(GstPlugin *plugin, gpointer user_data)
