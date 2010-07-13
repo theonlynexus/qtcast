@@ -6,10 +6,10 @@ class Options
 public:
     Options();
 
-    QBool useALSA;
-    QBool useJACK;
-    QBool useWDM;
-    QBool useOSS;
+    bool useALSA;
+    bool useJACK;
+    bool useWDM;
+    bool useOSS;
 };
 
 #endif // OPTIONS_H

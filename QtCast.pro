@@ -34,7 +34,14 @@ INCLUDEPATH += "./deps/stlsoft/include"
 INCLUDEPATH += "./deps/pantheios/include"
 
 # Remember to compile pantheios lib files!
-LIBS += -L"./deps/pantheios/lib"
+win32{
+CUR_DIR = $$system( cd )
+}
+unix{
+CUR_DIR = $$system( pwd )
+}
+
+LIBS += -L$$CUR_DIR/deps/pantheios/lib/
 
 win32{
     # Supposing MinGW 3.4
@@ -59,13 +66,14 @@ unix{
 
     LIT_DEBUG = .debug
 
-    LIBS += -lpantheios.1.core.$$GCC_VER$$LIT_DEBUG \
+    message( "LIBS = " $$LIBS )
+
+    LIBS +=  -lpantheios.1.core.$$GCC_VER$$LIT_DEBUG \
         -lpantheios.1.fe.simple.$$GCC_VER$$LIT_DEBUG \
         -lpantheios.1.fe.N.$$GCC_VER$$LIT_DEBUG \
         -lpantheios.1.be.file.$$GCC_VER$$LIT_DEBUG \
         -lpantheios.1.be.N.$$GCC_VER$$LIT_DEBUG \
         -lpantheios.1.bec.file.$$GCC_VER$$LIT_DEBUG \
-        #-lpantheios.1.core.$$GCC_VER$$LIT_DEBUG \
         -lpantheios.1.util.$$GCC_VER$$LIT_DEBUG \
 }
 
