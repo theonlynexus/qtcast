@@ -19,16 +19,6 @@ win32{
             -llibgobject-2.0
 }
 
-# Linux/*ix specific settings
-# Use pkg-config to retrieve compiler flags and parse them
-unix{
-    GSTCONFIG += $$system( pkg-config --cflags --libs gstreamer-0.10 )
-    GSTINC = $$find( GSTCONFIG, -I* )
-    for(a, GSTINC)::{
-        INCLUDEPATH += $$system( echo $$a | cut -b3- ) }
-    LIBS += $$find( GSTCONFIG, -l* )
-}
-
 # Includes for Pantheios logging API
 INCLUDEPATH += "./deps/stlsoft/include"
 INCLUDEPATH += "./deps/pantheios/include"
@@ -75,6 +65,21 @@ unix{
         -lpantheios.1.be.N.$$GCC_VER$$LIT_DEBUG \
         -lpantheios.1.bec.file.$$GCC_VER$$LIT_DEBUG \
         -lpantheios.1.util.$$GCC_VER$$LIT_DEBUG \
+
+    # Linux/*ix specific settings
+    # Use pkg-config to retrieve compiler flags and parse them
+    GSTCONFIG += $$system( pkg-config --cflags --libs gstreamer-0.10 )
+    GSTINC = $$find( GSTCONFIG, -I* )
+    for(a, GSTINC)::{
+        INCLUDEPATH += $$system( echo $$a | cut -b3- ) }
+    LIBS += $$find( GSTCONFIG, -l* )
+
+
+    PORTAUDIOCFG = $$system( pkg-config --cflags --libs portaudiocpp )
+    PORTAUDIOINC = $$find( PORTAUDIOCFG, -I* )
+    for(a, PORTAUDIOINC)::{
+        INCLUDEPATH += $$system( echo $$a | cut -b3- ) }
+    LIBS += $$find( PORTAUDIOCFG, -l* )
 }
 
 CONFIG( release )
@@ -94,11 +99,13 @@ SOURCES += main.cpp \
            qtcast.cpp \
            podcast.cpp \
            dialogoptions.cpp \
-           options.cpp
+           options.cpp \
+           portaudioutils.cpp
 HEADERS += qtcast.h \
            podcast.h \
            dialogoptions.h \
-           options.h
+           options.h \
+           portaudioutils.h
 FORMS += qtcast.ui
 FORMS += dialogoptions.ui
 RESOURCES += icons.qrc

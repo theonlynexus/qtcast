@@ -26,7 +26,9 @@ dialogOptions::dialogOptions(QWidget *parent) :
     if( plugin )
     {
         pantheios::log_DEBUG( "dialogOptions::on_listSources_activated: found ALSA plugin! ^.^");
-        getAlsaCards();
+        availableCards = getAlsaCards();
+        ui->soundcardCombo->clear();
+        ui->soundcardCombo->insertItems( 0, availableCards );
     }
     else
     {
@@ -86,4 +88,5 @@ QList<QString> dialogOptions::getAlsaCards()
         }
     }
     file.close();
+    return names;
 }

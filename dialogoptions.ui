@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QTabWidget" name="tabWidget">
+  <widget class="QTabWidget" name="optionsTab">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -38,19 +38,47 @@
      <height>371</height>
     </rect>
    </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>Tab 1</string>
+     <string>Sound Card </string>
     </attribute>
-    <widget class="QListWidget" name="listSources">
+    <widget class="QWidget" name="formLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>70</y>
-       <width>256</width>
-       <height>192</height>
+       <x>20</x>
+       <y>20</y>
+       <width>346</width>
+       <height>301</height>
       </rect>
      </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Output Plugin</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="pluginCombo"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="soundcardCombo"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Soundcard</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">

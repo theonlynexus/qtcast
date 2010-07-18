@@ -6,6 +6,8 @@
 #include <pantheios/frontends/fe.simple.h>
 #include <pantheios/backends/bec.file.h>
 
+#include <portaudioutils.h>
+
 PANTHEIOS_EXTERN_C const char PANTHEIOS_FE_PROCESS_IDENTITY[] = "QtCast";
 
 int main(int argc, char *argv[])
@@ -30,6 +32,8 @@ int main(int argc, char *argv[])
     {
         pantheios::logputs( pantheios::emergency, "Unexpected unknown error" );
     }
+
+    listDevices();
 
     QApplication a(argc, argv);
     QtCast w;

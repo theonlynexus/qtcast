@@ -1,6 +1,8 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
+#include <QBool>
+
 class Options
 {
 public:
