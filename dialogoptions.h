@@ -21,7 +21,7 @@ protected:
 
 private:
     Ui::dialogOptions *ui;
-    QList<QString> dialogOptions::getAlsaCards();
+    QList<QString> getAlsaCards();
 
 private slots:
     void on_listSources_activated(QModelIndex index);
