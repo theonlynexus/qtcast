@@ -75,11 +75,11 @@ unix{
     LIBS += $$find( GSTCONFIG, -l* )
 
 
-    PORTAUDIOCFG = $$system( pkg-config --cflags --libs portaudiocpp )
-    PORTAUDIOINC = $$find( PORTAUDIOCFG, -I* )
-    for(a, PORTAUDIOINC)::{
-        INCLUDEPATH += $$system( echo $$a | cut -b3- ) }
-    LIBS += $$find( PORTAUDIOCFG, -l* )
+#    PORTAUDIOCFG = $$system( pkg-config --cflags --libs portaudiocpp )
+#    PORTAUDIOINC = $$find( PORTAUDIOCFG, -I* )
+#    for(a, PORTAUDIOINC)::{
+#        INCLUDEPATH += $$system( echo $$a | cut -b3- ) }
+#    LIBS += $$find( PORTAUDIOCFG, -l* )
 }
 
 CONFIG( release )
@@ -99,13 +99,13 @@ SOURCES += main.cpp \
            qtcast.cpp \
            podcast.cpp \
            dialogoptions.cpp \
-           options.cpp \
-           portaudioutils.cpp
+           options.cpp
+#           portaudioutils.cpp
 HEADERS += qtcast.h \
            podcast.h \
            dialogoptions.h \
-           options.h \
-           portaudioutils.h
+           options.h
+#           portaudioutils.h
 FORMS += qtcast.ui
 FORMS += dialogoptions.ui
 RESOURCES += icons.qrc
