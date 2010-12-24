@@ -2,86 +2,6 @@
 # Project created by QtCreator 2009-07-16T17:34:15
 # -------------------------------------------------
 
-# Windows specific settings
-# All the necessary include and libraries are in the subdir "windeps"
-win32{
-    INCLUDEPATH += "./windeps/gstreamer/include/gstreamer-0.10"
-    INCLUDEPATH += "./windeps/gstreamer/include/glib-2.0"
-    INCLUDEPATH += "./windeps/gstreamer/include/"
-    INCLUDEPATH += "./windeps/libiconv-1.9.2/include"
-    LIBS += -L"./windeps/gstreamer/lib" \
-            -L"./windeps/libiconv-1.9.2/lib"
-    LIBS += -llibgstreamer-0.10 \
-            -llibgstbase-0.10 \
-            -llibgstaudio-0.10 \
-            -llibglib-2.0 \
-            -llibgthread-2.0 \
-            -llibgobject-2.0
-}
-
-# Includes for Pantheios logging API
-INCLUDEPATH += "./deps/stlsoft/include"
-INCLUDEPATH += "./deps/pantheios/include"
-
-# Remember to compile pantheios lib files!
-win32{
-CUR_DIR = $$system( cd )
-}
-unix{
-CUR_DIR = $$system( pwd )
-}
-
-LIBS += -L$$CUR_DIR/deps/pantheios/lib/
-
-win32{
-    # Supposing MinGW 3.4
-    # TODO: Add compiler version detection
-    LIBS += -lpantheios.1.core.gcc34.debug \
-            -lpantheios.1.fe.simple.gcc34.debug \
-            -lpantheios.1.be.file.gcc34.debug \
-            -lpantheios.1.bec.file.gcc34.debug \
-            -lpantheios.1.core.gcc34.debug \
-            -lpantheios.1.util.gcc34.debug
-}
-
-unix{    
-    GCC = gcc
-    PAR = $$quote( ")" ) # Grrrrrr... had me damned for one hour!
-    #message( $$PAR )
-    VER = $$quote( "gcc --version | line | cut -d \"$$PAR$$\" -f 2 | cut -b 2,4" )
-    #message( $$VER )
-    VER = $$system( $$VER )
-    GCC_VER = $$GCC$$VER
-    #message( "GCC_VER = " $$GCC_VER )
-
-    LIT_DEBUG = .debug
-
-    message( "LIBS = " $$LIBS )
-
-    LIBS +=  -lpantheios.1.core.$$GCC_VER$$LIT_DEBUG \
-        -lpantheios.1.fe.simple.$$GCC_VER$$LIT_DEBUG \
-        -lpantheios.1.fe.N.$$GCC_VER$$LIT_DEBUG \
-        -lpantheios.1.be.file.$$GCC_VER$$LIT_DEBUG \
-        -lpantheios.1.be.N.$$GCC_VER$$LIT_DEBUG \
-        -lpantheios.1.bec.file.$$GCC_VER$$LIT_DEBUG \
-        -lpantheios.1.util.$$GCC_VER$$LIT_DEBUG \
-
-    # Linux/*ix specific settings
-    # Use pkg-config to retrieve compiler flags and parse them
-    GSTCONFIG += $$system( pkg-config --cflags --libs gstreamer-0.10 )
-    GSTINC = $$find( GSTCONFIG, -I* )
-    for(a, GSTINC)::{
-        INCLUDEPATH += $$system( echo $$a | cut -b3- ) }
-    LIBS += $$find( GSTCONFIG, -l* )
-
-
-#    PORTAUDIOCFG = $$system( pkg-config --cflags --libs portaudiocpp )
-#    PORTAUDIOINC = $$find( PORTAUDIOCFG, -I* )
-#    for(a, PORTAUDIOINC)::{
-#        INCLUDEPATH += $$system( echo $$a | cut -b3- ) }
-#    LIBS += $$find( PORTAUDIOCFG, -l* )
-}
-
 CONFIG( release )
 {
     DESTDIR = ./release
@@ -100,12 +20,10 @@ SOURCES += main.cpp \
            podcast.cpp \
            dialogoptions.cpp \
            options.cpp
-#           portaudioutils.cpp
 HEADERS += qtcast.h \
            podcast.h \
            dialogoptions.h \
            options.h
-#           portaudioutils.h
 FORMS += qtcast.ui
 FORMS += dialogoptions.ui
 RESOURCES += icons.qrc
@@ -115,4 +33,10 @@ HEADERS += audiofilelistmodel.h
 SOURCES += audiofilelistmodel.cpp
 HEADERS += audiofilemeta.h
 SOURCES += audiofilemeta.cpp
+HEADERS += QsLog.h
+SOURCES += QsLog.cpp
+HEADERS += QsLogDest.h
+SOURCES += QsLogDest.cpp
+HEADERS += QsDebugOutput.h
+SOURCES += QsDebugOutput.cpp
 

@@ -1,17 +1,9 @@
 #include "dialogoptions.h"
 #include "ui_dialogoptions.h"
 
-#include <gst/gst.h>
-
-/* C++ program, so Pantheios init is automatic! */
-#include <pantheios/pantheios.hpp>
-#include <pantheios/frontends/fe.simple.h>
-#include <pantheios/inserters/integer.hpp>
-
-#include <alsa/asoundlib.h>
-#include <string.h>
-
 #include <QFile>
+#include <qt/qaudio.h>
+#include <qt/qaudiodeviceinfo.h>
 
 
 dialogOptions::dialogOptions(QWidget *parent) :
@@ -20,20 +12,7 @@ dialogOptions::dialogOptions(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    GstRegistry* registry = gst_registry_get_default();
-    GstPlugin* plugin = gst_registry_find_plugin( registry,"alsa");
-
-    if( plugin )
-    {
-        pantheios::log_DEBUG( "dialogOptions::on_listSources_activated: found ALSA plugin! ^.^");
-        availableCards = getAlsaCards();
-        ui->soundcardCombo->clear();
-        ui->soundcardCombo->insertItems( 0, availableCards );
-    }
-    else
-    {
-        pantheios::log_DEBUG( "dialogOptions::on_listSources_activated: no ALSA plugin." );
-    }
+    QAudioDeviceInfo::availableDevices( QAudio::AudioInput );
 }
 
 dialogOptions::~dialogOptions()

@@ -7,8 +7,7 @@
 #include "dialogoptions.h"
 #include "ui_dialogoptions.h"
 
-#include <gst/gst.h>
-#include <glib.h>
+#include "QsLog.h"
 
 #include <QFile>
 #include <QFileDialog>
@@ -16,33 +15,10 @@
 #include <QGraphicsView>
 #include <QToolBar>
 
-/* C++ program, so Pantheios init is automatic! */
-#include <pantheios/pantheios.hpp>
-#include <pantheios/frontends/fe.simple.h>
-#include <pantheios/inserters/integer.hpp>
-
 QtCast::QtCast(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::QtCastClass)
 {
     ui->setupUi(this);
-
-    const gchar *nano_str;
-    guint major, minor, micro, nano;
-
-    gst_init(0, 0);
-
-    gst_version (&major, &minor, &micro, &nano);
-
-    if (nano == 1)
-    nano_str = "(CVS)";
-    else if (nano == 2)
-    nano_str = "(Prerelease)";
-    else
-    nano_str = "";
-
-    printf ("This program is linked against GStreamer %d.%d.%d %s\n",
-          major, minor, micro, nano_str);
-    fflush(stdout);
 
     QToolBar* mainToolbar = (QToolBar*) this->findChild<QToolBar*>( "mainToolBar" );
     QAction* action = (QAction*)this->findChild<QAction*>( "actionLoad_Episode" );
@@ -121,7 +97,7 @@ void QtCast::on_actionExit_triggered()
 
 void QtCast::on_btnAddTrack_clicked()
 {
-    pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked()"  );
+    QLOG_DEBUG() << "QtCast::on_btnAddTrack_clicked()";
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Select Logo"), "", tr("Audio Files (*.ogg *.mp3 *.wav);;All files (*.*)"));
 
@@ -129,36 +105,36 @@ void QtCast::on_btnAddTrack_clicked()
      if( 0 == fileName )
          return;
 
-     pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - User has selected file ",
-                           fileName.toLocal8Bit().constData()  );
+     QLOG_DEBUG() << "QtCast::on_btnAddTrack_clicked - User has selected file " <<
+                           fileName.toLocal8Bit().constData();
      AudioFile file( fileName );
      AudioFileMeta meta( file.Meta() );
      QVariant variant( audioFileMetaId, &meta );
 
-     pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Inserting row, current count: ",
-                            QString::number(trackListModel->rowCount()).toLocal8Bit().constData() );
+     QLOG_DEBUG() << "QtCast::on_btnAddTrack_clicked - Inserting row, current count: " <<
+                            QString::number(trackListModel->rowCount()).toLocal8Bit().constData();
 
      trackListModel->insertRow( trackListModel->rowCount(), QModelIndex() );
 
-     pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row inserted, current count: ",
-                            QString::number(trackListModel->rowCount()).toLocal8Bit().constData() );
+     QLOG_DEBUG() << "QtCast::on_btnAddTrack_clicked - Row inserted, current count: " <<
+                            QString::number(trackListModel->rowCount()).toLocal8Bit().constData();
 
      QModelIndex index = trackListModel->index( trackListModel->rowCount()-1, 0,
                                                 QModelIndex() );
      if( ((AudioFileListModel*)trackListModel)->setData( index, variant, Qt::EditRole ) )
      {
-         pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row data set " );
+         QLOG_DEBUG() <<  "QtCast::on_btnAddTrack_clicked - Row data set ";
          variant = trackListModel->data( index, Qt::EditRole );
          meta = variant.value<AudioFileMeta>();
-         pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row title: ",
-                               meta.title.toLocal8Bit().constData() );
-         pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row artist: ",
-                               meta.artist.toLocal8Bit().constData() );
-         pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Row album: ",
-                               meta.album.toLocal8Bit().constData() );
+         QLOG_DEBUG() << "QtCast::on_btnAddTrack_clicked - Row title: " <<
+                               meta.title.toLocal8Bit().constData();
+         QLOG_DEBUG() << "QtCast::on_btnAddTrack_clicked - Row artist: " <<
+                               meta.artist.toLocal8Bit().constData();
+         QLOG_DEBUG() << "QtCast::on_btnAddTrack_clicked - Row album: " <<
+                               meta.album.toLocal8Bit().constData();
      }
      else
-        pantheios::log_DEBUG( "QtCast::on_btnAddTrack_clicked - Could not set data! " );
+        QLOG_DEBUG() << "QtCast::on_btnAddTrack_clicked - Could not set data! ";
 
 
 }
@@ -180,8 +156,8 @@ void QtCast::on_btnDelTrack_clicked()
 
     if( idx.isValid() )
     {
-        pantheios::log_DEBUG( "QtCast::on_btnDelTrack_clicked - Removing idx ",
-                               QString::number(idx.row()).toLocal8Bit().constData() );
+        QLOG_DEBUG() << "QtCast::on_btnDelTrack_clicked - Removing idx " <<
+                               QString::number(idx.row()).toLocal8Bit().constData();
         trackListModel->removeRow( idx.row() );        
     }
 

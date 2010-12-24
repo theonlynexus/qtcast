@@ -1,41 +1,31 @@
+#include <QDir>
+#include <QString>
 #include <QtGui/QApplication>
+
+#include "QsLog.h"
+#include "QsLogDest.h"
+
 #include "qtcast.h"
-
-/* C++ program, so Pantheios init is automatic! */
-#include <pantheios/pantheios.hpp>
-#include <pantheios/frontends/fe.simple.h>
-#include <pantheios/backends/bec.file.h>
-
-//#include <portaudioutils.h>
-
-PANTHEIOS_EXTERN_C const char PANTHEIOS_FE_PROCESS_IDENTITY[] = "QtCast";
 
 int main(int argc, char *argv[])
 {
-    try
-    {
-        // Set the file name for the local back-end, truncating the
-        // file's existing contents, if any.
-        pantheios_be_file_setFilePath( "QtCast.log" );
-
-        pantheios::log_NOTICE( "Initializing Qt application." );
-    }
-    catch(std::bad_alloc&)
-    {
-        pantheios::logputs( pantheios::alert, "out of memory" );
-    }
-    catch(std::exception& x)
-    {
-        pantheios::log_CRITICAL( "Exception: ", x );
-    }
-    catch(...)
-    {
-        pantheios::logputs( pantheios::emergency, "Unexpected unknown error" );
-    }
-
-//    listDevices();
-
     QApplication a(argc, argv);
+
+    QsLogging::Logger& logger = QsLogging::Logger::instance();
+    logger.setLoggingLevel(QsLogging::DebugLevel);
+    const QString sLogPath(QDir(a.applicationDirPath()).filePath( "QtCast.log" ));
+    QsLogging::DestinationPtr fileDestination(
+        QsLogging::DestinationFactory::MakeFileDestination(sLogPath) );
+    QsLogging::DestinationPtr debugDestination(
+        QsLogging::DestinationFactory::MakeDebugOutputDestination() );
+    logger.addDestination(debugDestination.get());
+    logger.addDestination(fileDestination.get());
+
+    //QLOG_INFO() << "Initializing Qt application.";
+    QLOG_DEBUG() << "Initializing Qt application.";
+
+    //    listDevices();
+
     QtCast w;
     w.show();
     return a.exec();

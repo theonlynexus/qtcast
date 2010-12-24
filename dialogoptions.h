@@ -5,6 +5,8 @@
 #include <QModelIndex>
 #include <QString>
 #include <QList>
+#include <qt/qaudiodeviceinfo.h>
+#include <qt/qaudio.h>
 
 namespace Ui {
     class dialogOptions;
@@ -24,6 +26,8 @@ private:
     QList<QString> getAlsaCards();
     QList<QString> availableApis;
     QList<QString> availableCards;
+    QList<QAudioDeviceInfo> qtInputCards;
+    QList<QAudioDeviceInfo> qtOutputCards;
 
 private slots:
     void on_listSources_activated(QModelIndex index);
