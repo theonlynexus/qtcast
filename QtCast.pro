@@ -13,6 +13,7 @@ CONFIG( debug )
 }
 
 QT += xml
+QT += multimedia
 TARGET = QtCast
 TEMPLATE = app
 SOURCES += main.cpp \

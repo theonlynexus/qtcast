@@ -5,8 +5,8 @@
 #include <QModelIndex>
 #include <QString>
 #include <QList>
-#include <qt/qaudiodeviceinfo.h>
-#include <qt/qaudio.h>
+#include <QtMultimedia/qaudiodeviceinfo.h>
+#include <QtMultimedia/qaudio.h>
 
 namespace Ui {
     class dialogOptions;

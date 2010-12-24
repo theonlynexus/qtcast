@@ -1,9 +1,12 @@
 #include "dialogoptions.h"
 #include "ui_dialogoptions.h"
 
+#include "QsLog.h"
+
 #include <QFile>
-#include <qt/qaudio.h>
-#include <qt/qaudiodeviceinfo.h>
+#include <QtMultimedia>
+#include <QAudio>
+#include <QAudioDeviceInfo>
 
 
 dialogOptions::dialogOptions(QWidget *parent) :
@@ -12,7 +15,13 @@ dialogOptions::dialogOptions(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QAudioDeviceInfo::availableDevices( QAudio::AudioInput );
+    qtInputCards = QAudioDeviceInfo::availableDevices( QAudio::AudioInput );
+    qtOutputCards = QAudioDeviceInfo::availableDevices( QAudio::AudioOutput );
+
+    for( int i=0; i<qtInputCards.count(); ++i )
+        QLOG_DEBUG() << qtInputCards.at(i).deviceName();
+    for( int i=0; i<qtOutputCards.count(); ++i )
+        QLOG_DEBUG() << qtOutputCards.at(i).deviceName();
 }
 
 dialogOptions::~dialogOptions()

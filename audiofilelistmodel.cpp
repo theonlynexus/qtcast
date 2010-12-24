@@ -1,9 +1,6 @@
 #include "audiofilelistmodel.h"
 
-/* C++ program, so Pantheios init is automatic! */
-#include <pantheios/pantheios.hpp>
-#include <pantheios/frontends/fe.simple.h>
-#include <pantheios/inserters/integer.hpp>
+#include "QsLog.h"
 
 AudioFileListModel::AudioFileListModel(QObject *parent)
      : QAbstractListModel(parent)
@@ -62,12 +59,12 @@ bool AudioFileListModel::setData( const QModelIndex &index,
                                   const QVariant &variant,
                                   Qt::ItemDataRole role )
 {
-    pantheios::log_DEBUG( "AudioFileListModel::setData - Row title: ",
-                       variant.value<AudioFileMeta>().title.toLocal8Bit().constData() );
-    pantheios::log_DEBUG( "AudioFileListModel::setData - Row artist: ",
-                       variant.value<AudioFileMeta>().artist.toLocal8Bit().constData() );
-    pantheios::log_DEBUG( "AudioFileListModel::setData - Row album: ",
-                       variant.value<AudioFileMeta>().album.toLocal8Bit().constData() );
+    QLOG_DEBUG() << "AudioFileListModel::setData - Row title: " <<
+                       variant.value<AudioFileMeta>().title.toLocal8Bit().constData();
+    QLOG_DEBUG() << "AudioFileListModel::setData - Row artist: " <<
+                       variant.value<AudioFileMeta>().artist.toLocal8Bit().constData();
+    QLOG_DEBUG() << "AudioFileListModel::setData - Row album: " <<
+                       variant.value<AudioFileMeta>().album.toLocal8Bit().constData();
 
     if (index.isValid() && role == Qt::EditRole)
     {
