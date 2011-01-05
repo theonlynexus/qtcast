@@ -142,7 +142,7 @@ void QtCast::on_btnAddTrack_clicked()
 void QtCast::on_actionAbout_triggered()
 {
      QMessageBox msgBox(this);
-     msgBox.setText("QTcast, a podcast utility written in QT and gstreamer.");
+     msgBox.setText("QTcast, a podcast utility written in QT and FMOD.");
      msgBox.setInformativeText("About");
      msgBox.setStandardButtons(QMessageBox::Ok);
      msgBox.setDefaultButton(QMessageBox::Ok);
