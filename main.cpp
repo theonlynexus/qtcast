@@ -108,6 +108,7 @@ int main(int argc, char *argv[])
     QLibrary fmodLib;
 
     fmodLib.setFileName( "fmodex" );
+    fmodLib.load();
     if( !fmodLib.isLoaded() )
     {
         QLOG_DEBUG() << "FMOD Ex DLL not loaded!";
