@@ -15,6 +15,8 @@
 #include <QGraphicsView>
 #include <QToolBar>
 
+#include <fmod.hpp>
+
 QtCast::QtCast(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::QtCastClass)
 {

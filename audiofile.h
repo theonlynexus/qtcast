@@ -24,7 +24,6 @@ private:
     AudioFileMeta meta;
 
     /* Objects for Metadata reading */
-    void MakeDecodingPipeline();
     void InitVars();
 };
 

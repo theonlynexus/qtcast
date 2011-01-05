@@ -9,9 +9,11 @@ AudioFile::AudioFile()
 
 AudioFile::AudioFile( QString filename )
 {
+    meta.filename = filename;
+
     InitVars();
 
-    this->Open( filename );
+    //this->Open( filename );
 }
 
 void AudioFile::InitVars()
