@@ -2,13 +2,15 @@
 #define AUDIOFILE_H
 
 #include "audiofilemeta.h"
+#include "QtCast.h"
 
 #include <QString>
+#include <fmod.hpp>
 
 class AudioFile
 {
 public:
-    AudioFile();
+    AudioFile( );
     AudioFile( QString filename );
     void Open( QString filename );
     void Close( );
@@ -18,10 +20,11 @@ public:
     QString Artist();
     QString Album();
     QString Duration();
-    AudioFileMeta Meta() const;
+    AudioFileMeta Meta() const;    
 
 private:
     AudioFileMeta meta;
+    FMOD::Sound *fmodSound;
 
     /* Objects for Metadata reading */
     void InitVars();

@@ -7,6 +7,9 @@
 #include <QtGui/QMainWindow>
 #include <QAbstractItemModel>
 #include <QList>
+#include <QLibrary>
+
+#include <fmod.hpp>
 
 
 namespace Ui
@@ -22,9 +25,18 @@ public:
     QtCast(QWidget *parent = 0);
     ~QtCast();
 
-private:
-    Ui::QtCastClass *ui;
+    static FMOD_RESULT fmodCreateSound( QString filename,
+           FMOD_MODE  mode, FMOD_CREATESOUNDEXINFO *  exinfo, FMOD::Sound **sound )
+    {
+        return fmodSystem->createSound( filename.toLocal8Bit(), mode, exinfo, sound );
+    }
 
+    friend class AudioFile;
+
+private:
+    int initFmodWin32();
+
+    Ui::QtCastClass *ui;
     Podcast podcast;
     QAbstractItemModel *trackListModel;
     QList<AudioFileMeta> tracksList;
@@ -32,6 +44,10 @@ private:
 
     int audioFileMetaId;
 
+    QLibrary fmodLib;
+    static FMOD::System *fmodSystem;
+    unsigned int fmodVersion;
+    int fmodNumDrivers;
 
 private slots:
     void on_actionOptions_triggered();

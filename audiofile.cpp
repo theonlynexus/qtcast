@@ -1,10 +1,12 @@
 #include "audiofile.h"
+#include "QtCast.h"
 
 #include <QMessageBox>
 
-AudioFile::AudioFile()
+#include <fmod.hpp>
+
+AudioFile::AudioFile( )
 {
-    InitVars();
 }
 
 AudioFile::AudioFile( QString filename )
@@ -12,13 +14,11 @@ AudioFile::AudioFile( QString filename )
     meta.filename = filename;
 
     InitVars();
-
-    //this->Open( filename );
 }
 
 void AudioFile::InitVars()
 {
-
+    QtCast::fmodCreateSound( meta.filename, FMOD_CREATESTREAM, 0x0, &fmodSound );
 }
 
 QString AudioFile::Filename()
