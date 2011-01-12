@@ -191,7 +191,7 @@ void QtCast::on_btnAddTrack_clicked()
 
      QLOG_DEBUG() << "QtCast::on_btnAddTrack_clicked - User has selected file " <<
                            fileName.toLocal8Bit().constData();
-     AudioFile file( fileName );
+     AudioFile file( fmodSystem, fileName );
      AudioFileMeta meta( file.Meta() );
      QVariant variant( audioFileMetaId, &meta );
 

@@ -4,6 +4,7 @@
 #include <QVariant>
 #include <QString>
 #include <QObject>
+#include <QTime>
 
 class AudioFileMeta
 {
@@ -16,8 +17,7 @@ public:
     QString artist;
     QString album;
     /* QString duration; */
-
-    unsigned int  mins, secs;
+    QTime duration;
 
 private:
 };

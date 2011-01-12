@@ -10,8 +10,8 @@
 class AudioFile
 {
 public:
-    AudioFile( );
-    AudioFile( QString filename );
+    AudioFile( FMOD::System *fmodSystem );
+    AudioFile( FMOD::System *fmodSystem, QString filename );
     void Open( QString filename );
     void Close( );
 
@@ -20,11 +20,16 @@ public:
     QString Artist();
     QString Album();
     QString Duration();
-    AudioFileMeta Meta() const;    
+    AudioFileMeta Meta() const;
 
 private:
     AudioFileMeta meta;
     FMOD::Sound *fmodSound;
+    FMOD::System *fmodSystem;
+
+    void outputFmodTagType( const FMOD_TAG &tag );
+    void outputFmodTagDataType( const FMOD_TAG &tag );
+    void outputFmodTag( const FMOD_TAG &tag );
 
     /* Objects for Metadata reading */
     void InitVars();

@@ -25,7 +25,7 @@ public:
     QtCast(QWidget *parent = 0);
     ~QtCast();
 
-    static FMOD_RESULT fmodCreateSound( QString filename,
+    inline FMOD_RESULT fmodCreateSound( QString filename,
            FMOD_MODE  mode, FMOD_CREATESOUNDEXINFO *  exinfo, FMOD::Sound **sound )
     {
         return fmodSystem->createSound( filename.toLocal8Bit(), mode, exinfo, sound );
@@ -41,11 +41,12 @@ private:
     QAbstractItemModel *trackListModel;
     QList<AudioFileMeta> tracksList;
     QList<AudioFileMeta> basesList;
+    int QtCast::initFmod_win32();
 
     int audioFileMetaId;
 
     QLibrary fmodLib;
-    static FMOD::System *fmodSystem;
+    FMOD::System *fmodSystem;
     unsigned int fmodVersion;
     int fmodNumDrivers;
 

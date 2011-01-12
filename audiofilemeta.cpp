@@ -10,6 +10,7 @@ AudioFileMeta::AudioFileMeta( const AudioFileMeta &src )
     artist = src.artist;
     album = src.album;
     filename = src.filename;
-    secs= src.secs;
-    mins = src.mins;
+//    secs= src.secs;
+//    mins = src.mins;
+    duration = src.duration;
 }
