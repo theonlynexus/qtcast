@@ -41,7 +41,7 @@ private:
     QAbstractItemModel *trackListModel;
     QList<AudioFileMeta> tracksList;
     QList<AudioFileMeta> basesList;
-    int QtCast::initFmod_win32();
+    int initFmod_win32();
 
     int audioFileMetaId;
 
