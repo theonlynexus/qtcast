@@ -15,7 +15,7 @@ private:
     int socketDescriptor;
 
 signals:
-    void error( int error );
+    void error( QTcpSocket::SocketError socketError );
 
 public slots:
 
