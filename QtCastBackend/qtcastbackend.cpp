@@ -1,5 +1,4 @@
 #include <QHostAddress>
-#include <QTcpSocket>
 #include <QThread>
 #include <QEventLoop>
 #include "qtcastbackend.h"
@@ -26,6 +25,21 @@ void QtCastBackend::init()
     if(server->isListening())
     { printf("Server up and listening\n"); fflush(stdout); }
 }
+
+void QtCastBackend::executeCommand( const COMMAND cmd,
+                     const unsigned short payloadSize,
+                     QBitArray payload )
+{
+    switch( cmd )
+    {
+    case CMD_QUIT:
+        doQuit = true;
+        break;
+    default:
+        break;
+    }
+}
+
 
 void QtCastBackend::newConnection()
 {

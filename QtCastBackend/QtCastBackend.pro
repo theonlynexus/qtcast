@@ -24,8 +24,10 @@ win32{
 
 SOURCES += main.cpp \
     fmodwrapper.cpp \
-    qtcastbackend.cpp
+    qtcastbackend.cpp \
+    commandserverthread.cpp
 
 HEADERS += \
     fmodwrapper.h \
-    qtcastbackend.h
+    qtcastbackend.h \
+    commandserverthread.h
