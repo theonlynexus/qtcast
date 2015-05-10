@@ -4,21 +4,21 @@ QtCast? is meant to make podcasting easy for everyone.
 
 The project is planned to be coded in C/C++, leveraging on QT and FMOD. While FMOD is not open source, there is no comparable library in the open source world, and they offer a free license for non-commercial projects.
 
-#summary Build instructions.
+# Build instructions.
 
-# Introduction 
+## Introduction 
 
 Need to install the FMOD libraries. You can do that by downloading the necessary files for you system from http://www.fmod.org
 
-## Compilation steps 
+### Compilation steps 
 
-### On Linux
+#### On Linux
 
   # Run `qmake QtCast.pro`
   # Run `make Makefile.Debug` or `make Makefile.Release` depending on the configuration you want to build
   # If there are no compile/link errors you're done and ready to run the app from the debug/release directory
   
-### On Windows 
+#### On Windows 
 
   # Check the include and libraries paths in QtCast.pro
   # Open a Visual Studio command prompt
