@@ -14,14 +14,14 @@ Need to install the FMOD libraries. You can do that by downloading the necessary
 
 #### On Linux
 
-  # Run `qmake QtCast.pro`
-  # Run `make Makefile.Debug` or `make Makefile.Release` depending on the configuration you want to build
-  # If there are no compile/link errors you're done and ready to run the app from the debug/release directory
+1. Run `qmake QtCast.pro`
+2. Run `make Makefile.Debug` or `make Makefile.Release` depending on the configuration you want to build
+3. If there are no compile/link errors you're done and ready to run the app from the debug/release directory
   
 #### On Windows 
 
-  # Check the include and libraries paths in QtCast.pro
-  # Open a Visual Studio command prompt
-  # Run `qmake QtCast.pro -spec win32-msvcXXXX` (replace XXX with the compiler version you are using, e.g. 2010)
-  # Run `nmake Makefile.Debug` or `nmake Makefile.Release` depending on the configuration you want to build
-  # If there are no compile/link errors you're done and ready to run the app from the debug/release directory
+1. Check the include and libraries paths in QtCast.pro
+2. Open a Visual Studio command prompt
+3. Run `qmake QtCast.pro -spec win32-msvcXXXX` (replace XXX with the compiler version you are using, e.g. 2010)
+4. Run `nmake Makefile.Debug` or `nmake Makefile.Release` depending on the configuration you want to build
+5. If there are no compile/link errors you're done and ready to run the app from the debug/release directory
